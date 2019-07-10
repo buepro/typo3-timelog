@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog">
+		<header/>
+		<body>
+			<trans-unit id="handle.description">
+				<source>handle</source>
+			</trans-unit>
+			<trans-unit id="title.description">
+				<source>title</source>
+			</trans-unit>
+			<trans-unit id="description.description">
+				<source>description</source>
+			</trans-unit>
+			<trans-unit id="active_time.description">
+				<source>The duration in houres</source>
+			</trans-unit>
+			<trans-unit id="batch_state.description">
+				<source>batchState</source>
+			</trans-unit>
+			<trans-unit id="batch_date.description">
+				<source>batchDate</source>
+			</trans-unit>
+			<trans-unit id="project.description">
+				<source>project</source>
+			</trans-unit>
+			<trans-unit id="worker.description">
+				<source>worker</source>
+			</trans-unit>
+			<trans-unit id="intervals.description">
+				<source>intervals</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,41 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+<f:spaceless>
+{f:translate(key: 'salutationNeutral', extensionName: 'timelog') -> f:variable(name: 'salutation')}
+{f:translate(key: 'salutationPersonal', extensionName: 'timelog')
+    -> f:format.printf(arguments: {0: client.lastName})
+    -> f:variable(name: 'salutation')
+    -> f:if(condition: client.lastName)}
+<f:variable name="projectTitle">{project.title} ({project.handle})</f:variable>
+{f:variable(name: 'space', value: ' ')}
+</f:spaceless>
+{salutation}
+{space}
+{f:translate(key: 'projectProgressText', extensionName: 'timelog') -> f:format.printf(arguments: '{0: projectTitle, 1: project.activeTime, 2: project.heapTime}')}
+<f:for each="{tasks}" as="task"><f:render section="PlainTextTask" arguments="{task: task}" /></f:for>
+{f:translate(key:'greeting', extensionName: 'timelog')}
+{space}
+{project.owner.firstName} {project.owner.lastName}
+{project.owner.company}
+{space}
+<f:render section="footer" />
+
+<f:section name="PlainTextTask">
+=====================================
+{task.endTime -> f:format.date(format: 'd.m.Y')} | {task.activeTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation', extensionName: 'timelog')} | {task.handle}
+-------------------------------------
+{task.title}
+-------------------------------------
+{task.description}
+=====================================
+</f:section>
+
+<f:section name="footer">
+---
+{f:uri.action(extensionName: 'timelog', pluginName: 'taskpanel', controller: 'Task', arguments: {projectHandle: project.handle}, absolute: true)}
+---
+{f:translate(key:'aboutTimelog', extensionName: 'timelog') -> f:format.printf(arguments: {0: 'TYPO3', 1: 'timelog'})}
+---
+</f:section>
+
+</html>

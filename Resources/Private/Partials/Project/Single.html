@@ -1,0 +1,136 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<!-- Compiles client name -->
+{f:variable(name: 'client', value: project.client)}
+{f:variable(name: 'clientName', value: '{client.firstName} {client.lastName}') -> f:if(condition: client.lastName)}
+{f:variable(name: 'clientName', value: client.name) -> f:if(condition: client.name)}
+{v:iterator.filter(subject: {0: client.company, 1: clientName}, nullFilter: 1, invert: 1)
+    -> v:iterator.implode(glue: ', ')
+    -> f:variable(name: 'clientName')}
+
+<!-- Creates icon to send email to client -->
+{f:uri.action(arguments: {projectHandle: project.handle}, additionalParams: {smt: 'client'}) -> f:variable(name: 'mailUri')}
+{f:translate(key: 'sendMailTo') -> f:format.printf(arguments: {0: clientName}) -> f:variable(name: 'sendMailTitle')}
+<f:if condition="{project.client.email}">
+    <f:variable name="sendMailToClient">
+        <a class="tlc-sendmail" href="javascript:void(0)" title="{sendMailTitle}" data-model="project"
+           data-handle="{project.handle}" data-uri="{mailUri}">
+            {settings.icons.sendMailTag} {f:translate(key: 'sendEmailToClient')}
+        </a>
+    </f:variable>
+</f:if>
+
+<div id="{project.handle}" class="tx-timelog-project card">
+    <div class="card-body">
+        <div class="tlc-desc overflow-hidden mb-4">
+            <f:if condition="{project.title}">
+                <header class="frame-header">
+                    <h4>{project.title}</h4>
+                </header>
+            </f:if>
+            <p>{project.description -> f:format.nl2br()}</p>
+        </div>
+        <div class="row">
+            <div class="col-md-7">
+                <table class="table table-sm table-striped">
+                    <tbody>
+                    <f:if condition="{clientName}">
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.client')}</th>
+                            <td>
+                                {clientName}
+                            </td>
+                        </tr>
+                    </f:if>
+                    <tr>
+                        <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.handle')}</th>
+                        <td>
+                            <f:if condition="{batch}">
+                                <f:then>
+                                    <f:link.action arguments="{batchHandle: batch.handle}"
+                                                   section="{project.handle}" absolute="1">
+                                        {batch.handle}
+                                    </f:link.action>
+                                </f:then>
+                                <f:else>
+                                    <f:link.action arguments="{projectHandle: project.handle}" section="{project.handle}"
+                                                   absolute="1">
+                                        {project.handle}
+                                    </f:link.action>
+                                </f:else>
+                            </f:if>
+                        </td>
+                    </tr>
+                    {f:variable(name: 'showCreateBatch', value: 1)
+                        -> f:if(condition: '{tasks} && !{batch} && {beUserLoggedIn}')}
+                    <f:if condition="{sendMailToClient} || {showCreateBatch}">
+                        <tr>
+                            <th scope="row">{f:translate(key: 'actions')}</th>
+                            <td>
+                                <f:if condition="{sendMailToClient}">
+                                <span class="tlc-sendmail-icons">
+                                    {sendMailToClient -> f:format.htmlentitiesDecode()}
+                                    <div class="spinner-grow text-warning" role="status">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <ion-icon class="text-success" name="checkmark"></ion-icon>
+                                    <ion-icon class="text-danger" name="close"></ion-icon>
+                                </span><br />
+                                </f:if>
+                                <f:if condition="{showCreateBatch}">
+                                    <f:link.action action="createBatch" arguments="{projectHandle: project.handle}"
+                                                   title="{f:translate(key: 'createBatch')}">
+                                        {settings.icons.batchTasksTag -> f:format.htmlentitiesDecode()} {f:translate(key: 'createBatch')}<br />
+                                    </f:link.action>
+                                </f:if>
+                            </td>
+                        </tr>
+                    </f:if>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-5">
+                <table class="table table-sm table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.active_time')}</th>
+                            <td>{project.activeTime -> f:format.number(decimals: 2)}h</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.heap_time')}</th>
+                            <td>{project.heapTime -> f:format.number(decimals: 2)}h</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.batch_time')}</th>
+                            <td>{project.batchTime -> f:format.number(decimals: 2)}h</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <f:if condition="{batches}">
+            <div class="mt-2">
+                <h5>{f:translate(key: 'tasks')}</h5>
+                <f:form action="list" arguments="{projectHandle: project.handle}">
+                    <div class="form-group">
+                        <f:form.select name="batchHandle" class="form-control" additionalAttributes="{onchange: 'this.form.submit()'}">
+                            <f:form.select.option value="" selected="{batch.handle} == ''">
+                                {f:translate(key: 'heapedTasks')}
+                            </f:form.select.option>
+                            <f:for each="{batches}" as="abatch">
+                                <f:form.select.option value="{abatch.handle}" selected="{batch.handle} == {abatch.handle}">
+                                    {abatch.date -> f:format.date(format: settings.general.dateTimeFormat)}
+                                    - {abatch.sumActiveTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation')}
+                                    - {abatch.handle}
+                                </f:form.select.option>
+                            </f:for>
+                        </f:form.select>
+                    </div>
+                </f:form>
+            </div>
+        </f:if>
+    </div>
+</div>
+</html>
+

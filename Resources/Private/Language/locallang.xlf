@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog">
+		<header/>
+		<body>
+			<trans-unit id="tx_timelog_domain_model_task">
+				<source>Task</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.handle">
+				<source>Handle</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.active_time">
+				<source>Active Time</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.batch_state">
+				<source>Batch State</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.batch_date">
+				<source>Batch Date</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.project">
+				<source>Project</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.worker">
+				<source>Worker</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.intervals">
+				<source>Intervals</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval">
+				<source>Interval</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval.start_time">
+				<source>Start Time</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval.end_time">
+				<source>End Time</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval.duration">
+				<source>Duration</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project">
+				<source>Project</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.handle">
+				<source>Handle</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.active_time">
+				<source>Active Time</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.heap_time">
+				<source>Heap Time</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.batch_time">
+				<source>Batch Time</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.client">
+				<source>Client</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.owner">
+				<source>Owner</source>
+			</trans-unit>
+			<trans-unit id="hourAbbreviation">
+				<source>h</source>
+			</trans-unit>
+			<trans-unit id="sendMailTo">
+				<source>Send email to %s</source>
+			</trans-unit>
+			<trans-unit id="mailSubject">
+				<source>Project progress</source>
+			</trans-unit>
+			<trans-unit id="salutationNeutral">
+				<source>Dear client</source>
+			</trans-unit>
+			<trans-unit id="salutationPersonal">
+				<source>Dear Miss/Mr. %s</source>
+			</trans-unit>
+			<trans-unit id="projectProgressText">
+				<source>Your project %s is progressing. Currently there are %.1f hours registered in our time recording (%.1f heap houres). The following work has been done recently:</source>
+			</trans-unit>
+			<trans-unit id="date">
+				<source>Date</source>
+			</trans-unit>
+			<trans-unit id="greeting">
+				<source>Best regards</source>
+			</trans-unit>
+			<trans-unit id="aboutTimelog">
+				<source>This report has been created by %s with the extension %s</source>
+			</trans-unit>
+			<trans-unit id="actions">
+				<source>Actions</source>
+			</trans-unit>
+			<trans-unit id="batchedTasks">
+				<source>Batched tasks</source>
+			</trans-unit>
+			<trans-unit id="heapedTasks">
+				<source>Heaped tasks</source>
+			</trans-unit>
+			<trans-unit id="sendEmailToClient">
+				<source>Send email to client</source>
+			</trans-unit>
+			<trans-unit id="createBatch">
+				<source>Create batch</source>
+			</trans-unit>
+			<trans-unit id="tasks">
+				<source>Tasks</source>
+			</trans-unit>
+			<trans-unit id="projectHandle">
+				<source>Project handle</source>
+			</trans-unit>
+			<trans-unit id="batchHandle">
+				<source>Batch handle</source>
+			</trans-unit>
+			<trans-unit id="taskHandle">
+				<source>Task handle</source>
+			</trans-unit>
+			<trans-unit id="findtasks">
+				<source>Find tasks</source>
+			</trans-unit>
+			<trans-unit id="find">
+				<source>Find</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

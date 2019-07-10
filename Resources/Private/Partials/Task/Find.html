@@ -1,0 +1,42 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<div class="tx-timelog-projectsearch card">
+    <div class="card-body">
+        <h5>{f:translate(key: 'findtasks')}</h5>
+        <f:form action="list">
+            <div class="form-row">
+                <div class="col">
+                    <f:form.textfield class="form-control tlc-findfield" name="projectHandle"
+                                      placeholder="{f:translate(key: 'projectHandle')}"
+                                      value="{project.handle}"/>
+                </div>
+                <div class="col">
+                    <f:form.textfield class="form-control tlc-findfield" name="batchHandle"
+                                      placeholder="{f:translate(key: 'batchHandle')}"
+                                      value="{batch.handle}"/>
+                </div>
+                <div class="col">
+                    <f:form.textfield class="form-control tlc-findfield" name="taskHandle"
+                                      placeholder="{f:translate(key: 'taskHandle')}"/>
+                </div>
+                <div class="col">
+                    <button type="submit" class="btn btn-primary">{f:translate(key: 'find')}</button>
+                </div>
+            </div>
+        </f:form>
+    </div>
+</div>
+
+<v:asset.script name="timelog-task-find" movable="true">
+;+function ( $ ) {
+    $(function () {
+        $('.tx-timelog-projectsearch input').on('click',function () {
+            var $parent = $(this).closest('.tx-timelog-projectsearch')
+            $('.tlc-findfield',$parent).attr('value','');
+        })
+    });
+}(jQuery);
+</v:asset.script>
+
+</html>

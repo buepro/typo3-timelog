@@ -1,0 +1,45 @@
+# Configuration
+
+## Constant editor
+
+Some available configuration constants are:
+
+| Constant | Description |
+|---|---|
+| stylesheet | Select the stylesheet to be used. |
+| | **css**: Use a css-file |
+| | **scss**: Use a scss-file.<br />Scss-processing needs to be available (e.g. provided by extension `bootstrap_package`)
+| storagePid | The uid from the *timelog storage page*. The timelog records are stored on that page.
+
+
+## PageTS
+
+<a name="record-preview"></a>
+### Record preview
+
+In case a separate page (folder page) holds timelog related records the record preview needs to be configured as 
+following:
+
+```
+TCEMAIN.preview {
+  disableButtonForDokType = 255, 199
+  tx_timelog_domain_model_project {
+    previewPageId = pluginPid
+  }
+  tx_timelog_domain_model_task {
+    previewPageId = pluginPid
+}
+```
+
+Replace pluginPid with the uid from the *timelog page*.
+
+
+## UserTS
+
+### Timezone
+
+Upon adding intervals the start time is automatically set to the server time. In case the backend user works in a 
+different timezone the start times might need to be adapted accordingly. The following `userTS` defines the timezone
+`gmt+2` (e.g. Europe/Helsinki):
+
+`tx_timelog.timezone.offset = 2`

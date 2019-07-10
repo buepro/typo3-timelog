@@ -1,0 +1,38 @@
+
+plugin.tx_timelog_taskpanel {
+    view {
+        # cat=plugin.tx_timelog_taskpanel/file; type=string; label=Path to template root (FE)
+        templateRootPath = EXT:timelog/Resources/Private/Templates/
+        # cat=plugin.tx_timelog_taskpanel/file; type=string; label=Path to template partials (FE)
+        partialRootPath = EXT:timelog/Resources/Private/Partials/
+        # cat=plugin.tx_timelog_taskpanel/file; type=string; label=Path to template layouts (FE)
+        layoutRootPath = EXT:timelog/Resources/Private/Layouts/
+    }
+    persistence {
+        # cat=plugin.tx_timelog_taskpanel//a; type=string; label=Default storage PID
+        storagePid =
+    }
+}
+
+## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
+
+plugin.tx_timelog_taskpanel {
+  general {
+    # cat=plugin.tx_timelog_taskpanel/general/010; type=string; label= Date format
+    dateFormat = d.m.Y
+    # cat=plugin.tx_timelog_taskpanel/general/020; type=string; label= Time format
+    timeFormat = H:i
+    # cat=plugin.tx_timelog_taskpanel/general/010; type=string; label= Date time format
+    dateTimeFormat = d.m.Y H:i
+    # cat=plugin.tx_timelog_taskpanel/general/060; type=options[None=none, CSS=css, SCSS (Bootstrap)=scss]; label=Stylesheet
+    stylesheet = css
+  }
+  icons {
+    # cat=plugin.tx_timelog_taskpanel/icons/010; type=boolean; label=Embed ionicicons web component script
+    embedIoniciconsWebComponentScript = 1
+    # cat=plugin.tx_timelog_taskpanel/icons/020; type=string; label=Send mail icon tag
+    sendMailTag = <ion-icon name="mail"></ion-icon>
+    # cat=plugin.tx_timelog_taskpanel/icons/030; type=string; label=Batch tasks icon tag
+    batchTasksTag = <ion-icon name="apps"></ion-icon>
+  }
+}

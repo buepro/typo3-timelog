@@ -1,0 +1,61 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+{f:translate(key: 'salutationNeutral', extensionName: 'timelog') -> f:variable(name: 'salutation')}
+{f:translate(key: 'salutationPersonal', extensionName: 'timelog')
+    -> f:format.printf(arguments: {0: client.lastName})
+    -> f:variable(name: 'salutation')
+    -> f:if(condition: client.lastName)}
+{project.title
+    -> f:link.action(extensionName: 'timelog', pluginName: 'taskpanel', controller: 'Task', absolute: 1,
+                        arguments: {projectHandle: project.handle})
+    -> f:variable(name: 'projectLinkText')}
+
+<h3>{salutation}</h3>
+<p>
+    {f:translate(key: 'projectProgressText', extensionName: 'timelog')
+        -> f:format.printf(arguments: {0: projectLinkText, 1: project.activeTime, 2: project.heapTime})
+        -> f:format.htmlentitiesDecode()}
+</p>
+<f:for each="{tasks}" as="task">
+    <div style="border: #aaaaaa 1px solid; margin: 30px 0; padding: 0 10px;">
+        <p>
+            {task.endTime -> f:format.date(format: 'd.m.Y')}&nbsp;|&nbsp;
+            {task.activeTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation',
+            extensionName: 'timelog')}&nbsp;|&nbsp;
+            <f:link.action extensionName="timelog" pluginName="taskpanel" controller="Task" absolute="1"
+                           arguments="{taskHandle: task.handle}" section="{task.handle}">
+                {task.handle}
+            </f:link.action>
+        </p>
+        <f:if condition="{task.title}">
+            <h4>{task.title}</h4>
+        </f:if>
+        <p>{task.description -> f:format.nl2br()}</p>
+    </div>
+</f:for>
+<p>
+    {f:translate(key:'greeting', extensionName: 'timelog')}
+</p>
+<p>
+    {project.owner.firstName} {project.owner.lastName}<br />
+    {project.owner.company}
+</p>
+<br />
+<p>
+    <small>
+        <f:variable name="TYPO3">
+            <f:link.external uri="https://www.typo3.org">TYPO3</f:link.external>
+        </f:variable>
+        <f:variable name="timelog">
+            <f:link.external uri="https://extensions.typo3.org/extension/timelog/">timelog</f:link.external>
+        </f:variable>
+        <f:format.htmlentitiesDecode>
+            <f:format.printf arguments="{0: TYPO3, 1: timelog}">
+                {f:translate(key:'aboutTimelog', extensionName: 'timelog')}
+            </f:format.printf>
+        </f:format.htmlentitiesDecode>
+    </small>
+</p>
+
+</html>

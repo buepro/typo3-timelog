@@ -1,0 +1,14 @@
+.tx-timelog-tasklist {
+    .tlc-task {
+        border: $border-color $border-width solid;
+        border-bottom: 0;
+        background-clip: content-box;
+        &:nth-child(2n) {
+            background-color: $table-accent-bg;
+        }
+        &:last-child {
+            border-bottom: $border-color $border-width solid;
+        }
+    }
+}
+

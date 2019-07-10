@@ -1,0 +1,9 @@
+#=========================================================#
+# Hashid
+#=========================================================#
+
+# cat=Hashid; type=string; label=Hashid salt
+hashidSalt =
+
+# cat=Hashid; type=int; label=Hashid length
+hashidLength = 8

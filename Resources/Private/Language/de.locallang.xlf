@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog">
+		<header/>
+		<body>
+			<trans-unit id="tx_timelog_domain_model_task" approved="yes">
+				<source>Task</source> <target state="translated">Aufgabe</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.handle" approved="yes">
+				<source>Handle</source> <target state="translated">Referenz</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.title" approved="yes">
+				<source>Title</source> <target state="translated">Titel</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.description" approved="yes">
+				<source>Description</source> <target state="translated">Beschreibug</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.active_time" approved="yes">
+				<source>Active Time</source> <target state="translated">Aktive Zeit</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.batch_state" approved="yes">
+				<source>Batch State</source> <target state="translated">Stapelstatus</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
+				<source>Batch Date</source> <target state="translated">Stapeldatum</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.project" approved="yes">
+				<source>Project</source> <target state="translated">Projekt</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.worker" approved="yes">
+				<source>Worker</source> <target state="translated">Arbeiter</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_task.intervals" approved="yes">
+				<source>Intervals</source> <target state="translated">Intervalle</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval" approved="yes">
+				<source>Interval</source> <target state="translated">Intervall</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval.start_time" approved="yes">
+				<source>Start Time</source> <target state="translated">Startzeit</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval.end_time" approved="yes">
+				<source>End Time</source> <target state="translated">Endzeit</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_interval.duration" approved="yes">
+				<source>Duration</source> <target state="translated">Dauer</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project" approved="yes">
+				<source>Project</source> <target state="translated">Projekt</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.handle" approved="yes">
+				<source>Handle</source> <target state="translated">Referenz</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.title" approved="yes">
+				<source>Title</source> <target state="translated">Titel</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.description" approved="yes">
+				<source>Description</source> <target state="translated">Beschreibung</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.active_time" approved="yes">
+				<source>Active Time</source> <target state="translated">Aktive Zeit</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.heap_time" approved="yes">
+				<source>Heap Time</source> <target state="translated">Ungstapelte Zeit</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.batch_time" approved="yes">
+				<source>Batch Time</source> <target state="translated">Gestapelte Zeit</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
+				<source>Client</source> <target state="translated">Kunde</target></trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.owner" approved="yes">
+				<source>Owner</source> <target state="translated">Inhaber</target></trans-unit>
+			<trans-unit id="hourAbbreviation" approved="yes">
+				<source>h</source> <target state="translated">h</target></trans-unit>
+			<trans-unit id="sendMailTo" approved="yes">
+				<source>Send email to %s</source> <target state="translated">E-Mail an %s versenden</target></trans-unit>
+			<trans-unit id="mailSubject" approved="yes">
+				<source>Project progress</source> <target state="translated">Projektvortschritt</target></trans-unit>
+			<trans-unit id="salutationNeutral">
+				<source>Dear client</source>
+				<target state="translated">Guten Tag</target>
+			</trans-unit>
+			<trans-unit id="salutationPersonal">
+				<source>Dear Miss/Mr. %s</source>
+				<target state="translated">Guten Tag Frau/Herr %s</target>
+			</trans-unit>
+			<trans-unit id="projectProgressText">
+				<source>Your project %s is progressing. Currently there are %.1f hours registered in our time recording (%.1f heap houres). The following work has been done recently:</source>
+				<target state="translated">Ihr Projekt %s schreitet voran. Aktuell sind %.1f Stunden in unserer Zeiterfassung registriert (%.1f ungeordnet). Folgende Arbeiten wurden kürzlich durchgeführt:</target>
+			</trans-unit>
+			<trans-unit id="date">
+				<source>Date</source>
+				<target state="translated">Datum</target>
+			</trans-unit>
+			<trans-unit id="greeting">
+				<source>Best regards</source>
+				<target state="translated">Freundliche Grüsse</target>
+			</trans-unit>
+			<trans-unit id="aboutTimelog">
+				<source>This report has been created by %s with the extension %s</source>
+				<target state="translated">Dieser Bericht wurde mit %s und der Erweiterung %s erstellt.</target>
+			</trans-unit>
+			<trans-unit id="actions">
+				<source>Actions</source>
+				<target state="translated">Aktionen</target>
+			</trans-unit>
+			<trans-unit id="batchedTasks">
+				<source>Batched tasks</source>
+				<target state="translated">Gestapelte Arbeiten</target>
+			</trans-unit>
+			<trans-unit id="heapedTasks">
+				<source>Heaped tasks</source>
+				<target state="translated">Ungestapelte Arbeiten</target>
+			</trans-unit>
+			<trans-unit id="sendEmailToClient">
+				<source>Send email to client</source>
+				<target state="translated">Email an Kunde senden</target>
+			</trans-unit>
+			<trans-unit id="createBatch">
+				<source>Create batch</source>
+				<target state="translated">Arbeitsstapel erstellen</target>
+			</trans-unit>
+			<trans-unit id="tasks">
+				<source>Tasks</source>
+				<target state="translated">Arbeiten</target>
+			</trans-unit>
+			<trans-unit id="projectHandle">
+				<source>Project handle</source>
+				<target state="translated">Projektreferenz</target>
+			</trans-unit>
+			<trans-unit id="batchHandle">
+				<source>Batch handle</source>
+				<target state="translated">Stapelreferenz</target>
+			</trans-unit>
+			<trans-unit id="taskHandle">
+				<source>Task handle</source>
+				<target state="translated">Arbeitsreferenz</target>
+			</trans-unit>
+			<trans-unit id="findtasks">
+				<source>Find tasks</source>
+				<target state="translated">Arbeiten finden</target>
+			</trans-unit>
+			<trans-unit id="find">
+				<source>Find</source>
+				<target state="translated">Finden</target>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

@@ -1,0 +1,44 @@
+@media (min-width: 500px) {
+  .tx-timelog-project th {
+    width: 10rem; } }
+
+.tx-timelog-project .tlc-sendmail-icons ion-icons, .tx-timelog-project .tlc-sendmail-icons .spinner-grow {
+  width: 1rem;
+  height: 1rem; }
+
+.tx-timelog-project .tlc-sendmail-icons > * {
+  display: inline-block; }
+  .tx-timelog-project .tlc-sendmail-icons > *:nth-child(n+2) {
+    display: none; }
+
+.tx-timelog-project .tlc-sendmail-icons.tlc-progress > * {
+  display: none; }
+  .tx-timelog-project .tlc-sendmail-icons.tlc-progress > *:nth-child(2) {
+    display: inline-block; }
+
+.tx-timelog-project .tlc-sendmail-icons.tlc-success > * {
+  display: none; }
+  .tx-timelog-project .tlc-sendmail-icons.tlc-success > *:nth-child(3) {
+    display: inline-block; }
+
+.tx-timelog-project .tlc-sendmail-icons.tlc-error > * {
+  display: none; }
+  .tx-timelog-project .tlc-sendmail-icons.tlc-error > *:nth-child(4) {
+    display: inline-block; }
+
+.tx-timelog-project ion-icon {
+  margin-bottom: -2px; }
+
+.tx-timelog-project .spinner-grow {
+  margin-bottom: 2px; }
+
+.tx-timelog-tasklist .tlc-task {
+  border: #dee2e6 1px solid;
+  border-bottom: 0;
+  background-clip: content-box; }
+  .tx-timelog-tasklist .tlc-task:nth-child(2n) {
+    background-color: rgba(0, 0, 0, 0.05); }
+  .tx-timelog-tasklist .tlc-task:last-child {
+    border-bottom: #dee2e6 1px solid; }
+
+/*# sourceMappingURL=theme.css.map */

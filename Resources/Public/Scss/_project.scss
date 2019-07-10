@@ -1,0 +1,43 @@
+.tx-timelog-project {
+    @media (min-width: 500px) {
+        th {
+            width: 10rem;
+        }
+    }
+    .tlc-sendmail-icons {
+        ion-icons, .spinner-grow {
+            width: 1rem;
+            height: 1rem;
+        }
+        > * {
+            display: inline-block;
+            &:nth-child(n+2) {
+                display:none;
+            }
+        }
+        &.tlc-progress > * {
+            display: none;
+            &:nth-child(2) {
+                display: inline-block;
+            }
+        }
+        &.tlc-success > * {
+            display: none;
+            &:nth-child(3) {
+                display: inline-block;
+            }
+        }
+        &.tlc-error > * {
+            display: none;
+            &:nth-child(4) {
+                display: inline-block;
+            }
+        }
+    }
+    ion-icon {
+        margin-bottom: -2px;
+    }
+    .spinner-grow {
+        margin-bottom: 2px;
+    }
+}

@@ -1,0 +1,41 @@
+<html data-namespace-typo3-fluid="true"
+      xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers">
+
+
+<div class="tx-timelog-panel card">
+    <div class="card-body">
+        <f:if condition="{task.title}">
+            <h4>{task.title}</h4>
+        </f:if>
+        <div class="row">
+            <div class="col-md-6">
+                <p>{task.description -> f:format.nl2br()}</p>
+            </div>
+            <div class="col-md-6">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_task.handle')}</th>
+                            <td>{task.handle}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_task.active_time')}</th>
+                            <td>{task.activeTime -> f:format.number(decimals: 2)}h</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_task.batch_state')}</th>
+                            <td>{task.batchState}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_task.batch_date')}</th>
+                            <td>{task.batchDate}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>
+

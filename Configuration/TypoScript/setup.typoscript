@@ -1,0 +1,89 @@
+
+plugin.tx_timelog_taskpanel {
+    view {
+        templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Templates/
+        templateRootPaths.1 = {$plugin.tx_timelog_taskpanel.view.templateRootPath}
+        partialRootPaths.0 = EXT:timelog/Resources/Private/Partials/
+        partialRootPaths.1 = {$plugin.tx_timelog_taskpanel.view.partialRootPath}
+        layoutRootPaths.0 = EXT:timelog/Resources/Private/Layouts/
+        layoutRootPaths.1 = {$plugin.tx_timelog_taskpanel.view.layoutRootPath}
+    }
+    persistence {
+        storagePid = {$plugin.tx_timelog_taskpanel.persistence.storagePid}
+        #recursive = 1
+    }
+    features {
+        #skipDefaultArguments = 1
+        # if set to 1, the enable fields are ignored in BE context
+        ignoreAllEnableFieldsInBe = 0
+        # Should be on by default, but can be disabled if all action in the plugin are uncached
+        requireCHashArgumentForActionArguments = 1
+    }
+    mvc {
+        #callDefaultActionIfActionCantBeResolved = 1
+    }
+}
+
+# these classes are only used in auto-generated templates
+plugin.tx_timelog._CSS_DEFAULT_STYLE (
+    textarea.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    input.f3-form-error {
+        background-color:#FF9F9F;
+        border: 1px #FF0000 solid;
+    }
+
+    .typo3-messages .message-error {
+        color:red;
+    }
+
+    .typo3-messages .message-ok {
+        color:green;
+    }
+)
+
+
+## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
+
+
+plugin.tx_timelog_taskpanel {
+  settings {
+    general {
+      dateFormat = {$plugin.tx_timelog_taskpanel.general.dateFormat}
+      timeFormat = {$plugin.tx_timelog_taskpanel.general.timeFormat}
+      dateTimeFormat = {$plugin.tx_timelog_taskpanel.general.dateTimeFormat}
+    }
+    icons {
+      sendMailTag = {$plugin.tx_timelog_taskpanel.icons.sendMailTag}
+      batchTasksTag = {$plugin.tx_timelog_taskpanel.icons.batchTasksTag}
+    }
+  }
+}
+["{$plugin.tx_timelog_taskpanel.general.stylesheet}" == "css"]
+page {
+  includeCSS {
+    timelog = EXT:timelog/Resources/Public/Css/theme.css
+  }
+}
+[END]
+["{$plugin.tx_timelog_taskpanel.general.stylesheet}" == "scss"]
+page {
+  includeCSS {
+    timelog = EXT:timelog/Resources/Public/Scss/theme.scss
+  }
+}
+[END]
+[{$plugin.tx_timelog_taskpanel.icons.embedIoniciconsWebComponentScript} == 1]
+page {
+  includeJSFooterlibs {
+    tlIonicicons = https://unpkg.com/ionicons@4.5.5/dist/ionicons.js
+    tlIonicicons.external = 1
+  }
+}
+[END]
+
+
+

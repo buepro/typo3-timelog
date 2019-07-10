@@ -1,0 +1,18 @@
+# Configures preview links
+TCEMAIN.preview {
+  tx_timelog_domain_model_project {
+    fieldToParameterMap {
+      handle = tx_timelog_taskpanel[projectHandle]
+    }
+    useCacheHash = 1
+  }
+  tx_timelog_domain_model_task {
+    fieldToParameterMap {
+      handle = tx_timelog_taskpanel[taskHandle]
+    }
+    useCacheHash = 1
+  }
+}
+
+# Hides interval record in list module view
+mod.web_list.hideTables := addToList(tx_timelog_domain_model_interval)

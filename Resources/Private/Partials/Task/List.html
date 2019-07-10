@@ -1,0 +1,32 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<div class="tx-timelog-tasklist col">
+    <f:for each="{tasks}" as="task">
+        <div id="{task.handle}" class="tlc-task row align-items-center">
+            <div class="tlc-info col-md-2 py-3">
+                <div class="row">
+                    <div class="col-auto col-md-12">{task.endTime -> f:format.date(format: 'd.m.Y')}</div>
+                    <div class="col-auto col-md-12">
+                        {task.activeTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation')}
+                    </div>
+                    <div class="col-auto col-md-12">
+                        <f:link.action arguments="{taskHandle: task.handle}" section="{task.handle}">
+                            {task.handle}
+                        </f:link.action>
+                    </div>
+                </div>
+            </div>
+            <div class="tlc-desc col py-3">
+                <f:if condition="{task.title}">
+                    <header class="frame-header">
+                        <h5>{task.title}</h5>
+                    </header>
+                </f:if>
+                {task.description -> f:format.nl2br()}
+            </div>
+        </div>
+    </f:for>
+</div>
+
+</html>

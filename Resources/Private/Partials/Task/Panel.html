@@ -1,0 +1,22 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+
+<f:flashMessages/>
+
+<section class="my-5">
+    <f:render partial="Task/Find" arguments="{_all}" />
+</section>
+<f:if condition="{project}">
+    <section class="my-5">
+        <f:render partial="Project/Single" arguments="{_all}" />
+    </section>
+</f:if>
+<f:if condition="{tasks}">
+    <section class="my-5">
+        <f:render partial="Task/List" arguments="{_all}" />
+    </section>
+</f:if>
+
+<v:asset.script path="EXT:timelog/Resources/Public/JavaScript/Src/sendmail.jquery.js" />
+
+</html>
