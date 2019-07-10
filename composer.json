@@ -25,11 +25,6 @@
       "Buepro\\Timelog\\": "Classes"
     }
   },
-  "autoload-dev": {
-    "psr-4": {
-      "Buepro\\Timelog\\Tests\\": "Tests"
-    }
-  },
   "replace": {
     "timelog": "self.version",
     "typo3-ter/timelog": "self.version"
