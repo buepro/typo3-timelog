@@ -8,9 +8,10 @@ to require a user identification (login) for the page the plugin is used on.
 
 ## Environment
 
-When generating tasks in the backend the php time zone is taken into account. Set it in the "Configure Installation-Wide 
-Options" from the settings module to the time zone where the tasks are being created. 
-E.g.: `[SYS][phpTimeZone] = Europe/Helsinki`
+When generating tasks in the backend the php time zone is taken into account. Review it in the 
+"Configure Installation-Wide Options" from the settings module (e.g.: `[SYS][phpTimeZone] = Europe/Helsinki`). 
+In case the timezone setting can't be changed for the installation it might be defined by 
+[userTS](Configuration.md#timezone).
 
 ## Installation
 
@@ -31,7 +32,9 @@ key is **timelog**.
 
 1. Create an extension template for the *timelog page* and add "Timelog (timelog)"  to "Include static (from extension)".
 
-1. Add the plugin "Task panel" to *timelog page*
+1. Add the plugin "Task panel" to the *timelog page*
+
+1. In the [constant editor](Configuration.md#constant-editor) set the `storagePid` to the *timelog page*-uid.
 
 ### Create separate storage page
 
@@ -42,6 +45,8 @@ the following optional steps should be carried out:
 1. Create a folder page (following called *timelog storage page*). You might place it inside the *timelog page*.
 
 1. Configure the record preview as outlined in the [configuration](Configuration.md#record-preview).
+
+1. In the [constant editor](Configuration.md#constant-editor) set the `storagePid` to the *timelog storage page*-uid.
 
 ## Configuration
 

@@ -2,19 +2,21 @@
 
 ## Constant editor
 
-Some available configuration constants are:
+Select the `PLUGIN.TX_TIMELOG_TASKPANEL` category in the template module constant editor to define the following
+constants:
 
 | Constant | Description |
 |---|---|
-| stylesheet | Select the stylesheet to be used. |
+| general.stylesheet | Select the stylesheet to be used. |
 | | **css**: Use a css-file |
 | | **scss**: Use a scss-file.<br />Scss-processing needs to be available (e.g. provided by extension `bootstrap_package`)
-| storagePid | The uid from the *timelog storage page*. The timelog records are stored on that page.
+| persistence.storagePid | The uid from the *timelog storage page*. The timelog records are stored on that page.
+
+<small>Constant path: `plugin.tx_timelog_taskpanel`</small>
 
 
 ## PageTS
 
-<a name="record-preview"></a>
 ### Record preview
 
 In case a separate page (folder page) holds timelog related records the record preview needs to be configured as 

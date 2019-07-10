@@ -17,7 +17,7 @@ Tasks can be gathered in **batches** and might be used as reference in invoices.
 
 ## Documentation
 
-- [Administration (installation, maintenance)](Documentation/Admin.md)
+- [Administration (installation, maintenance)](Documentation/Administration.md)
 - [Configuration](Documentation/Configuration.md)
 - [Usage](Documentation/Usage.md)
 

@@ -1,7 +1,7 @@
 {
-  "name": "buepro/timelog",
+  "name": "buepro/typo3-timelog",
   "type": "typo3-cms-extension",
-  "description": "The aim of this extension is to increase the efficiency and transparency of work by continuously collecting work information and communicate it to customers.",
+  "description": "TYPO3 extension to increase efficiency and transparency of work by continuously collecting work information and communicate it to customers.",
   "keywords": [
     "TYPO3",
     "timelog"
@@ -19,6 +19,9 @@
   "require": {
     "typo3/cms-core": "^9.5",
     "buepro/typo3-auxlibs": "^1.0"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master"
   },
   "autoload": {
     "psr-4": {
