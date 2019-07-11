@@ -46,6 +46,38 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     protected $taskRepository = null;
 
     /**
+     * Plugin ts setup
+     * @var array
+     */
+    private $tsSetup = [];
+
+    /**
+     * Checks precondition.
+     *
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\StopActionException
+     * @throws \TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException
+     */
+    protected function initializeAction()
+    {
+        // Forwards to errorAction
+        if ($this->actionMethodName === 'errorAction') {
+            return;
+        }
+
+        // Initializes configuration
+        $config = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+        if (isset($config['plugin.']['tx_timelog_taskpanel.'])) {
+            $this->tsSetup = $config['plugin.']['tx_timelog_taskpanel.'];
+        }
+
+        // Checks configuration
+        if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
+            $this->redirect('error');
+        }
+    }
+
+    /**
      * Lists tasks and gets batches for a project. Three use cases are distinguished:
      *
      * 1. Project handle is provided
@@ -158,5 +190,16 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $tasks[0]->getUid()
         );
         $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
+    }
+
+    public function errorAction()
+    {
+        if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
+            $this->addFlashMessage(
+                'The storagePid isn\'t defined. Please review the TS constants.',
+                'Configuration missing',
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,TRUE
+            );
+        }
     }
 }

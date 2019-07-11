@@ -41,4 +41,8 @@
   .tx-timelog-tasklist .tlc-task:last-child {
     border-bottom: #dee2e6 1px solid; }
 
+.typo3-messages {
+  list-style: none;
+  padding-left: 0; }
+
 /*# sourceMappingURL=theme.css.map */

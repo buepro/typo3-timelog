@@ -22,11 +22,11 @@ call_user_func(
             'Buepro.Timelog',
             'Taskpanel',
             [
-                'Task' => 'list,createBatch'
+                'Task' => 'list,createBatch,error'
             ],
             // non-cacheable actions
             [
-                'Task' => 'list,createBatch'
+                'Task' => 'list,createBatch,error'
             ]
         );
 
