@@ -54,7 +54,7 @@
 			<trans-unit id="sendMailTo" approved="yes">
 				<source>Send email to %s</source> <target state="translated">E-Mail an %s versenden</target></trans-unit>
 			<trans-unit id="mailSubject" approved="yes">
-				<source>Project progress</source> <target state="translated">Projektvortschritt</target></trans-unit>
+				<source>Project progress</source> <target state="translated">Projektfortschritt</target></trans-unit>
 			<trans-unit id="salutationNeutral">
 				<source>Dear client</source>
 				<target state="translated">Guten Tag</target>
@@ -76,8 +76,8 @@
 				<target state="translated">Freundliche Grüsse</target>
 			</trans-unit>
 			<trans-unit id="aboutTimelog">
-				<source>This report has been created by %s with the extension %s</source>
-				<target state="translated">Dieser Bericht wurde mit %s und der Erweiterung %s erstellt.</target>
+				<source>This report has been created by %s with the extension %s from %s.</source>
+				<target state="translated">Dieser Bericht wurde mit %s und der Erweiterung %s von %s erstellt.</target>
 			</trans-unit>
 			<trans-unit id="actions">
 				<source>Actions</source>

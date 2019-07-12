@@ -50,8 +50,11 @@
         <f:variable name="timelog">
             <f:link.external uri="https://extensions.typo3.org/extension/timelog/">timelog</f:link.external>
         </f:variable>
+        <f:variable name="buepro">
+            <f:link.external uri="https://www.buechler.pro">buechler.pro GmbH</f:link.external>
+        </f:variable>
         <f:format.htmlentitiesDecode>
-            <f:format.printf arguments="{0: TYPO3, 1: timelog}">
+            <f:format.printf arguments="{0: TYPO3, 1: timelog, 2: buepro}">
                 {f:translate(key:'aboutTimelog', extensionName: 'timelog')}
             </f:format.printf>
         </f:format.htmlentitiesDecode>

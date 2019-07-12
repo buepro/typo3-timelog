@@ -9,7 +9,7 @@
 
 $EM_CONF[$_EXTKEY] = [
     'title' => 'Timelog',
-    'description' => 'The aim of this extension is to increase the efficiency and transparency of work by continuously collecting work information and communicate it to customers.',
+    'description' => 'Increases the efficiency and transparency of work by continuously collecting work information and communicate it to customers.',
     'category' => 'plugin',
     'author' => 'Roman Büchler',
     'author_email' => 'rb@buechler.pro',

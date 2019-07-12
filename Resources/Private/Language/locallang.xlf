@@ -97,7 +97,7 @@
 				<source>Best regards</source>
 			</trans-unit>
 			<trans-unit id="aboutTimelog">
-				<source>This report has been created by %s with the extension %s</source>
+				<source>This report has been created by %s with the extension %s from %s.</source>
 			</trans-unit>
 			<trans-unit id="actions">
 				<source>Actions</source>

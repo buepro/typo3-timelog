@@ -63,20 +63,20 @@
                         </td>
                     </tr>
                     {f:variable(name: 'showCreateBatch', value: 1)
-                        -> f:if(condition: '{tasks} && !{batch} && {beUserLoggedIn}')}
-                    <f:if condition="{sendMailToClient} || {showCreateBatch}">
+                        -> f:if(condition: '{tasks} && !{batch}')}
+                    <f:if condition="{beUserLoggedIn} && ({sendMailToClient} || {showCreateBatch})">
                         <tr>
                             <th scope="row">{f:translate(key: 'actions')}</th>
                             <td>
                                 <f:if condition="{sendMailToClient}">
-                                <span class="tlc-sendmail-icons">
-                                    {sendMailToClient -> f:format.htmlentitiesDecode()}
-                                    <div class="spinner-grow text-warning" role="status">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                    <ion-icon class="text-success" name="checkmark"></ion-icon>
-                                    <ion-icon class="text-danger" name="close"></ion-icon>
-                                </span><br />
+                                    <span class="tlc-sendmail-icons">
+                                        {sendMailToClient -> f:format.htmlentitiesDecode()}
+                                        <div class="spinner-grow text-warning" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                        <ion-icon class="text-success" name="checkmark"></ion-icon>
+                                        <ion-icon class="text-danger" name="close"></ion-icon>
+                                    </span><br />
                                 </f:if>
                                 <f:if condition="{showCreateBatch}">
                                     <f:link.action action="createBatch" arguments="{projectHandle: project.handle}"

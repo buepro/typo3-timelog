@@ -59,7 +59,11 @@ page {
 page {
   includeJSFooterlibs {
     tlIonicicons = https://unpkg.com/ionicons@4.5.5/dist/ionicons.js
-    tlIonicicons.external = 1
+    tlIonicicons {
+        external = 1
+        disableCompression = 1
+        excludeFromConcatenation = 1
+    }
   }
 }
 [END]

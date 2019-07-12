@@ -19,7 +19,18 @@ The extension has been created using the Bootstrap framework hence the html-mark
 advantage from that framework. The fastest way to get the extension productive is to use bootstrap. In case
 bootstrap isn't available the extension templates as well as style definitions need to be reviewed.
 
-### Install Plugin
+### Install extension
+
+#### Non-composer mode
+
+1. Install extension `auxlibs`
+1. Install extension `timelog`
+
+#### Composer mode
+
+`composer require buepro/typo3-timelog`
+
+### Add plugin to page
 
 Follow these steps to install the extension plugin:
 
