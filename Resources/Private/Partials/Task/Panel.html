@@ -3,19 +3,21 @@
 
 <f:flashMessages/>
 
-<section class="my-5">
-    <f:render partial="Task/Find" arguments="{_all}" />
-</section>
-<f:if condition="{project}">
+<div class="tx-timelog-taskpanel my-n5">
     <section class="my-5">
-        <f:render partial="Project/Single" arguments="{_all}" />
+        <f:render partial="Task/Find" arguments="{_all}" />
     </section>
-</f:if>
-<f:if condition="{tasks}">
-    <section class="my-5">
-        <f:render partial="Task/List" arguments="{_all}" />
-    </section>
-</f:if>
+    <f:if condition="{project}">
+        <section class="my-5">
+            <f:render partial="Project/Single" arguments="{_all}" />
+        </section>
+    </f:if>
+    <f:if condition="{tasks}">
+        <section class="my-5">
+            <f:render partial="Task/List" arguments="{_all}" />
+        </section>
+    </f:if>
+</div>
 
 <v:asset.script path="EXT:timelog/Resources/Public/JavaScript/Src/sendmail.jquery.js" />
 
