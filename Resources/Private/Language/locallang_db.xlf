@@ -18,9 +18,6 @@
 			<trans-unit id="tx_timelog_domain_model_task.active_time">
 				<source>Active Time</source>
 			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.batch_state">
-				<source>Batch State</source>
-			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.batch_date">
 				<source>Batch Date</source>
 			</trans-unit>
@@ -32,12 +29,6 @@
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.intervals">
 				<source>Intervals</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.batch_state.0">
-				<source>Not batched</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.batch_state.10">
-				<source>Batched</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_interval">
 				<source>Interval</source>

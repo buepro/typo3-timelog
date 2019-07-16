@@ -22,10 +22,10 @@ return [
         'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_task.gif'
     ],
     'interface' => [
-        'showRecordFieldList' => 'handle, title, description, active_time, batch_state, batch_date, project, worker, intervals',
+        'showRecordFieldList' => 'handle, title, description, active_time, batch_date, project, worker, intervals',
     ],
     'types' => [
-        '1' => ['showitem' => 'handle, title, description, active_time, batch_state, batch_date, project, worker, intervals'],
+        '1' => ['showitem' => 'handle, title, description, active_time, batch_date, project, worker, intervals'],
     ],
     'columns' => [
         't3ver_label' => [
@@ -72,15 +72,6 @@ return [
                 'type' => 'input',
                 'size' => 30,
                 'eval' => 'double2'
-            ]
-        ],
-        'batch_state' => [
-            'exclude' => false,
-            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.batch_state',
-            'config' => [
-                'type' => 'input',
-                'size' => 4,
-                'eval' => 'int'
             ]
         ],
         'batch_date' => [

@@ -59,13 +59,6 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     protected $activeTime = 0;
 
     /**
-     * batchState
-     *
-     * @var int
-     */
-    protected $batchState = 0;
-
-    /**
      * batchDate
      *
      * @var \DateTime
@@ -275,27 +268,6 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     }
 
     /**
-     * Returns the batchState
-     *
-     * @return int $batchState
-     */
-    public function getBatchState()
-    {
-        return $this->batchState;
-    }
-
-    /**
-     * Sets the batchState
-     *
-     * @param int $batchState
-     * @return void
-     */
-    public function setBatchState($batchState)
-    {
-        $this->batchState = $batchState;
-    }
-
-    /**
      * Returns the batchDate
      *
      * @return \DateTime $batchDate
@@ -318,11 +290,6 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
             $previousBatchDate = $this->batchDate;
             $this->batchDate = $batchDate;
             $this->emitBatchDateChangeSignal($previousBatchDate, $batchDate);
-        }
-        if (!$this->getBatchDate()) {
-            $this->setBatchState(0);
-        } else {
-            $this->setBatchState(10);
         }
     }
 
@@ -402,13 +369,6 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
             $this->setActiveTime($activeTime / 3600);
         } else {
             $this->setActiveTime(0);
-        }
-
-        // Updates the batch state
-        if (!$this->getBatchDate()) {
-            $this->setBatchState(0);
-        } else {
-            $this->setBatchState(10);
         }
     }
 

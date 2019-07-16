@@ -18,14 +18,14 @@ call_user_func(function () {
         ],
         'interface' => [
             'showRecordFieldList' =>
-                'project, worker, title, description, active_time, handle, batch_date, batch_state, intervals'
+                'project, worker, title, description, active_time, handle, batch_date, intervals'
         ],
         'palettes' => [
             'references' => [
                 'showitem' => 'project, worker',
             ],
             'batch' => [
-                'showitem' => 'batch_date, batch_state'
+                'showitem' => 'batch_date'
             ],
         ],
         'types' => [
@@ -121,19 +121,6 @@ call_user_func(function () {
                     'eval' => 'double2',
                     'default' => 0,
                     'readOnly' => 1
-                ]
-            ],
-            'batch_state' => [
-                'config' => [
-                    'type' => 'select',
-                    'renderType' => 'selectSingle',
-                    'readOnly' => 1,
-                    'size' => 1,
-                    'maxitems' => 1,
-                    'items' => [
-                        ['LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.batch_state.0', '0'],
-                        ['LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.batch_state.10', '10'],
-                    ],
                 ]
             ],
             'batch_date' => [

@@ -15,9 +15,6 @@
 			<trans-unit id="active_time.description">
 				<source>The duration in houres</source>
 			</trans-unit>
-			<trans-unit id="batch_state.description">
-				<source>batchState</source>
-			</trans-unit>
 			<trans-unit id="batch_date.description">
 				<source>batchDate</source>
 			</trans-unit>

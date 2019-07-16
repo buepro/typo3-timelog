@@ -66,7 +66,8 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // Initializes configuration
         $config = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT);
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
+        );
         if (isset($config['plugin.']['tx_timelog_taskpanel.'])) {
             $this->tsSetup = $config['plugin.']['tx_timelog_taskpanel.'];
         }
@@ -198,7 +199,8 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $this->addFlashMessage(
                 'The storagePid isn\'t defined. Please review the TS constants.',
                 'Configuration missing',
-                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,TRUE
+                \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,
+                true
             );
         }
     }

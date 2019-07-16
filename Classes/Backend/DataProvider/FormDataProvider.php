@@ -51,10 +51,10 @@ class FormDataProvider implements FormDataProviderInterface
             $serverTime = new \DateTime();
 
             // Sets start time
-            if (isset($GLOBALS["BE_USER"]->userTS['tx_timelog.']['timezone.']['offset'])) {
+            if (isset($GLOBALS['BE_USER']->userTS['tx_timelog.']['timezone.']['offset'])) {
                 // Takes into account userTS
                 $daylightSaving = date('I');
-                $offset = (int) $GLOBALS["BE_USER"]->userTS['tx_timelog.']['timezone.']['offset'];
+                $offset = (int) $GLOBALS['BE_USER']->userTS['tx_timelog.']['timezone.']['offset'];
                 $result['databaseRow']['start_time'] = $serverTime->getTimestamp();
                 // Gets gmt+0 without daylight saving
                 $result['databaseRow']['start_time'] -= $serverTime->getOffset();

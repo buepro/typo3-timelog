@@ -13,8 +13,6 @@
 				<source>Description</source> <target state="translated">Beschreibug</target></trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.active_time" approved="yes">
 				<source>Active Time</source> <target state="translated">Aktive Zeit</target></trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.batch_state" approved="yes">
-				<source>Batch State</source> <target state="translated">Stapelstatus</target></trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
 				<source>Batch Date</source> <target state="translated">Stapeldatum</target></trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.project" approved="yes">

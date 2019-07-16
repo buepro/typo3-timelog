@@ -18,9 +18,6 @@
 			<trans-unit id="tx_timelog_domain_model_task.active_time">
 				<source>Active Time</source>
 			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.batch_state">
-				<source>Batch State</source>
-			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.batch_date">
 				<source>Batch Date</source>
 			</trans-unit>
