@@ -7,8 +7,6 @@
  * LICENSE file that was distributed with this source code.
  */
 
-// @todo Show company in project selector
-
 call_user_func(function () {
     $fieldModification = [
         'ctrl' => [
@@ -23,9 +21,6 @@ call_user_func(function () {
                 'project, worker, title, description, active_time, handle, batch_date, intervals'
         ],
         'palettes' => [
-            'references' => [
-                'showitem' => 'project, worker',
-            ],
             'batch' => [
                 'showitem' => 'batch_date'
             ],
@@ -34,8 +29,7 @@ call_user_func(function () {
             '1' => [
                 'showitem' =>
                     '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                        --palette--;;references,
-                        title, description, active_time, intervals, 
+                        project, worker, title, description, active_time, intervals, 
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle, 
                         --palette--;;batch',
             ]

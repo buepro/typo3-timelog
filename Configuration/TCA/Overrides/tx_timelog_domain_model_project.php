@@ -11,6 +11,8 @@ call_user_func(function () {
     $fieldModification = [
         'ctrl' => [
             'label' => 'title',
+            'label_alt' => 'title,client',
+            'label_alt_force' => 1,
             'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getProjectLabel',
             'searchFields' => 'title',
             'default_sortby' => 'tstamp DESC',
