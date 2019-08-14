@@ -9,12 +9,6 @@
 
 namespace Buepro\Timelog\Backend\UserFunc;
 
-/**
- * Created by PhpStorm.
- * User: roman
- * Date: 28/03/2019
- * Time: 12:01
- */
 use TYPO3\CMS\Backend\Utility\BackendUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -66,5 +60,34 @@ class TcaUserFunc
             $parts[] = $client['company'] ?? $client['name'] ?? $client['last_name'] ?? '';
         }
         $parameters['title'] = implode(' - ', array_filter($parts));
+    }
+
+    public function getFeUsersLabel(&$parameters)
+    {
+        // Default text (contains username and path)
+        $text = explode('<br />',$parameters['entry']['text']);
+
+        // Adds username
+        $items[] = $text[0];
+
+        // Adds name
+        if ($parameters['row']['name']) {
+            $items[] = $parameters['row']['name'];
+        } elseif ($parameters['row']['first_name'] || $parameters['row']['last_name']) {
+            if ($parameters['row']['first_name']) {
+                $name[] = $parameters['row']['first_name'];
+            }
+            if ($parameters['row']['last_name']) {
+                $name[] = $parameters['row']['last_name'];
+            }
+            $items[] = implode(' ', $name);
+        }
+        // Adds company
+        if ($parameters['row']['company']) {
+            $items[] = $parameters['row']['company'];
+        }
+
+        // Compiles text and adds path
+        $parameters['entry']['text'] = implode(' | ', $items) . '<br />' . $text[1];
     }
 }

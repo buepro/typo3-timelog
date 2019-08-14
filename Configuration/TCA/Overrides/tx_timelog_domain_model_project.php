@@ -65,7 +65,13 @@ call_user_func(function () {
                             'disabled' => true,
                         ],
                     ],
-                ]
+                    'suggestOptions' => [
+                        'fe_users' => [
+                            'additionalSearchFields' => 'first_name,last_name,name,company',
+                            'renderFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getFeUsersLabel',
+                        ],
+                    ],
+                ],
             ],
             'owner' => [
                 'config' => [
@@ -91,6 +97,12 @@ call_user_func(function () {
                     'fieldWizard' => [
                         'recordsOverview' => [
                             'disabled' => true,
+                        ],
+                    ],
+                    'suggestOptions' => [
+                        'fe_users' => [
+                            'additionalSearchFields' => 'first_name,last_name,name,company',
+                            'renderFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getFeUsersLabel',
                         ],
                     ],
                 ]

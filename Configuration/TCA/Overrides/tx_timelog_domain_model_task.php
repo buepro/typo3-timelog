@@ -7,7 +7,6 @@
  * LICENSE file that was distributed with this source code.
  */
 
-// @todo Allow to search owner and client by name and company
 // @todo Show company in project selector
 
 call_user_func(function () {
