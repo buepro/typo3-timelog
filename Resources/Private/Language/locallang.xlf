@@ -76,7 +76,7 @@
 				<source>Send email to %s</source>
 			</trans-unit>
 			<trans-unit id="mailSubject">
-				<source>Project progress</source>
+				<source>Project progress - %s</source>
 			</trans-unit>
 			<trans-unit id="salutationNeutral">
 				<source>Dear client</source>

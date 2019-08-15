@@ -102,6 +102,10 @@ class SendMailMiddleware implements MiddlewareInterface
                 ->get(TaskRepository::class);
             $tasks = $taskRepository->findRecentForProject($project);
             // Initializes views
+            $this->standaloneSubjectView->assignMultiple([
+                'project' => $project,
+                'tasks' => $tasks
+            ]);
             $this->standaloneBodyPlainView->assignMultiple([
                 'client' => $client,
                 'project' => $project,
