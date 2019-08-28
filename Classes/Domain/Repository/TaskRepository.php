@@ -74,7 +74,7 @@ class TaskRepository extends Repository
             ->getQueryBuilderForTable('tx_timelog_domain_model_task');
 
         $queryBuilder
-            ->add('select', 'task.*, MAX(interval.end_time) AS max_end_time')
+            ->add('select', 'task.*, MAX(interval.start_time) AS max_start_time')
             ->from('tx_timelog_domain_model_task', 'task')
             ->leftJoin(
                 'task',
@@ -87,7 +87,7 @@ class TaskRepository extends Repository
                 $queryBuilder->expr()->eq('task.batch_date', $queryBuilder->createNamedParameter($timestamp, \PDO::PARAM_INT))
             )
             ->groupBy('task.uid')
-            ->orderBy('max_end_time', 'DESC');
+            ->orderBy('max_start_time', 'DESC');
 
 //        $sql = $queryBuilder->getSQL();
 //        $params = $queryBuilder->getParameters();
@@ -155,7 +155,7 @@ class TaskRepository extends Repository
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_timelog_domain_model_task');
         $queryBuilder
-            ->add('select', 'task.uid, MAX(interval.end_time) AS max_end_time')
+            ->add('select', 'task.uid, MAX(interval.start_time) AS max_start_time')
             ->from('tx_timelog_domain_model_task', 'task')
             ->leftJoin(
                 'task',
@@ -170,7 +170,7 @@ class TaskRepository extends Repository
                 )
             )
             ->groupBy('task.uid')
-            ->orderBy('max_end_time', 'DESC')
+            ->orderBy('max_start_time', 'DESC')
             ->setMaxResults($limit);
 
 //        $sql = $queryBuilder->getSQL();
