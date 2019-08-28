@@ -24,7 +24,10 @@ call_user_func(function () {
         ],
         'palettes' => [
             'references' => [
-                'showitem' => 'client, owner',
+                'showitem' => 'client, owner, --linebreak--, cc_email',
+            ],
+            'texts' => [
+                'showitem' => 'description, internal_note',
             ],
             'times' => [
                 'showitem' => 'active_time, heap_time, batch_time',
@@ -35,7 +38,8 @@ call_user_func(function () {
                 'showitem' =>
                     '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                         --palette--;;references,
-                        title, description,
+                        title, 
+                        --palette--;;texts,
                         --palette--;;times, 
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle',
             ]
@@ -109,6 +113,30 @@ call_user_func(function () {
                     ],
                 ]
             ],
+            'cc_email' => [
+                'exclude' => true,
+                'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.cc_email',
+                'config' => [
+                    'type' => 'input',
+                    'size' => 30,
+                    'eval' => 'trim'
+                ],
+            ],
+            'title' => [
+                'config' => [
+                    'size' => 40,
+                ],
+            ],
+            'internal_note' => [
+                'exclude' => true,
+                'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.internal_note',
+                'config' => [
+                    'type' => 'text',
+                    'cols' => 40,
+                    'rows' => 15,
+                    'eval' => 'trim'
+                ]
+            ],
             'active_time' => [
                 'config' => [
                     'size' => 12,
@@ -134,7 +162,7 @@ call_user_func(function () {
                 'config' => [
                     'readOnly' => 1
                 ]
-            ]
+            ],
         ]
     ];
     $GLOBALS['TCA']['tx_timelog_domain_model_project'] = array_replace_recursive(

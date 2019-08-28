@@ -47,6 +47,13 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     protected $description = '';
 
     /**
+     * internalNote
+     *
+     * @var string
+     */
+    protected $internalNote = '';
+
+    /**
      * Sum from the tasks activeTime in hours
      *
      * @var float
@@ -80,6 +87,13 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
      * @var float
      */
     protected $batchTime = 0.0;
+
+    /**
+     * ccEmail
+     *
+     * @var string
+     */
+    protected $ccEmail = '';
 
     /**
      * Returns the handle
@@ -142,6 +156,27 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+    /**
+     * Returns the internalNote
+     *
+     * @return string $internalNote
+     */
+    public function getInternalNote()
+    {
+        return $this->internalNote;
+    }
+
+    /**
+     * Sets the internalNote
+     *
+     * @param string $internalNote
+     * @return void
+     */
+    public function setInternalNote($internalNote)
+    {
+        $this->internalNote = $internalNote;
     }
 
     /**
@@ -247,6 +282,27 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     public function setBatchTime($batchTime)
     {
         $this->batchTime = $batchTime;
+    }
+
+    /**
+     * Returns the ccEmail
+     *
+     * @return string $ccEmail
+     */
+    public function getCcEmail()
+    {
+        return $this->ccEmail;
+    }
+
+    /**
+     * Sets the ccEmail
+     *
+     * @param string $ccEmail
+     * @return void
+     */
+    public function setCcEmail($ccEmail)
+    {
+        $this->ccEmail = $ccEmail;
     }
 
     public function Update()

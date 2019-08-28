@@ -12,6 +12,9 @@
 			<trans-unit id="description.description">
 				<source>description</source>
 			</trans-unit>
+			<trans-unit id="internal_note.description">
+				<source>internal note</source>
+			</trans-unit>
 			<trans-unit id="active_time.description">
 				<source>Sum from the tasks activeTime in hours</source>
 			</trans-unit>
@@ -26,6 +29,9 @@
 			</trans-unit>
 			<trans-unit id="owner.description">
 				<source>owner</source>
+			</trans-unit>
+			<trans-unit id="cc_email.description">
+				<source>Single email address or coma separated list from email addresses receiving the email as CC.</source>
 			</trans-unit>
 		</body>
 	</file>

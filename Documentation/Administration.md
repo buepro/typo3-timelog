@@ -59,6 +59,12 @@ the following optional steps should be carried out:
 
 1. In the [constant editor](Configuration.md#constant-editor) set the `storagePid` to the *timelog storage page*-uid.
 
+## Update the extension
+
+After updating the extension launch the upgrade wizard from the upgrade module and do the following:
+- Create missing tables and fields if necessary
+- Run wizards as needed
+
 ## Configuration
 
 Following some aspects from the extension should be configured as outlined [here](Configuration.md).

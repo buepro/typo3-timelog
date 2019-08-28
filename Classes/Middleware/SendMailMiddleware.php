@@ -131,6 +131,14 @@ class SendMailMiddleware implements MiddlewareInterface
                 $mail->setFrom(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner()));
                 $mail->setCc(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner()));
             }
+            if ($project->getCcEmail()) {
+                $ccEmails = GeneralUtility::trimExplode(',', $project->getCcEmail());
+                foreach ($ccEmails as $ccEmail) {
+                    if (GeneralUtility::validEmail($ccEmail)) {
+                        $mail->addCc($ccEmail);
+                    }
+                }
+            }
             $mail->send();
             //return new HtmlResponse($htmlText);
             //return new HtmlResponse($plainText);
