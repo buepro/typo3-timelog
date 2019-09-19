@@ -121,6 +121,10 @@
 				<source>Find</source>
 				<target state="translated">Finden</target>
 			</trans-unit>
+			<trans-unit id="noTasksFound">
+				<source>No tasks were found for the given criteria.</source>
+				<target state="translated">Für die gegebenen Kriterien konnten keine Arbeiten gefunden werden.</target>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

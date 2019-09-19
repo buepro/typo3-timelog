@@ -129,6 +129,9 @@
 			<trans-unit id="find">
 				<source>Find</source>
 			</trans-unit>
+			<trans-unit id="noTasksFound">
+				<source>No tasks were found for the given criteria.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

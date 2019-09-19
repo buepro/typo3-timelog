@@ -135,7 +135,9 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             if (!$project) {
                 $project = $this->projectRepository->findByHandle($projectHandle)->getFirst();
             }
-            $tasks = $this->taskRepository->findHeapTasks($project);
+            if ($project) {
+                $tasks = $this->taskRepository->findHeapTasks($project);
+            }
         }
 
         // Gets batches and batch
@@ -153,6 +155,7 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             'tasks' => $tasks,
             'batches' => $batches,
             'batch' => $batch,
+            'noTasksFound' => ($projectHandle || $batchHandle || $taskHandle) && !$tasks,
             'settings' => $this->settings,
             'beUserLoggedIn' => isset($GLOBALS['BE_USER'])
         ]);

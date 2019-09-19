@@ -12,6 +12,13 @@
             <f:render partial="Project/Single" arguments="{_all}" />
         </section>
     </f:if>
+    <f:if condition="{noTasksFound}">
+        <section class="my-5">
+            <div class="alert alert-info" role="alert">
+                {f:translate(key: 'noTasksFound')}
+            </div>
+        </section>
+    </f:if>
     <f:if condition="{tasks}">
         <section class="my-5">
             <f:render partial="Task/List" arguments="{_all}" />
