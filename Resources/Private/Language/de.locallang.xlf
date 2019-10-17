@@ -52,7 +52,7 @@
 			<trans-unit id="sendMailTo" approved="yes">
 				<source>Send email to %s</source> <target state="translated">E-Mail an %s versenden</target></trans-unit>
 			<trans-unit id="mailSubject" approved="yes">
-				<source>Project progress - %s</source> <target state="translated">Projektvortschritt - %s</target></trans-unit>
+				<source>Project progress - %s</source> <target state="translated">Projektfortschritt - %s</target></trans-unit>
 			<trans-unit id="salutationNeutral">
 				<source>Dear client</source>
 				<target state="translated">Guten Tag</target>
