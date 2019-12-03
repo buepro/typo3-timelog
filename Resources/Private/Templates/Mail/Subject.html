@@ -2,6 +2,6 @@
       xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
 
 {f:translate(key: 'mailSubject', extensionName: 'timelog')
-    -> f:format.printf(arguments: {1: project.title})}
+    -> f:format.printf(arguments: {1: project.title}) -> f:format.htmlentitiesDecode()}
 
 </html>
