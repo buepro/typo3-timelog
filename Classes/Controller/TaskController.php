@@ -64,16 +64,10 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             return;
         }
 
-        // Initializes configuration
-        $config = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FULL_TYPOSCRIPT
-        );
-        if (isset($config['plugin.']['tx_timelog_taskpanel.'])) {
-            $this->tsSetup = $config['plugin.']['tx_timelog_taskpanel.'];
-        }
-
         // Checks configuration
-        if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
+        $configuration = $this->configurationManager->getConfiguration(
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+        if (empty($configuration['persistence']['storagePid'])) {
             $this->redirect('error');
         }
     }
@@ -200,7 +194,7 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
             $this->addFlashMessage(
-                'The storagePid isn\'t defined. Please review the TS constants.',
+                'The storagePid isn\'t defined. Please review the "Record Storage Page" field and the TS constants.',
                 'Configuration missing',
                 \TYPO3\CMS\Core\Messaging\AbstractMessage::ERROR,
                 true

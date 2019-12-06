@@ -41,6 +41,13 @@ plugin.tx_timelog_taskpanel {
     }
   }
 }
+["{$plugin.tx_timelog_taskpanel.persistence.storagePid}" == ""]
+plugin.tx_timelog_taskpanel {
+    persistence {
+        storagePid >
+    }
+}
+[END]
 ["{$plugin.tx_timelog_taskpanel.general.stylesheet}" == "css"]
 page {
   includeCSS {
