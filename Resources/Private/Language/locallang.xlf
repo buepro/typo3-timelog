@@ -132,6 +132,15 @@
 			<trans-unit id="noTasksFound">
 				<source>No tasks were found for the given criteria.</source>
 			</trans-unit>
+			<trans-unit id="projects">
+				<source>Projects</source>
+			</trans-unit>
+			<trans-unit id="projectListInfo">
+				<source>The following list shows all projects having hashed tasks.</source>
+			</trans-unit>
+			<trans-unit id="noProjectsFound">
+				<source>No projects were found for the given criteria.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

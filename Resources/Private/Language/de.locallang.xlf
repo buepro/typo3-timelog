@@ -40,7 +40,7 @@
 			<trans-unit id="tx_timelog_domain_model_project.active_time" approved="yes">
 				<source>Active Time</source> <target state="translated">Aktive Zeit</target></trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.heap_time" approved="yes">
-				<source>Heap Time</source> <target state="translated">Ungstapelte Zeit</target></trans-unit>
+				<source>Heap Time</source> <target state="translated">Gehäufte Zeit</target></trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.batch_time" approved="yes">
 				<source>Batch Time</source> <target state="translated">Gestapelte Zeit</target></trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
@@ -87,7 +87,7 @@
 			</trans-unit>
 			<trans-unit id="heapedTasks">
 				<source>Heaped tasks</source>
-				<target state="translated">Ungestapelte Arbeiten</target>
+				<target state="translated">Gehäufte Arbeiten</target>
 			</trans-unit>
 			<trans-unit id="sendEmailToClient">
 				<source>Send email to client</source>
@@ -124,6 +124,18 @@
 			<trans-unit id="noTasksFound">
 				<source>No tasks were found for the given criteria.</source>
 				<target state="translated">Für die gegebenen Kriterien konnten keine Arbeiten gefunden werden.</target>
+			</trans-unit>
+			<trans-unit id="projects">
+				<source>Projects</source>
+				<target state="translated">Projekte</target>
+			</trans-unit>
+			<trans-unit id="projectListInfo">
+				<source>The following list shows all projects having hashed tasks.</source>
+				<target state="translated">Die folgende Liste enthält alle Projekte, welche noch gehäufte Arbeiten enthalten.</target>
+			</trans-unit>
+			<trans-unit id="noProjectsFound">
+				<source>No projects were found for the given criteria.</source>
+				<target state="translated">Für die gegebenen Kriterien konnten keine Projekte gefunden werden.</target>
 			</trans-unit>
 		</body>
 	</file>

@@ -1,0 +1,26 @@
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+<f:layout name="Default"/>
+
+<f:section name="content">
+    <section class="my-5 tlc-project-list">
+        <f:if condition="{projects}">
+            <f:then>
+                <p class="alert alert-info my-5" role="alert">
+                    {f:translate(key: 'projectListInfo')}
+                </p>
+                <f:for each="{projects}" as="project">
+                    <f:render partial="Project/Single" arguments="{project: project}"/>
+                </f:for>
+            </f:then>
+            <f:else>
+                <p class="alert alert-info" role="alert">
+                    {f:translate(key: 'noProjectsFound')}
+                </p>
+            </f:else>
+        </f:if>
+    </section>
+</f:section>
+</html>

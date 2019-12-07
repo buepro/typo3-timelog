@@ -1,5 +1,21 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
-	<div class="tx-timelog">
-		<f:render section="content" />
-	</div>
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
+      data-namespace-typo3-fluid="true">
+
+    <div class="tx-timelog">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <f:link.action controller="Task" action="list" arguments="{projectHandle: projectHandle}"
+                               class="nav-link{f:if(condition: '{controller} == \'Task\'', then: ' active')}">
+                    {f:translate(key: 'tasks')}
+                </f:link.action>
+            </li>
+            <li class="nav-item">
+                <f:link.action controller="Project" action="list" arguments="{projectHandle: projectHandle}"
+                               class="nav-link{f:if(condition: '{controller} == \'Project\'', then: ' active')}">
+                {f:translate(key: 'projects')}
+                </f:link.action>
+            </li>
+        </ul>
+        <f:render section="content" />
+    </div>
 </html>

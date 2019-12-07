@@ -12,6 +12,7 @@ namespace Buepro\Timelog\Controller;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
+use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 /***
  *
@@ -66,10 +67,21 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
 
         // Checks configuration
         $configuration = $this->configurationManager->getConfiguration(
-            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
+            \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+        );
         if (empty($configuration['persistence']['storagePid'])) {
             $this->redirect('error');
         }
+    }
+
+    /**
+     * Initializes the view before invoking an action method.
+     *
+     * @param ViewInterface $view The view to be initialized
+     */
+    protected function initializeView(ViewInterface $view)
+    {
+        $view->assign('controller', 'Task');
     }
 
     /**
@@ -145,13 +157,13 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
         }
 
         $this->view->assignMultiple([
+            'projectHandle' => $project ? $project->getHandle() : $taskHandle,
             'project' => $project,
             'tasks' => $tasks,
             'batches' => $batches,
             'batch' => $batch,
             'noTasksFound' => ($projectHandle || $batchHandle || $taskHandle) && !$tasks,
             'settings' => $this->settings,
-            'beUserLoggedIn' => isset($GLOBALS['BE_USER'])
         ]);
     }
 

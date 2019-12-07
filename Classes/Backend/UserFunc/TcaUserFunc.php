@@ -65,7 +65,7 @@ class TcaUserFunc
     public function getFeUsersLabel(&$parameters)
     {
         // Default text (contains username and path)
-        $text = explode('<br />',$parameters['entry']['text']);
+        $text = explode('<br />', $parameters['entry']['text']);
 
         // Adds username
         $items[] = $text[0];

@@ -20,8 +20,8 @@
         </a>
     </f:variable>
 </f:if>
-
-<div id="{project.handle}" class="tx-timelog-project card">
+<f:comment>The 'p-'-prefix is needed for the project link to work.</f:comment>
+<div id="{f:if(condition: '{controller} != \'Task\'', then: 'p-')}{project.handle}" class="tx-timelog-project card">
     <div class="card-body">
         <div class="tlc-desc overflow-hidden mb-4">
             <f:if condition="{project.title}">
@@ -46,29 +46,23 @@
                     <tr>
                         <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.handle')}</th>
                         <td>
-                            <f:if condition="{batch}">
-                                <f:then>
-                                    <f:link.action arguments="{batchHandle: batch.handle}"
-                                                   section="{project.handle}" absolute="1">
-                                        {batch.handle}
-                                    </f:link.action>
-                                </f:then>
-                                <f:else>
-                                    <f:link.action arguments="{projectHandle: project.handle}" section="{project.handle}"
-                                                   absolute="1">
-                                        {project.handle}
-                                    </f:link.action>
-                                </f:else>
+                            <f:if condition="{project.handle}">
+                                <f:link.action controller="Task" action="list"
+                                               arguments="{projectHandle: project.handle}" section="{project.handle}"
+                                               absolute="1" title="{f:translate(key: 'projectHandle')}">
+                                    {project.handle}
+                                </f:link.action>
                             </f:if>
                         </td>
                     </tr>
                     {f:variable(name: 'showCreateBatch', value: 1)
-                        -> f:if(condition: '{tasks} && !{batch}')}
-                    <f:if condition="{beUserLoggedIn} && ({sendMailToClient} || {showCreateBatch})">
-                        <tr>
-                            <th scope="row">{f:translate(key: 'actions')}</th>
-                            <td>
-                                <f:if condition="{sendMailToClient}">
+                        -> f:if(condition: '{project.heapTime} > 0')}
+                    <f:be.security.ifAuthenticated>
+                        <f:if condition="{sendMailToClient} || {showCreateBatch}">
+                            <tr>
+                                <th scope="row">{f:translate(key: 'actions')}</th>
+                                <td>
+                                    <f:if condition="{sendMailToClient}">
                                     <span class="tlc-sendmail-icons">
                                         {sendMailToClient -> f:format.htmlentitiesDecode()}
                                         <div class="spinner-grow text-warning" role="status">
@@ -77,16 +71,18 @@
                                         <ion-icon class="text-success" name="checkmark"></ion-icon>
                                         <ion-icon class="text-danger" name="close"></ion-icon>
                                     </span><br />
-                                </f:if>
-                                <f:if condition="{showCreateBatch}">
-                                    <f:link.action action="createBatch" arguments="{projectHandle: project.handle}"
-                                                   title="{f:translate(key: 'createBatch')}">
-                                        {settings.icons.batchTasksTag -> f:format.htmlentitiesDecode()} {f:translate(key: 'createBatch')}<br />
-                                    </f:link.action>
-                                </f:if>
-                            </td>
-                        </tr>
-                    </f:if>
+                                    </f:if>
+                                    <f:if condition="{showCreateBatch}">
+                                        <f:link.action action="createBatch" arguments="{projectHandle: project.handle}"
+                                                       title="{f:translate(key: 'createBatch')}">
+                                            {settings.icons.batchTasksTag -> f:format.htmlentitiesDecode()} {f:translate(key: 'createBatch')}<br />
+                                        </f:link.action>
+                                    </f:if>
+                                </td>
+                            </tr>
+                        </f:if>
+                    </f:be.security.ifAuthenticated>
+
                     </tbody>
                 </table>
             </div>

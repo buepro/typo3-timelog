@@ -2,6 +2,22 @@
       xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <div class="tx-timelog-tasklist col">
+    <header class="frame-header">
+        <f:if condition="{batch}">
+            <f:then>
+                <f:variable name="batchLink">
+                    <f:link.action arguments="{batchHandle: batch.handle}" section="{project.handle}"
+                                   absolute="1" title="{f:translate(key: 'batchHandle')}">
+                        {batch.handle}
+                    </f:link.action>
+                </f:variable>
+                <h4>Gestapelte Arbeiten ({batchLink -> f:format.htmlentitiesDecode()})</h4>
+            </f:then>
+            <f:else>
+                <h4>Gehäufte Arbeiten</h4>
+            </f:else>
+        </f:if>
+    </header>
     <f:for each="{tasks}" as="task">
         <div id="{task.handle}" class="tlc-task row align-items-center">
             <div class="tlc-info col-md-2 py-3">

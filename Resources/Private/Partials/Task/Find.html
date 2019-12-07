@@ -1,9 +1,11 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
 
-<div class="tx-timelog-projectsearch card">
+<div class="tx-timelog-projectsearch card overflow-hidden">
     <div class="card-body">
-        <h5>{f:translate(key: 'findtasks')}</h5>
+        <header class="frame-header">
+            <h4>{f:translate(key: 'findtasks')}</h4>
+        </header>
         <f:form action="list">
             <div class="form-row">
                 <div class="col">

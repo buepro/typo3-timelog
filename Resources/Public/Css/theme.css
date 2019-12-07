@@ -1,3 +1,8 @@
+.tx-timelog .tlc-project-list .tx-timelog-project {
+  margin-top: -1px; }
+  .tx-timelog .tlc-project-list .tx-timelog-project:nth-child(2n+3) {
+    background: #fafafa; }
+
 @media (min-width: 500px) {
   .tx-timelog-project th {
     width: 10rem; } }
