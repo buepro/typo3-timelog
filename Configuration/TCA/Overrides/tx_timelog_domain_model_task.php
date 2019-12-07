@@ -13,7 +13,7 @@ call_user_func(function () {
             'label' => 'title',
             'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getTaskLabel',
             'searchFields' => 'title',
-            'default_sortby' => 'tstamp DESC',
+            'default_sortby' => 'crdate DESC',
             'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_task.svg'
         ],
         'interface' => [
