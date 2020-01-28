@@ -1,5 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:auxlibs="http://typo3.org/ns/Buepro/Auxlibs/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
 <div class="tx-timelog-tasklist col">
     <header class="frame-header">
@@ -39,7 +41,7 @@
                         <h5>{task.title}</h5>
                     </header>
                 </f:if>
-                {task.description -> f:format.nl2br()}
+                <f:render partial="Helper/Parsedown" arguments="{text: task.description, settings: settings.markdown}" />
             </div>
         </div>
     </f:for>

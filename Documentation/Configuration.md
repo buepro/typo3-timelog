@@ -11,6 +11,8 @@ constants:
 | | **css**: Use a css-file |
 | | **scss**: Use a scss-file.<br />Scss-processing needs to be available (e.g. provided by extension `bootstrap_package`)
 | persistence.storagePid | The uid from the *timelog storage page*. The timelog records are stored on that page.
+| markdown.transform | Defines how the description text for projects and tasks should be treated:<br />0: Output raw text<br />1: Apply markdown to html transformation<br />2: Individual treatment controlled by token<br /><br />Please refer to constant editor for further adjustment parameters.
+
 
 <small>Constant path: `plugin.tx_timelog_taskpanel`</small>
 

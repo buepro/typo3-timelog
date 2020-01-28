@@ -8,6 +8,7 @@ plugin.tx_timelog_taskpanel {
         # cat=plugin.tx_timelog_taskpanel/file; type=string; label=Path to template layouts (FE)
         layoutRootPath = EXT:timelog/Resources/Private/Layouts/
     }
+
     persistence {
         # cat=plugin.tx_timelog_taskpanel//a; type=string; label=Default storage PID
         storagePid =
@@ -16,23 +17,39 @@ plugin.tx_timelog_taskpanel {
 
 ## EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
 
+# customsubcategory=general=General
+# customsubcategory=icons=Icons
+# customsubcategory=markdown=Markdown
+
 plugin.tx_timelog_taskpanel {
-  general {
-    # cat=plugin.tx_timelog_taskpanel/general/010; type=string; label= Date format
-    dateFormat = d.m.Y
-    # cat=plugin.tx_timelog_taskpanel/general/020; type=string; label= Time format
-    timeFormat = H:i
-    # cat=plugin.tx_timelog_taskpanel/general/010; type=string; label= Date time format
-    dateTimeFormat = d.m.Y H:i
-    # cat=plugin.tx_timelog_taskpanel/general/060; type=options[None=none, CSS=css, SCSS (Bootstrap)=scss]; label=Stylesheet
-    stylesheet = css
-  }
-  icons {
-    # cat=plugin.tx_timelog_taskpanel/icons/010; type=boolean; label=Embed ionicicons web component script
-    embedIoniciconsWebComponentScript = 1
-    # cat=plugin.tx_timelog_taskpanel/icons/020; type=string; label=Send mail icon tag
-    sendMailTag = <ion-icon name="mail"></ion-icon>
-    # cat=plugin.tx_timelog_taskpanel/icons/030; type=string; label=Batch tasks icon tag
-    batchTasksTag = <ion-icon name="apps"></ion-icon>
-  }
+    general {
+        # cat=plugin.tx_timelog_taskpanel/general/010; type=string; label= Date format
+        dateFormat = d.m.Y
+        # cat=plugin.tx_timelog_taskpanel/general/020; type=string; label= Time format
+        timeFormat = H:i
+        # cat=plugin.tx_timelog_taskpanel/general/010; type=string; label= Date time format
+        dateTimeFormat = d.m.Y H:i
+        # cat=plugin.tx_timelog_taskpanel/general/060; type=options[None=none, CSS=css, SCSS (Bootstrap)=scss]; label= Stylesheet
+        stylesheet = css
+    }
+
+    icons {
+        # cat=plugin.tx_timelog_taskpanel/icons/010; type=boolean; label=Embed ionicicons web component script
+        embedIoniciconsWebComponentScript = 1
+        # cat=plugin.tx_timelog_taskpanel/icons/020; type=string; label=Send mail icon tag
+        sendMailTag = <ion-icon name="mail"></ion-icon>
+        # cat=plugin.tx_timelog_taskpanel/icons/030; type=string; label=Batch tasks icon tag
+        batchTasksTag = <ion-icon name="apps"></ion-icon>
+    }
+
+    markdown {
+        # cat=plugin.tx_timelog_taskpanel/markdown/010; type=options[Never=0, Always=1, Individual (when token is found in text)=2]; label= Transform markdown: Controls markdown transformation for project and task description. When set to "Individual" the text is transformed in case the token is found in the text by considering the regular expression defined further down.
+        transform = 1
+        # cat=plugin.tx_timelog_taskpanel/markdown/020; type=string; label= Markdown token
+        token = !md
+        # cat=plugin.tx_timelog_taskpanel/markdown/030; type=string; label= Markdown regular expression
+        regexp = /^!md(?:\r|\n|\r\n)/
+        # cat=plugin.tx_timelog_taskpanel/markdown/030; type=bool; label= Maintain line breaks. If set line breaks will result in a br-tag
+        maintainLineBreaks = 1
+    }
 }

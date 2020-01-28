@@ -1,6 +1,14 @@
+//
+// General
+//
 $border-width: 1px !default;
 $border-color: #dee2e6 !default;
 $border-radius: 0.25rem !default;
 $table-accent-bg: rgba(black, .05) !default;
 
-
+//
+// Markdown
+//
+$markdown-headings-font-size: 1rem !default;
+$markdown-headings-font-weight: bold !default;
+$markdown-h1-border: 1px darkgray solid !default;

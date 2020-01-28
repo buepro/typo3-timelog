@@ -1,5 +1,7 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:auxlibs="http://typo3.org/ns/Buepro/Auxlibs/ViewHelpers"
+      data-namespace-typo3-fluid="true">
 
 <!-- Compiles client name -->
 {f:variable(name: 'client', value: project.client)}
@@ -29,7 +31,7 @@
                     <h4>{project.title}</h4>
                 </header>
             </f:if>
-            <p>{project.description -> f:format.nl2br()}</p>
+            <f:render partial="Helper/Parsedown" arguments="{text: project.description, settings: settings.markdown}" />
         </div>
         <div class="row">
             <div class="col-md-7">

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .tx-timelog .tlc-project-list .tx-timelog-project {
   margin-top: -1px; }
   .tx-timelog .tlc-project-list .tx-timelog-project:nth-child(2n+3) {
@@ -45,6 +46,46 @@
     background-color: rgba(0, 0, 0, 0.05); }
   .tx-timelog-tasklist .tlc-task:last-child {
     border-bottom: #dee2e6 1px solid; }
+
+.tx-timelog-markdown {
+  counter-reset: h1 h2 h3 h4 h5 h6; }
+  .tx-timelog-markdown h1, .tx-timelog-markdown h2, .tx-timelog-markdown h3, .tx-timelog-markdown h4, .tx-timelog-markdown h5, .tx-timelog-markdown h6 {
+    font-size: 1rem;
+    font-weight: bold; }
+  .tx-timelog-markdown h1 {
+    margin: 0 0 1em;
+    padding: 0.5em 0;
+    border-top: 1px darkgray solid;
+    border-bottom: 1px darkgray solid; }
+  .tx-timelog-markdown h1 {
+    counter-reset: h2 h3 h4 h5 h6;
+    counter-increment: h1; }
+    .tx-timelog-markdown h1:before {
+      content: counter(h1) "   "; }
+  .tx-timelog-markdown h2 {
+    counter-reset: h3 h4 h5 h6;
+    counter-increment: h2; }
+    .tx-timelog-markdown h2:before {
+      content: counter(h1) "." counter(h2) "   "; }
+  .tx-timelog-markdown h3 {
+    counter-reset: h4 h5 h6;
+    counter-increment: h3; }
+    .tx-timelog-markdown h3:before {
+      content: counter(h1) "." counter(h2) "." counter(h3) "   "; }
+  .tx-timelog-markdown h4 {
+    counter-reset: h5 h6;
+    counter-increment: h4; }
+    .tx-timelog-markdown h4:before {
+      content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "   "; }
+  .tx-timelog-markdown h5 {
+    counter-reset: h6;
+    counter-increment: h5; }
+    .tx-timelog-markdown h5:before {
+      content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "   "; }
+  .tx-timelog-markdown h6 {
+    counter-increment: h6; }
+    .tx-timelog-markdown h6:before {
+      content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) "   "; }
 
 .typo3-messages {
   list-style: none;

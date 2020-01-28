@@ -18,7 +18,7 @@
   ],
   "require": {
     "typo3/cms-core": "^9.5",
-    "buepro/typo3-auxlibs": "^1.0"
+    "buepro/typo3-auxlibs": "^1.3.3"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
@@ -29,7 +29,11 @@
     }
   },
   "replace": {
-    "timelog": "self.version",
     "typo3-ter/timelog": "self.version"
+  },
+  "extra": {
+    "typo3/cms": {
+      "extension-key": "timelog"
+    }
   }
 }
