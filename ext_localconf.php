@@ -7,13 +7,6 @@
  * LICENSE file that was distributed with this source code.
  */
 
-use Buepro\Timelog\Backend\DataProvider\FormDataProvider;
-use Buepro\Timelog\Backend\Hook\DataHandlerHook;
-use Buepro\Timelog\Domain\Model\Task;
-use Buepro\Timelog\Mediator\HandleMediator;
-use Buepro\Timelog\Mediator\TimeMediator;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
@@ -33,7 +26,7 @@ call_user_func(
         );
 
         // wizards
-        ExtensionManagementUtility::addPageTSConfig(
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
         'mod {
             wizards.newContentElement.wizardItems.plugins {
                 elements {
@@ -86,7 +79,7 @@ call_user_func(
          * Page TS
          */
         if (1) {
-            ExtensionManagementUtility::addPageTSConfig(
+            \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
                 '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:timelog/Configuration/TsConfig/Page/TCEMAIN.tsconfig">'
             );
         }
@@ -115,7 +108,7 @@ call_user_func(
          */
         if (1) {
             $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['formDataGroup']['tcaDatabaseRecord']
-            [FormDataProvider::class] = [
+            [\Buepro\Timelog\Backend\DataProvider\FormDataProvider::class] = [
                 'depends' => [
                     \TYPO3\CMS\Backend\Form\FormDataProvider\TcaFlexPrepare::class,
                 ],
@@ -130,7 +123,7 @@ call_user_func(
          */
         if (1) {
             $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass']
-                ['timelog'] = DataHandlerHook::class;
+                ['timelog'] = \Buepro\Timelog\Backend\Hook\DataHandlerHook::class;
         }
 
         /**
@@ -145,23 +138,23 @@ call_user_func(
             $signalSlotDispatcher->connect(
                 \TYPO3\CMS\Extbase\Persistence\Generic\Backend::class,
                 'afterPersistObject',
-                HandleMediator::class,
+                \Buepro\Timelog\Mediator\HandleMediator::class,
                 'handleAfterPersistObject'
             );
 
             // Task active time change
             $signalSlotDispatcher->connect(
-                Task::class,
+                \Buepro\Timelog\Domain\Model\Task::class,
                 'activeTimeChange',
-                TimeMediator::class,
+                \Buepro\Timelog\Mediator\TimeMediator::class,
                 'handleTaskActiveTimeChange'
             );
 
             // Task batch date change
             $signalSlotDispatcher->connect(
-                Task::class,
+                \Buepro\Timelog\Domain\Model\Task::class,
                 'batchDateChange',
-                TimeMediator::class,
+                \Buepro\Timelog\Mediator\TimeMediator::class,
                 'handleTaskBatchDateChange'
             );
         }

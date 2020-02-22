@@ -7,28 +7,23 @@
  * LICENSE file that was distributed with this source code.
  */
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
-use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
-
 defined('TYPO3_MODE') || die('Access denied.');
 
 call_user_func(
     static function () {
-        ExtensionUtility::registerPlugin(
+        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
             'Buepro.Timelog',
             'Taskpanel',
             'Task panel'
         );
 
-        ExtensionManagementUtility::addStaticFile('timelog', 'Configuration/TypoScript', 'Timelog');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_task', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_task.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_timelog_domain_model_task');
 
-        ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_task', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_task.xlf');
-        ExtensionManagementUtility::allowTableOnStandardPages('tx_timelog_domain_model_task');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_interval', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_interval.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_timelog_domain_model_interval');
 
-        ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_interval', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_interval.xlf');
-        ExtensionManagementUtility::allowTableOnStandardPages('tx_timelog_domain_model_interval');
-
-        ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_project', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_project.xlf');
-        ExtensionManagementUtility::allowTableOnStandardPages('tx_timelog_domain_model_project');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_project', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_project.xlf');
+        \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_timelog_domain_model_project');
     }
 );
