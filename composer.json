@@ -18,7 +18,7 @@
   ],
   "require": {
     "typo3/cms-core": "^9.5",
-    "buepro/typo3-auxlibs": "^1.3.3"
+    "buepro/typo3-auxlibs": "^1.2.1"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
