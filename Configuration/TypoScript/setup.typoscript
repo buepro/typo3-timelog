@@ -1,6 +1,6 @@
 plugin.tx_timelog_taskpanel {
     view {
-        templateRootPaths.0 = EXT:{extension.extensionKey}/Resources/Private/Templates/
+        templateRootPaths.0 = EXT:timelog/Resources/Private/Templates/
         templateRootPaths.1 = {$plugin.tx_timelog_taskpanel.view.templateRootPath}
         partialRootPaths.0 = EXT:timelog/Resources/Private/Partials/
         partialRootPaths.1 = {$plugin.tx_timelog_taskpanel.view.partialRootPath}

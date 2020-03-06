@@ -2,11 +2,11 @@
 plugin.tx_timelog_taskpanel {
     view {
         # cat=plugin.tx_timelog_taskpanel/file; type=string; label=Path to template root (FE)
-        templateRootPath = EXT:timelog/Resources/Private/Templates/
+        templateRootPath =
         # cat=plugin.tx_timelog_taskpanel/file; type=string; label=Path to template partials (FE)
-        partialRootPath = EXT:timelog/Resources/Private/Partials/
+        partialRootPath =
         # cat=plugin.tx_timelog_taskpanel/file; type=string; label=Path to template layouts (FE)
-        layoutRootPath = EXT:timelog/Resources/Private/Layouts/
+        layoutRootPath =
     }
 
     persistence {
