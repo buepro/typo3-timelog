@@ -13,9 +13,7 @@
     }
   ],
   "homepage": "https://github.com/buepro/typo3-timelog/",
-  "license": [
-    "MIT"
-  ],
+  "license": ["GPL-2.0-or-later"],
   "require": {
     "typo3/cms-core": "^9.5",
     "buepro/typo3-auxlibs": "^1.2.1"
@@ -25,7 +23,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Buepro\\Timelog\\": "Classes"
+      "Buepro\\Timelog\\": "Classes/"
     }
   },
   "replace": {
