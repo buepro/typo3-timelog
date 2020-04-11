@@ -14,7 +14,7 @@ call_user_func(function () {
             'label_alt' => 'title,client',
             'label_alt_force' => 1,
             'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getProjectLabel',
-            'searchFields' => 'title',
+            'searchFields' => 'handle,title,description',
             'default_sortby' => 'tstamp DESC',
             'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_project.svg'
         ],
