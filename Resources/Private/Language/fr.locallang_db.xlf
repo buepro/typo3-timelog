@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog" target-language="fr">
+    <header/>
+    <body>
+      <trans-unit id="tx_timelog_domain_model_task" approved="yes">
+        <source>Task</source>
+        <target state="final">Tâche</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Poignée</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titre</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.description" approved="yes">
+        <source>Description</source>
+        <target state="final">Description</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.active_time" approved="yes">
+        <source>Active Time</source>
+        <target state="final">Temps actif</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
+        <source>Batch Date</source>
+        <target state="final">Date du lot</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.project" approved="yes">
+        <source>Project</source>
+        <target state="final">Projet</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.worker" approved="yes">
+        <source>Worker</source>
+        <target state="final">Travailleur</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.intervals" approved="yes">
+        <source>Intervals</source>
+        <target state="final">Intervalles</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval" approved="yes">
+        <source>Interval</source>
+        <target state="final">Intervalle</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.start_time" approved="yes">
+        <source>Start Time</source>
+        <target state="final">Heure de début</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.end_time" approved="yes">
+        <source>End Time</source>
+        <target state="final">Heure de fin</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.duration" approved="yes">
+        <source>Duration</source>
+        <target state="final">Duration</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project" approved="yes">
+        <source>Project</source>
+        <target state="final">Projet</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Poignée</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titre</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.description" approved="yes">
+        <source>Description</source>
+        <target state="final">Description</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.internal_note" approved="yes">
+        <source>Internal note</source>
+        <target state="final">Note interne</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.active_time" approved="yes">
+        <source>Active Time</source>
+        <target state="final">Temps actif</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.heap_time" approved="yes">
+        <source>Heap Time</source>
+        <target state="final">Temps heap</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.batch_time" approved="yes">
+        <source>Batch Time</source>
+        <target state="final">Temps du lot</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
+        <source>Client</source>
+        <target state="final">Client</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.owner" approved="yes">
+        <source>Owner</source>
+        <target state="final">Propriétaire</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.cc_email" approved="yes">
+        <source>CC Email</source>
+        <target state="final">CC Email</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_taskpanel.name" approved="yes">
+        <source>Task panel</source>
+        <target state="final">Panneau des tâches</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_taskpanel.description">
+        <source/>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
