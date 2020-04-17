@@ -3,12 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog">
 		<header/>
 		<body>
-			<trans-unit id="start_time.description">
-				<source>startTime</source>
-			</trans-unit>
-			<trans-unit id="end_time.description">
-				<source>endTime</source>
-			</trans-unit>
 			<trans-unit id="duration.description">
 				<source>The duration in houres</source>
 			</trans-unit>

@@ -3,18 +3,6 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog">
 		<header/>
 		<body>
-			<trans-unit id="handle.description">
-				<source>handle</source>
-			</trans-unit>
-			<trans-unit id="title.description">
-				<source>title</source>
-			</trans-unit>
-			<trans-unit id="description.description">
-				<source>description</source>
-			</trans-unit>
-			<trans-unit id="internal_note.description">
-				<source>internal note</source>
-			</trans-unit>
 			<trans-unit id="active_time.description">
 				<source>Sum from the tasks activeTime in hours</source>
 			</trans-unit>
@@ -23,12 +11,6 @@
 			</trans-unit>
 			<trans-unit id="batch_time.description">
 				<source>Sum from active time from tasks that are batched</source>
-			</trans-unit>
-			<trans-unit id="client.description">
-				<source>client</source>
-			</trans-unit>
-			<trans-unit id="owner.description">
-				<source>owner</source>
 			</trans-unit>
 			<trans-unit id="cc_email.description">
 				<source>Single email address or coma separated list from email addresses receiving the email as CC.</source>
