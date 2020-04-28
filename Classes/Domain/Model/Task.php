@@ -9,6 +9,10 @@
 
 namespace Buepro\Timelog\Domain\Model;
 
+use Buepro\Timelog\Event\TaskActiveTimeChangedEvent;
+use Buepro\Timelog\Event\TaskBatchDateChangedEvent;
+use Psr\EventDispatcher\EventDispatcherInterface;
+
 /***
  *
  * This file is part of the "Timelog" Extension for TYPO3 CMS.
@@ -24,11 +28,6 @@ namespace Buepro\Timelog\Domain\Model;
  */
 class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Buepro\Timelog\Domain\Model\UpdateInterface
 {
-
-    /**
-     * @var \TYPO3\CMS\Extbase\SignalSlot\Dispatcher
-     */
-    protected $signalSlotDispatcher = null;
 
     /**
      * handle
@@ -88,6 +87,11 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     protected $intervals = null;
 
     /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -95,6 +99,14 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
 
         //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
+    }
+
+    /**
+     * @param EventDispatcherInterface $eventDispatcher
+     */
+    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher)
+    {
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -111,29 +123,21 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     }
 
     /**
-     * @param \TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher
+     * @param float $previousActiveTime
+     * @param float $newActiveTime
      */
-    public function injectSignalSlotDispatcher(\TYPO3\CMS\Extbase\SignalSlot\Dispatcher $signalSlotDispatcher)
+    private function triggerActiveTimeChangedEvent(float $previousActiveTime, float $newActiveTime)
     {
-        $this->signalSlotDispatcher = $signalSlotDispatcher;
+        $this->eventDispatcher->dispatch(new TaskActiveTimeChangedEvent($this, $previousActiveTime, $newActiveTime));
     }
 
     /**
-     * @param \DateTime $previousActiveTime
-     * @param \DateTime $newActiveTime
+     * @param \DateTime|null $previousDate
+     * @param \DateTime|null $currentDate
      */
-    private function emitActiveTimeChangeSignal($previousActiveTime, $newActiveTime)
+    private function triggerBatchDateChangedEvent($previousDate, $currentDate)
     {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'activeTimeChange', [$this, $previousActiveTime, $newActiveTime]);
-    }
-
-    /**
-     * @param \DateTime $previousDate
-     * @param \DateTime $currentDate
-     */
-    private function emitBatchDateChangeSignal($previousDate, $currentDate)
-    {
-        $this->signalSlotDispatcher->dispatch(__CLASS__, 'batchDateChange', [$this, $previousDate, $currentDate]);
+        $this->eventDispatcher->dispatch(new TaskBatchDateChangedEvent($this, $previousDate, $currentDate));
     }
 
     /**
@@ -242,7 +246,7 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
         if ($this->activeTime !== $activeTime) {
             $previousActiveTime = $this->activeTime;
             $this->activeTime = $activeTime;
-            $this->emitActiveTimeChangeSignal($previousActiveTime, $activeTime);
+            $this->triggerActiveTimeChangedEvent($previousActiveTime, $activeTime);
         }
     }
 
@@ -289,7 +293,7 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
             ($this->batchDate && $batchDate && ($this->batchDate->getTimestamp() !== $batchDate->getTimestamp()))) {
             $previousBatchDate = $this->batchDate;
             $this->batchDate = $batchDate;
-            $this->emitBatchDateChangeSignal($previousBatchDate, $batchDate);
+            $this->triggerBatchDateChangedEvent($previousBatchDate, $batchDate);
         }
     }
 

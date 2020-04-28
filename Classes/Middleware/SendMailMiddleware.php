@@ -13,6 +13,7 @@ namespace Buepro\Timelog\Middleware;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
+use Buepro\Timelog\Utility\DiUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -21,7 +22,6 @@ use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\NullResponse;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -86,9 +86,7 @@ class SendMailMiddleware implements MiddlewareInterface
                 Project::class
             );
             /** @var Project $project */
-            $project = GeneralUtility::makeInstance(ObjectManager::class)
-                ->get(ProjectRepository::class)
-                ->findByUid($projectUid);
+            $project = DiUtility::getObject(ProjectRepository::class)->findByUid($projectUid);
             if (!$project) {
                 return $this->getErrorResponse('Project isn\'t available.');
             }
@@ -98,8 +96,7 @@ class SendMailMiddleware implements MiddlewareInterface
                 return $this->getErrorResponse('Client email isn\'t available');
             }
             // Initializes tasks
-            $taskRepository = GeneralUtility::makeInstance(ObjectManager::class)
-                ->get(TaskRepository::class);
+            $taskRepository = DiUtility::getObject(TaskRepository::class);
             $tasks = $taskRepository->findRecentForProject($project);
             // Initializes views
             $this->standaloneSubjectView->assignMultiple([
@@ -124,8 +121,8 @@ class SendMailMiddleware implements MiddlewareInterface
             $mail
                 ->setSubject($subject)
                 ->setTo(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($client))
-                ->setBody($htmlText, 'text/html')
-                ->addPart($plainText, 'text/plain');
+                ->html($htmlText)
+                ->text($plainText);
 
             if ($project->getOwner() && $project->getOwner()->getEmail()) {
                 $mail->setFrom(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner()));

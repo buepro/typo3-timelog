@@ -21,9 +21,6 @@ return [
         'searchFields' => 'handle,title,description',
         'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_task.gif'
     ],
-    'interface' => [
-        'showRecordFieldList' => 'handle, title, description, active_time, batch_date, project, worker, intervals',
-    ],
     'types' => [
         '1' => ['showitem' => 'handle, title, description, active_time, batch_date, project, worker, intervals'],
     ],

@@ -10,6 +10,7 @@
 namespace Buepro\Timelog\Controller;
 
 use Buepro\Timelog\Domain\Model\Project;
+use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
@@ -20,9 +21,13 @@ class ProjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      * projectRepository
      *
      * @var \Buepro\Timelog\Domain\Repository\ProjectRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $projectRepository = null;
+
+    public function __construct(ProjectRepository $projectRepository)
+    {
+        $this->projectRepository = $projectRepository;
+    }
 
     /**
      * Initializes the view before invoking an action method.

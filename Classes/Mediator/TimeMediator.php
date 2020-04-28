@@ -10,12 +10,14 @@
 namespace Buepro\Timelog\Mediator;
 
 use Buepro\Timelog\Domain\Model\Project;
-use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
+use Buepro\Timelog\Event\TaskActiveTimeChangedEvent;
+use Buepro\Timelog\Event\TaskBatchDateChangedEvent;
 use TYPO3\CMS\Core\SingletonInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
+use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 
 /**
  * Coordinates everything related to task and project time.
@@ -38,11 +40,16 @@ class TimeMediator implements SingletonInterface
      */
     protected $objectManager;
 
-    public function __construct()
+    /**
+     * TimeMediator constructor.
+     *
+     * @param ProjectRepository $projectRepository
+     * @param TaskRepository $taskRepository
+     */
+    public function __construct(ProjectRepository $projectRepository, TaskRepository $taskRepository)
     {
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $this->projectRepository = $this->objectManager->get(ProjectRepository::class);
-        $this->taskRepository = $this->objectManager->get(TaskRepository::class);
+        $this->projectRepository = $projectRepository;
+        $this->taskRepository = $taskRepository;
     }
 
     /**
@@ -50,6 +57,7 @@ class TimeMediator implements SingletonInterface
      *
      * @param Project $project
      * @return array Contains the keys active, heap and stack
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     private function calcProjectTime(Project $project)
     {
@@ -73,8 +81,9 @@ class TimeMediator implements SingletonInterface
      * Updates the active, batch and heap time from a project.
      *
      * @param Project | null $project
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
     private function updateProjectTime($project)
     {
@@ -88,22 +97,27 @@ class TimeMediator implements SingletonInterface
     }
 
     /**
-     * Handles the activTimeChange signal from a task to update the active, batch and heap time for the associated
-     * project.
+     * Handles the event `TaskActiveTimeChangedEvent` from a task to update the active, batch and heap time for the
+     * associated project.
      *
-     * @param Task $task
-     * @param float $previousActiveTime
-     * @param float $newActiveTime
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException
-     * @throws \TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException
+     * @param TaskActiveTimeChangedEvent $event
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function handleTaskActiveTimeChange(Task $task, $previousActiveTime, $newActiveTime)
+    public function handleTaskActiveTimeChangedEvent(TaskActiveTimeChangedEvent $event)
     {
-        $this->updateProjectTime($task->getProject());
+        $this->updateProjectTime($event->getTask()->getProject());
     }
 
-    public function handleTaskBatchDateChange(Task $task, $previousBatchDate, $currentBatchDate)
+    /**
+     * @param TaskBatchDateChangedEvent $event
+     * @throws IllegalObjectTypeException
+     * @throws UnknownObjectException
+     * @throws \TYPO3\CMS\Extbase\Object\Exception
+     */
+    public function handleTaskBatchDateChangedEvent(TaskBatchDateChangedEvent $event)
     {
-        $this->updateProjectTime($task->getProject());
+        $this->updateProjectTime($event->getTask()->getProject());
     }
 }

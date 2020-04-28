@@ -11,9 +11,9 @@ namespace Buepro\Timelog\Domain\Repository;
 
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
+use Buepro\Timelog\Utility\DiUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -42,7 +42,7 @@ class TaskRepository extends Repository
     public function initializeObject()
     {
         if (TYPO3_MODE === 'BE') {
-            $querySettings = $this->objectManager->get(Typo3QuerySettings::class);
+            $querySettings = DiUtility::getObject(Typo3QuerySettings::class);
             $querySettings->setRespectStoragePage(false);
             $this->setDefaultQuerySettings($querySettings);
         }
@@ -55,8 +55,7 @@ class TaskRepository extends Repository
      */
     private function debugQuery(Query $query)
     {
-        $queryParser = GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(\TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser::class);
+        $queryParser = DiUtility::getObject(\TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser::class);
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($queryParser->convertQueryToDoctrineQueryBuilder($query)->getSQL());
         \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($queryParser->convertQueryToDoctrineQueryBuilder($query)->getParameters());
     }
@@ -94,8 +93,7 @@ class TaskRepository extends Repository
 
         $tasks = $queryBuilder->execute();
         $result = [];
-        $propertyMapper = GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(PropertyMapper::class);
+        $propertyMapper = DiUtility::getObject(PropertyMapper::class);
         foreach ($tasks as $task) {
             $result[] = $propertyMapper->convert((string) $task['uid'], Task::class);
         }
@@ -179,8 +177,7 @@ class TaskRepository extends Repository
         $tasks = $queryBuilder->execute();
 
         $result = [];
-        $propertyMapper = GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(PropertyMapper::class);
+        $propertyMapper = DiUtility::getObject(PropertyMapper::class);
         foreach ($tasks as $task) {
             $result[] = $propertyMapper->convert((string) $task['uid'], Task::class);
         }

@@ -10,10 +10,10 @@
 namespace Buepro\Timelog\Domain\Repository;
 
 use Buepro\Timelog\Domain\Model\Project;
+use Buepro\Timelog\Utility\DiUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /***
@@ -67,8 +67,7 @@ class ProjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $projects = $queryBuilder->execute();
         $result = [];
-        $propertyMapper = GeneralUtility::makeInstance(ObjectManager::class)
-            ->get(PropertyMapper::class);
+        $propertyMapper = DiUtility::getObject(PropertyMapper::class);
         foreach ($projects as $project) {
             $result[] = $propertyMapper->convert((string) $project['uid'], Project::class);
         }

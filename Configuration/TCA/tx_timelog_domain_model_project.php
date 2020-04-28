@@ -21,9 +21,6 @@ return [
         'searchFields' => 'handle,title,description',
         'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_project.gif'
     ],
-    'interface' => [
-        'showRecordFieldList' => 'handle, title, description, active_time, heap_time, batch_time, client, owner',
-    ],
     'types' => [
         '1' => ['showitem' => 'handle, title, description, active_time, heap_time, batch_time, client, owner'],
     ],

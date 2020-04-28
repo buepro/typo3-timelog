@@ -10,15 +10,17 @@
 namespace Buepro\Timelog\Backend\Mediator;
 
 use Buepro\Timelog\Domain\Model\UpdateInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Buepro\Timelog\Utility\DiUtility;
+use TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
-use TYPO3\CMS\Extbase\SignalSlot\Dispatcher;
 
 /**
  * Class CoreMediator
  *
- * Registers the changed models and updates them upon request.
+ * Models might be changed in the backend without using setters. This can lead to an not consistent model state.
+ * Such models can be registered and updated at this mediator.
+ *
  * Clients ask for an instance of it and register them self by calling `registerChangedObjectUid`.
  * Since clients are from the backend the scope is automatically backend.
  *
@@ -28,7 +30,12 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * @var ObjectManager
      */
-    private $objectManager;
+    protected $objectManager;
+
+    /**
+     * @var PersistenceManager
+     */
+    protected $persistenceManager;
 
     /**
      * Array holding the uid from changed objects. The array has two dimension where the key from the first dimension
@@ -38,20 +45,10 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
      */
     private $changedObjectUidList = [];
 
-    public function __construct()
+    public function __construct(ObjectManager $objectManager, PersistenceManager $persistenceManager)
     {
-        $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
-        $signalSlotDispatcher = GeneralUtility::makeInstance(Dispatcher::class);
-
-        // Connects to signal.
-        // In trials it was found that this signals is fired once after all DB operations have been finished.
-        // Alternatively the hook processDatamap_afterAllOperations might be used (gets fired twice).
-        $signalSlotDispatcher->connect(
-            \TYPO3\CMS\Backend\Controller\EditDocumentController::class,
-            'initAfter',
-            self::class,
-            'handleEditDocumentInitAfterSignal'
-        );
+        $this->objectManager = $objectManager;
+        $this->persistenceManager = $persistenceManager;
     }
 
     /**
@@ -70,17 +67,18 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
      */
     private function updateChangedObjects()
     {
-        if (!$this->changedObjectUidList) {
-            return;
-        }
         foreach ($this->changedObjectUidList as $className => $uidList) {
             foreach ($uidList as $uid => $n) {
                 $repositoryClassName = str_replace('Model', 'Repository', $className) . 'Repository';
                 if (class_exists($repositoryClassName)) {
-                    $object = $this->objectManager->get($repositoryClassName)->findByUid($uid);
-                    if ($object instanceof UpdateInterface) {
+                    $repository = DiUtility::getObject($repositoryClassName);
+                    if (!$repository) {
+                        continue;
+                    }
+                    $object = $repository->findByUid($uid);
+                    if ($object && $object instanceof UpdateInterface) {
                         $object->update();
-                        $this->objectManager->get(PersistenceManager::class)->add($object);
+                        $this->persistenceManager->add($object);
                     }
                 }
             }
@@ -93,12 +91,16 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
      * @param $editDocumentController
      * @param $request
      */
-    public function handleEditDocumentInitAfterSignal($editDocumentController, $request)
+    public function handleAfterFormEnginePageInitializedEvent(AfterFormEnginePageInitializedEvent $event)
     {
+        if (!$this->changedObjectUidList) {
+            return;
+        }
+
         // Updates objects
         $this->updateChangedObjects();
         // Persists objects
-        $this->objectManager->get(PersistenceManager::class)->persistAll();
+        $this->persistenceManager->persistAll();
         // Clears changed object lists
         $this->changedObjectUidList = [];
     }

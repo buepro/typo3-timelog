@@ -14,6 +14,7 @@ use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Utility\DatabaseUtility;
 use Buepro\Timelog\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent;
 
 /**
  * Class HandleMediator
@@ -23,11 +24,9 @@ use TYPO3\CMS\Core\SingletonInterface;
  */
 class HandleMediator implements SingletonInterface
 {
-    /**
-     * @param $object
-     */
-    public function handleAfterPersistObject($object)
+    public function handlePersistEvent(EntityPersistedEvent $event): void
     {
+        $object = $event->getObject();
         if (in_array(get_class($object), [Task::class, Project::class], true) && !$object->getHandle()) {
             $handle = GeneralUtility::encodeHashid($object->getUid(), get_class($object));
             // Sets the handle for the model in memory

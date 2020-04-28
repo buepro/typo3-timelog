@@ -21,9 +21,6 @@ return [
         'searchFields' => '',
         'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_interval.gif'
     ],
-    'interface' => [
-        'showRecordFieldList' => 'start_time, end_time, duration',
-    ],
     'types' => [
         '1' => ['showitem' => 'start_time, end_time, duration'],
     ],

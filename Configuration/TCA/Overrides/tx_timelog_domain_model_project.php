@@ -18,10 +18,6 @@ call_user_func(function () {
             'default_sortby' => 'tstamp DESC',
             'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_project.svg'
         ],
-        'interface' => [
-            'showRecordFieldList' =>
-                'client, owner, title, description, active_time, heapTime, batchTime, handle'
-        ],
         'palettes' => [
             'references' => [
                 'showitem' => 'client, owner, --linebreak--, cc_email',

@@ -34,7 +34,6 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * projectRepository
      *
      * @var \Buepro\Timelog\Domain\Repository\ProjectRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $projectRepository = null;
 
@@ -42,7 +41,6 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * taskRepository
      *
      * @var \Buepro\Timelog\Domain\Repository\TaskRepository
-     * @TYPO3\CMS\Extbase\Annotation\Inject
      */
     protected $taskRepository = null;
 
@@ -51,6 +49,18 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
      * @var array
      */
     private $tsSetup = [];
+
+    /**
+     * TaskController constructor.
+     *
+     * @param ProjectRepository $projectRepository
+     * @param TaskRepository $taskRepository
+     */
+    public function __construct(ProjectRepository $projectRepository, TaskRepository $taskRepository)
+    {
+        $this->projectRepository = $projectRepository;
+        $this->taskRepository = $taskRepository;
+    }
 
     /**
      * Checks precondition.
@@ -70,6 +80,7 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
         if (empty($configuration['persistence']['storagePid'])) {
+            /** @extensionScannerIgnoreLine */
             $this->redirect('error');
         }
     }
@@ -183,10 +194,12 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $project = $this->projectRepository->findByHandle($projectHandle)->getFirst();
         if (!$project) {
+            /** @extensionScannerIgnoreLine */
             $this->redirect('list');
         }
         $tasks = $this->taskRepository->findHeapTasks($project);
         if (!$tasks) {
+            /** @extensionScannerIgnoreLine */
             $this->redirect('list', null, null, ['projectHandle' => $projectHandle]);
         }
         $batchDate = new \DateTime('now');
@@ -199,12 +212,14 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $batchDate->getTimestamp(),
             $tasks[0]->getUid()
         );
+        /** @extensionScannerIgnoreLine */
         $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
     }
 
     public function errorAction()
     {
         if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
+            /** @extensionScannerIgnoreLine */
             $this->addFlashMessage(
                 'The storagePid isn\'t defined. Please review the "Record Storage Page" field and the TS constants.',
                 'Configuration missing',

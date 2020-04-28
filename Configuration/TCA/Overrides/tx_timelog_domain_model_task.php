@@ -16,10 +16,6 @@ call_user_func(function () {
             'default_sortby' => 'crdate DESC',
             'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_task.svg'
         ],
-        'interface' => [
-            'showRecordFieldList' =>
-                'project, worker, title, description, active_time, handle, batch_date, intervals'
-        ],
         'palettes' => [
             'batch' => [
                 'showitem' => 'batch_date'
@@ -67,7 +63,6 @@ call_user_func(function () {
                 'config' => [
                     'type' => 'select',
                     'renderType' => 'selectMultipleSideBySide',
-                    'enableMultiSelectFilterTextfield' => true,
                     'foreign_table_where' => 'ORDER BY tx_timelog_domain_model_project.tstamp DESC',
                     'default' => 0,
                     'size' => 3,

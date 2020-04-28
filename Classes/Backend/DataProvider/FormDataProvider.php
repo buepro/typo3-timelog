@@ -21,19 +21,6 @@ use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
  */
 class FormDataProvider implements FormDataProviderInterface
 {
-    /**
-     * Adds an interval to a task by JS
-     */
-    private function addInterval()
-    {
-        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Page\PageRenderer::class
-        );
-        $pageRenderer->loadRequireJsModule(
-            'jquery',
-            'function() { $(".inlineNewButton").trigger("click"); }'
-        );
-    }
 
     /**
      * Adds form data to result array
@@ -45,30 +32,30 @@ class FormDataProvider implements FormDataProviderInterface
      */
     public function addData(array $result)
     {
-        // Adds data to interval
+        // Add data to interval
         if ($result['tableName'] === 'tx_timelog_domain_model_interval' && $result['command'] === 'new') {
             // Server time based on `phpTimeZone` defined in `LocalConfiguration.php`
             $serverTime = new \DateTime();
 
-            // Sets start time
+            // Set start time
             $tsConfig = $GLOBALS['BE_USER']->getTSConfig();
             if (isset($tsConfig['tx_timelog.']['timezone.']['offset'])) {
-                // Takes into account userTS
+                // Take into account userTS
                 $daylightSaving = date('I');
                 $offset = (int) $tsConfig['tx_timelog.']['timezone.']['offset'];
                 $result['databaseRow']['start_time'] = $serverTime->getTimestamp();
-                // Gets gmt+0 without daylight saving
+                // Get gmt+0 without daylight saving
                 $result['databaseRow']['start_time'] -= $serverTime->getOffset();
-                // Adds user gmt offset
+                // Add user gmt offset
                 $result['databaseRow']['start_time'] += $offset * 3600;
-                // Adds daylight saving
+                // Add daylight saving
                 $result['databaseRow']['start_time'] += $daylightSaving * 3600;
             } else {
                 $result['databaseRow']['start_time'] = $serverTime->getTimestamp();
             }
         }
 
-        // Adds data to task
+        // Add data to task
         if ($result['tableName'] === 'tx_timelog_domain_model_task' && $result['command'] === 'new') {
             // Sets last used worker by be-user to task
             $latest = DatabaseUtility::getLatestRecord(
@@ -79,8 +66,8 @@ class FormDataProvider implements FormDataProviderInterface
             if ($latest && $latest['worker']) {
                 $result['databaseRow']['worker'] = $latest['worker'];
             }
-            $this->addInterval();
         }
+
         return $result;
     }
 }

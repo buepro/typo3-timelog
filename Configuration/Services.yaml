@@ -1,0 +1,34 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    Buepro\Timelog\:
+        resource: '../Classes/*'
+
+    # Event listeners
+    Buepro\Timelog\Mediator\HandleMediator:
+        tags:
+            - name: event.listener
+              identifier: 'timelog-handle-mediator'
+              method: 'handlePersistEvent'
+              event: TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent
+
+    Buepro\Timelog\Mediator\TimeMediator:
+        tags:
+            - name: event.listener
+              identifier: 'timelog-task-time'
+              method: handleTaskActiveTimeChangedEvent
+              event: Buepro\Timelog\Event\TaskActiveTimeChangedEvent
+            - name: event.listener
+              identifier: 'timelog-task-batch'
+              method: handleTaskBatchDateChangedEvent
+              event: Buepro\Timelog\Event\TaskBatchDateChangedEvent
+
+    Buepro\Timelog\Backend\Mediator\CoreMediator:
+        tags:
+            - name: event.listener
+              identifier: 'timelog-core-mediator'
+              method: handleAfterFormEnginePageInitializedEvent
+              event: TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent
