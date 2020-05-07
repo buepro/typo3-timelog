@@ -72,6 +72,9 @@
 			<trans-unit id="tx_timelog_domain_model_project.owner">
 				<source>Owner</source>
 			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.tasks">
+				<source>Tasks</source>
+			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.cc_email">
 				<source>CC Email</source>
 			</trans-unit>

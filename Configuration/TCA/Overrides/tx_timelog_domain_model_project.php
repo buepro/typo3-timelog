@@ -36,7 +36,8 @@ call_user_func(function () {
                         --palette--;;references,
                         title, 
                         --palette--;;texts,
-                        --palette--;;times, 
+                        --palette--;;times,
+                        tasks,
                     --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle',
             ]
         ],

@@ -96,6 +96,36 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     protected $ccEmail = '';
 
     /**
+     * tasks
+     *
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task>
+     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
+     */
+    protected $tasks = null;
+
+    /**
+     * __construct
+     */
+    public function __construct()
+    {
+        //Do not remove the next line: It would break the functionality
+        $this->initStorageObjects();
+    }
+
+    /**
+     * Initializes all ObjectStorage properties
+     * Do not modify this method!
+     * It will be rewritten on each save in the extension builder
+     * You may modify the constructor of this class instead
+     *
+     * @return void
+     */
+    protected function initStorageObjects()
+    {
+        $this->tasks = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
+    /**
      * Returns the handle
      *
      * @return string $handle
@@ -303,6 +333,28 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     public function setCcEmail($ccEmail)
     {
         $this->ccEmail = $ccEmail;
+    }
+
+    /**
+     * Adds a Task
+     *
+     * @param \Buepro\Timelog\Domain\Model\Task $task
+     * @return void
+     */
+    public function addTask(\Buepro\Timelog\Domain\Model\Task $task)
+    {
+        $this->tasks->attach($task);
+    }
+
+    /**
+     * Removes a Task
+     *
+     * @param \Buepro\Timelog\Domain\Model\Task $taskToRemove The Task to be removed
+     * @return void
+     */
+    public function removeTask(\Buepro\Timelog\Domain\Model\Task $taskToRemove)
+    {
+        $this->tasks->detach($taskToRemove);
     }
 
     public function Update()

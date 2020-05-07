@@ -111,6 +111,24 @@ return [
                 'maxitems' => 1,
             ],
         ],
+        'tasks' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.tasks',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_timelog_domain_model_task',
+                'foreign_field' => 'project',
+                'maxitems' => 9999,
+                'appearance' => [
+                    'collapseAll' => 1,
+                    'levelLinksPosition' => 'top',
+                    'showSynchronizationLink' => 1,
+                    'showPossibleLocalizationRecords' => 1,
+                    'showAllLocalizationLink' => 1
+                ],
+            ],
+
+        ],
 
     ],
 ];

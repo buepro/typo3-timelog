@@ -10,7 +10,7 @@ CREATE TABLE tx_timelog_domain_model_task (
 	batch_date int(11) DEFAULT '0' NOT NULL,
 	project int(11) unsigned DEFAULT '0',
 	worker int(11) unsigned DEFAULT '0',
-	intervals int(11) unsigned DEFAULT '0' NOT NULL,
+	intervals int(11) unsigned DEFAULT '0' NOT NULL
 
 );
 
@@ -22,7 +22,7 @@ CREATE TABLE tx_timelog_domain_model_interval (
 	task int(11) unsigned DEFAULT '0' NOT NULL,
 	start_time int(11) DEFAULT '0' NOT NULL,
 	end_time int(11) DEFAULT '0' NOT NULL,
-	duration double(11,2) DEFAULT '0.00' NOT NULL,
+	duration double(11,2) DEFAULT '0.00' NOT NULL
 
 );
 
@@ -41,6 +41,7 @@ CREATE TABLE tx_timelog_domain_model_project (
 	client int(11) unsigned DEFAULT '0',
 	owner int(11) unsigned DEFAULT '0',
 	cc_email varchar(255) DEFAULT '' NOT NULL,
+    tasks int(11) unsigned DEFAULT '0' NOT NULL
 
 );
 
@@ -49,6 +50,6 @@ CREATE TABLE tx_timelog_domain_model_project (
 #
 CREATE TABLE tx_timelog_domain_model_interval (
 
-	task int(11) unsigned DEFAULT '0' NOT NULL,
+	task int(11) unsigned DEFAULT '0' NOT NULL
 
 );
