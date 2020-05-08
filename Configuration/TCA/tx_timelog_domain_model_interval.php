@@ -11,6 +11,8 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_interval',
         'label' => 'start_time',
+        'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getIntervalLabel',
+        'default_sortby' => 'tstamp DESC',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -19,10 +21,17 @@ return [
         'enablecolumns' => [
         ],
         'searchFields' => '',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_interval.gif'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_interval.svg'
+    ],
+    'palettes' => [
+        'time' => [
+            'showitem' => 'start_time, end_time, duration',
+        ]
     ],
     'types' => [
-        '1' => ['showitem' => 'start_time, end_time, duration'],
+        '1' => [
+            'showitem' => 'sys_language_uid, l10n_parent, l10n_diffsource, hidden, --palette--;;time'
+        ],
     ],
     'columns' => [
         't3ver_label' => [
@@ -40,7 +49,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'size' => 10,
+                'size' => 12,
                 'eval' => 'datetime',
                 'default' => time()
             ],
@@ -51,9 +60,9 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'size' => 10,
+                'size' => 12,
                 'eval' => 'datetime',
-                'default' => time()
+                'default' => 0
             ],
         ],
         'duration' => [
@@ -61,11 +70,11 @@ return [
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_interval.duration',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'double2'
+                'size' => 12,
+                'eval' => 'double2',
+                'readOnly' => 1
             ]
         ],
-
         'task' => [
             'config' => [
                 'type' => 'passthrough',

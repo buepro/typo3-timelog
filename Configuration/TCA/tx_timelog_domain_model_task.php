@@ -10,7 +10,8 @@
 return [
     'ctrl' => [
         'title' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task',
-        'label' => 'handle',
+        'label' => 'title',
+        'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getTaskLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -19,10 +20,22 @@ return [
         'enablecolumns' => [
         ],
         'searchFields' => 'handle,title,description',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_task.gif'
+        'default_sortby' => 'crdate DESC',
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_task.svg'
+    ],
+    'palettes' => [
+        'batch' => [
+            'showitem' => 'batch_date'
+        ],
     ],
     'types' => [
-        '1' => ['showitem' => 'handle, title, description, active_time, batch_date, project, worker, intervals'],
+        '1' => [
+            'showitem' =>
+                '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                        project, worker, title, description, active_time, intervals, 
+                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle, 
+                        --palette--;;batch',
+        ]
     ],
     'columns' => [
         't3ver_label' => [
@@ -40,7 +53,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
+                'readOnly' => 1
             ],
         ],
         'title' => [
@@ -67,8 +81,9 @@ return [
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.active_time',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'double2'
+                'size' => 12,
+                'eval' => 'double2',
+                'readOnly' => 1
             ]
         ],
         'batch_date' => [
@@ -77,9 +92,9 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'size' => 10,
+                'size' => 14,
                 'eval' => 'datetime',
-                'default' => time()
+                'default' => 0
             ],
         ],
         'project' => [
@@ -87,8 +102,12 @@ return [
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.project',
             'config' => [
                 'type' => 'select',
-                'renderType' => 'selectSingle',
+                'renderType' => 'selectMultipleSideBySide',
                 'foreign_table' => 'tx_timelog_domain_model_project',
+                'foreign_table_where' => 'ORDER BY tx_timelog_domain_model_project.tstamp DESC',
+                'default' => 0,
+                'size' => 3,
+                'autoSizeMax' => 5,
                 'minitems' => 0,
                 'maxitems' => 1,
             ],
@@ -97,11 +116,31 @@ return [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.worker',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
+                'type' => 'group',
+                'renderType' => '',
                 'foreign_table' => 'fe_users',
+                'internal_type' => 'db',
+                'allowed' => 'fe_users',
+                'default' => 0,
+                'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'fieldControl' => [
+                    'addRecord' => [
+                        'disabled' => false,
+                    ],
+                    'listModule' => [
+                        'disabled' => false,
+                    ],
+                    'elementBrowser' => [
+                        'disabled' => true,
+                    ],
+                ],
+                'fieldWizard' => [
+                    'recordsOverview' => [
+                        'disabled' => true,
+                    ],
+                ],
             ],
         ],
         'intervals' => [
@@ -111,9 +150,11 @@ return [
                 'type' => 'inline',
                 'foreign_table' => 'tx_timelog_domain_model_interval',
                 'foreign_field' => 'task',
+                'foreign_default_sortby' => 'start_time DESC',
                 'maxitems' => 9999,
                 'appearance' => [
                     'collapseAll' => 0,
+                    'expandSingle' => 0,
                     'levelLinksPosition' => 'top',
                     'showSynchronizationLink' => 1,
                     'showPossibleLocalizationRecords' => 1,

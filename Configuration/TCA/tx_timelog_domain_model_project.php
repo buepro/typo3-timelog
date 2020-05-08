@@ -11,6 +11,9 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project',
         'label' => 'handle',
+        'label_alt' => 'title,client',
+        'label_alt_force' => 1,
+        'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getProjectLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
@@ -19,10 +22,31 @@ return [
         'enablecolumns' => [
         ],
         'searchFields' => 'handle,title,description',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_project.gif'
+        'default_sortby' => 'tstamp DESC',
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_project.svg'
+    ],
+    'palettes' => [
+        'references' => [
+            'showitem' => 'client, owner, --linebreak--, cc_email',
+        ],
+        'texts' => [
+            'showitem' => 'description, internal_note',
+        ],
+        'times' => [
+            'showitem' => 'active_time, heap_time, batch_time',
+        ]
     ],
     'types' => [
-        '1' => ['showitem' => 'handle, title, description, active_time, heap_time, batch_time, client, owner'],
+        '1' => [
+            'showitem' =>
+                '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                        --palette--;;references,
+                        title, 
+                        --palette--;;texts,
+                        --palette--;;times,
+                        tasks,
+                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle',
+        ]
     ],
     'columns' => [
         't3ver_label' => [
@@ -40,7 +64,8 @@ return [
             'config' => [
                 'type' => 'input',
                 'size' => 30,
-                'eval' => 'trim'
+                'eval' => 'trim',
+                'readOnly' => 1
             ],
         ],
         'title' => [
@@ -48,7 +73,7 @@ return [
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.title',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
+                'size' => 40,
                 'eval' => 'trim'
             ],
         ],
@@ -62,13 +87,24 @@ return [
                 'eval' => 'trim'
             ]
         ],
+        'internal_note' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.internal_note',
+            'config' => [
+                'type' => 'text',
+                'cols' => 40,
+                'rows' => 15,
+                'eval' => 'trim'
+            ]
+        ],
         'active_time' => [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.active_time',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'double2'
+                'size' => 12,
+                'eval' => 'double2',
+                'readOnly' => 1
             ]
         ],
         'heap_time' => [
@@ -76,8 +112,9 @@ return [
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.heap_time',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'double2'
+                'size' => 12,
+                'eval' => 'double2',
+                'readOnly' => 1
             ]
         ],
         'batch_time' => [
@@ -85,30 +122,92 @@ return [
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.batch_time',
             'config' => [
                 'type' => 'input',
-                'size' => 30,
-                'eval' => 'double2'
+                'size' => 12,
+                'eval' => 'double2',
+                'readOnly' => 1
             ]
         ],
         'client' => [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.client',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
+                'type' => 'group',
+                'renderType' => '',
+                'internal_type' => 'db',
+                'allowed' => 'fe_users',
                 'foreign_table' => 'fe_users',
+                'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'default' => 0,
+                'fieldControl' => [
+                    'addRecord' => [
+                        'disabled' => false,
+                    ],
+                    'listModule' => [
+                        'disabled' => false,
+                    ],
+                    'elementBrowser' => [
+                        'disabled' => true,
+                    ],
+                ],
+                'fieldWizard' => [
+                    'recordsOverview' => [
+                        'disabled' => true,
+                    ],
+                ],
+                'suggestOptions' => [
+                    'fe_users' => [
+                        'additionalSearchFields' => 'first_name,last_name,name,company',
+                        'renderFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getFeUsersLabel',
+                    ],
+                ],
             ],
         ],
         'owner' => [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.owner',
             'config' => [
-                'type' => 'select',
-                'renderType' => 'selectSingle',
+                'type' => 'group',
+                'renderType' => '',
+                'internal_type' => 'db',
+                'allowed' => 'fe_users',
                 'foreign_table' => 'fe_users',
+                'size' => 1,
                 'minitems' => 0,
                 'maxitems' => 1,
+                'default' => 0,
+                'fieldControl' => [
+                    'addRecord' => [
+                        'disabled' => false,
+                    ],
+                    'listModule' => [
+                        'disabled' => false,
+                    ],
+                    'elementBrowser' => [
+                        'disabled' => true,
+                    ],
+                ],
+                'fieldWizard' => [
+                    'recordsOverview' => [
+                        'disabled' => true,
+                    ],
+                ],
+                'suggestOptions' => [
+                    'fe_users' => [
+                        'additionalSearchFields' => 'first_name,last_name,name,company',
+                        'renderFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getFeUsersLabel',
+                    ],
+                ],
+            ],
+        ],
+        'cc_email' => [
+            'exclude' => true,
+            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.cc_email',
+            'config' => [
+                'type' => 'input',
+                'size' => 30,
+                'eval' => 'trim'
             ],
         ],
         'tasks' => [
