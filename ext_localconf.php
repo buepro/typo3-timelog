@@ -10,12 +10,14 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 (function () {
-
+    /**
+     * Configure plugin
+     */
     $version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version();
     $version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger($version);
     if ($version < 10000000) {
         // For TYPO3 < V10
-        /** @extensionScannerIgnoreLine */
+        // @extensionScannerIgnoreLine
         \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
             'Buepro.Timelog',
             'Taskpanel',
@@ -46,9 +48,11 @@ defined('TYPO3_MODE') || die('Access denied.');
         );
     }
 
-    // wizards
+    /**
+     * New content element wizard
+     */
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addPageTSConfig(
-'mod {
+        'mod {
             wizards.newContentElement.wizardItems.plugins {
                 elements {
                     taskpanel {
@@ -65,18 +69,7 @@ defined('TYPO3_MODE') || die('Access denied.');
             }
         }'
     );
-    $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
 
-    $iconRegistry->registerIcon(
-        'timelog-plugin-taskpanel',
-        \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
-        ['source' => 'EXT:timelog/Resources/Public/Icons/user_plugin_taskpanel.svg']
-    );
-})();
-
-//# EXTENSION BUILDER DEFAULTS END TOKEN - Everything BEFORE this line is overwritten with the defaults of the extension builder
-
-(function () {
     /**
      * Extension configuration
      */
@@ -109,6 +102,7 @@ defined('TYPO3_MODE') || die('Access denied.');
     if (1) {
         $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
         $icons = [
+            'user_plugin_taskpanel',
             'tx_timelog_domain_model_project',
             'tx_timelog_domain_model_task',
             'tx_timelog_domain_model_interval'

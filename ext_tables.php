@@ -10,25 +10,6 @@
 defined('TYPO3_MODE') || die('Access denied.');
 
 (function () {
-    $version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version();
-    $version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger($version);
-    if ($version < 10000000) {
-        // For TYPO3 < V10
-        /** @extensionScannerIgnoreLine */
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            'Buepro.Timelog',
-            'Taskpanel',
-            'Task panel'
-        );
-    } else {
-        // For TYPO3 V10
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::registerPlugin(
-            'Timelog',
-            'Taskpanel',
-            'Task panel'
-        );
-    }
-
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_task', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_task.xlf');
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::allowTableOnStandardPages('tx_timelog_domain_model_task');
 

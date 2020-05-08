@@ -80,7 +80,7 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
         if (empty($configuration['persistence']['storagePid'])) {
-            /** @extensionScannerIgnoreLine */
+            // @extensionScannerIgnoreLine
             $this->redirect('error');
         }
     }
@@ -194,12 +194,12 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
     {
         $project = $this->projectRepository->findByHandle($projectHandle)->getFirst();
         if (!$project) {
-            /** @extensionScannerIgnoreLine */
+            // @extensionScannerIgnoreLine
             $this->redirect('list');
         }
         $tasks = $this->taskRepository->findHeapTasks($project);
         if (!$tasks) {
-            /** @extensionScannerIgnoreLine */
+            // @extensionScannerIgnoreLine
             $this->redirect('list', null, null, ['projectHandle' => $projectHandle]);
         }
         $batchDate = new \DateTime('now');
@@ -212,14 +212,14 @@ class TaskController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
             $batchDate->getTimestamp(),
             $tasks[0]->getUid()
         );
-        /** @extensionScannerIgnoreLine */
+        // @extensionScannerIgnoreLine
         $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
     }
 
     public function errorAction()
     {
         if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
-            /** @extensionScannerIgnoreLine */
+            // @extensionScannerIgnoreLine
             $this->addFlashMessage(
                 'The storagePid isn\'t defined. Please review the "Record Storage Page" field and the TS constants.',
                 'Configuration missing',
