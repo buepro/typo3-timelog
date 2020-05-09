@@ -16,3 +16,11 @@ TCEMAIN.preview {
 
 # Hides interval record in list module view
 mod.web_list.hideTables := addToList(tx_timelog_domain_model_interval)
+mod.web_list.tableDisplayOrder {
+  tx_timelog_domain_model_taskgroup {
+    after = tx_timelog_domain_model_project
+  }
+  tx_timelog_domain_model_task {
+    after = tx_timelog_domain_model_taskgroup
+  }
+}

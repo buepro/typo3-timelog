@@ -67,7 +67,7 @@ class DataHandlerHook implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Hook: processDatamap_afterDatabaseOperations
      *
-     * Registers a task or project at the CoreMediator for being updated.
+     * Registers a Project, Task or TaskGroup at the CoreMediator for being updated.
      *
      * When using the hook after INSERT operations, you will only get the temporary NEW... id passed to your hook as $id,
      * but you can easily translate it to the real uid of the inserted record using the $dataHandler->substNEWwithIDs array.
@@ -80,13 +80,20 @@ class DataHandlerHook implements \TYPO3\CMS\Core\SingletonInterface
      */
     public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, $dataHandler)
     {
-        if (in_array($table, ['tx_timelog_domain_model_task', 'tx_timelog_domain_model_project'], true)) {
+        if (in_array($table, [
+            'tx_timelog_domain_model_project',
+            'tx_timelog_domain_model_task',
+            'tx_timelog_domain_model_taskgroup'
+        ], true)) {
             $uid = $id;
             if ($status === 'new') {
                 $uid = $dataHandler->substNEWwithIDs[$id];
             }
             if ($uid) {
                 $className = ucfirst(str_replace('tx_timelog_domain_model_', '', $table));
+                if ($className === 'Taskgroup') {
+                    $className = 'TaskGroup';
+                }
                 $className = 'Buepro\\Timelog\\Domain\\Model\\' . $className;
                 GeneralUtility::makeInstance(CoreMediator::class)
                     ->registerChangedObjectUid($className, $uid);

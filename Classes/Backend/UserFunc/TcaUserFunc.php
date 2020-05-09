@@ -14,19 +14,16 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class TcaUserFunc
 {
-    public function getIntervalLabel(&$parameters)
+    public function getProjectLabel(&$parameters)
     {
-        $interval = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
-        if (!$interval['task']) {
-            return;
+        $textLength = 30;
+        $parts[] = GeneralUtility::fixed_lgd_cs($parameters['row']['title'], $textLength);
+        $parts[] = sprintf('%.1f, %.1f', $parameters['row']['active_time'], $parameters['row']['heap_time']);
+        if ($parameters['row']['client']) {
+            $client = BackendUtility::getRecord('fe_users', $parameters['row']['client']);
+            $parts[] = $client['company'] ?? $client['name'] ?? $client['last_name'] ?? '';
         }
-        $task = BackendUtility::getRecord('tx_timelog_domain_model_task', $interval['task']);
-        $parameters['title'] = sprintf(
-            '%s (%s - %.2f)',
-            $task['title'],
-            BackendUtility::datetime($interval['start_time']),
-            $interval['duration']
-        );
+        $parameters['title'] = implode(' - ', array_filter($parts));
     }
 
     public function getTaskLabel(&$parameters)
@@ -37,6 +34,7 @@ class TcaUserFunc
         } else {
             $parts[] = GeneralUtility::fixed_lgd_cs($parameters['row']['description'], $textLength * 2);
         }
+        $parts[] = sprintf('%.1f', $parameters['row']['active_time']);
         if ($parameters['row']['project']) {
             $project = BackendUtility::getRecord('tx_timelog_domain_model_project', $parameters['row']['project']);
             if ($project && $project['title']) {
@@ -51,15 +49,34 @@ class TcaUserFunc
         $parameters['title'] = implode(' - ', array_filter($parts));
     }
 
-    public function getProjectLabel(&$parameters)
+    public function getTaskGroupLabel(&$parameters)
     {
         $textLength = 30;
         $parts[] = GeneralUtility::fixed_lgd_cs($parameters['row']['title'], $textLength);
-        if ($parameters['row']['client']) {
-            $client = BackendUtility::getRecord('fe_users', $parameters['row']['client']);
-            $parts[] = $client['company'] ?? $client['name'] ?? $client['last_name'] ?? '';
+        $parts[] = sprintf('%.1f, %.1f', $parameters['row']['active_time'], $parameters['row']['time_deviation']);
+        if ($parameters['row']['project']) {
+            $project = BackendUtility::getRecord('tx_timelog_domain_model_project', $parameters['row']['project']);
+            $parts[] = GeneralUtility::fixed_lgd_cs($project['title'], $textLength);
+        }
+        if ($parameters['row']['handle']) {
+            $parts[] = $parameters['row']['handle'];
         }
         $parameters['title'] = implode(' - ', array_filter($parts));
+    }
+
+    public function getIntervalLabel(&$parameters)
+    {
+        $interval = BackendUtility::getRecord($parameters['table'], $parameters['row']['uid']);
+        if (!$interval['task']) {
+            return;
+        }
+        $task = BackendUtility::getRecord('tx_timelog_domain_model_task', $interval['task']);
+        $parameters['title'] = sprintf(
+            '%s (%s - %.2f)',
+            $task['title'],
+            BackendUtility::datetime($interval['start_time']),
+            $interval['duration']
+        );
     }
 
     public function getFeUsersLabel(&$parameters)

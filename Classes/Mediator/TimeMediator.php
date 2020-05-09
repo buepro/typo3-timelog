@@ -10,7 +10,10 @@
 namespace Buepro\Timelog\Mediator;
 
 use Buepro\Timelog\Domain\Model\Project;
+use Buepro\Timelog\Domain\Model\Task;
+use Buepro\Timelog\Domain\Model\TaskGroup;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
+use Buepro\Timelog\Domain\Repository\TaskGroupRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
 use Buepro\Timelog\Event\TaskActiveTimeChangedEvent;
 use Buepro\Timelog\Event\TaskBatchDateChangedEvent;
@@ -18,6 +21,7 @@ use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Object\ObjectManager;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
  * Coordinates everything related to task and project time.
@@ -36,6 +40,11 @@ class TimeMediator implements SingletonInterface
     protected $taskRepository;
 
     /**
+     * @var TaskGroupRepository
+     */
+    protected $taskGroupRepository;
+
+    /**
      * @var ObjectManager
      */
     protected $objectManager;
@@ -45,28 +54,32 @@ class TimeMediator implements SingletonInterface
      *
      * @param ProjectRepository $projectRepository
      * @param TaskRepository $taskRepository
+     * @param TaskGroupRepository $taskGroupRepository
      */
-    public function __construct(ProjectRepository $projectRepository, TaskRepository $taskRepository)
-    {
+    public function __construct(
+        ProjectRepository $projectRepository,
+        TaskRepository $taskRepository,
+        TaskGroupRepository $taskGroupRepository
+    ) {
         $this->projectRepository = $projectRepository;
         $this->taskRepository = $taskRepository;
+        $this->taskGroupRepository = $taskGroupRepository;
     }
 
     /**
-     * Calculates the active, heap and batch time from a project
+     * Calculates the active, heap and batch time from tasks
      *
-     * @param Project $project
+     * @param QueryResultInterface $tasks
      * @return array Contains the keys active, heap and stack
-     * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    private function calcProjectTime(Project $project)
+    private function calcTimeForTasks(QueryResultInterface $tasks)
     {
         $result = [
             'active' => 0.0,
             'heap' => 0.0,
             'batch' => 0.0,
         ];
-        $tasks = $this->taskRepository->findByProject($project);
+        /** @var Task $task */
         foreach ($tasks as $task) {
             $result['active'] += $task->getActiveTime();
             if (!$task->getBatchDate() || $task->getBatchDate()->getTimestamp() === 0) {
@@ -88,11 +101,24 @@ class TimeMediator implements SingletonInterface
     private function updateProjectTime($project)
     {
         if ($project) {
-            $projectTime = $this->calcProjectTime($project);
+            $tasks = $this->taskRepository->findByProject($project);
+            $projectTime = $this->calcTimeForTasks($tasks);
             $project->setActiveTime($projectTime['active']);
             $project->setHeapTime($projectTime['heap']);
             $project->setBatchTime($projectTime['batch']);
             $this->projectRepository->update($project);
+        }
+    }
+
+    private function updateTaskGroupTime(TaskGroup $taskGroup)
+    {
+        if ($taskGroup) {
+            $tasks = $this->taskRepository->findByTaskGroup($taskGroup);
+            $taskGroupTime = $this->calcTimeForTasks($tasks);
+            $taskGroup->setActiveTime($taskGroupTime['active']);
+            $taskGroup->setHeapTime($taskGroupTime['heap']);
+            $taskGroup->setBatchTime($taskGroupTime['batch']);
+            $this->taskGroupRepository->update($taskGroup);
         }
     }
 
@@ -107,7 +133,12 @@ class TimeMediator implements SingletonInterface
      */
     public function handleTaskActiveTimeChangedEvent(TaskActiveTimeChangedEvent $event)
     {
-        $this->updateProjectTime($event->getTask()->getProject());
+        if ($event->getTask()->getProject()) {
+            $this->updateProjectTime($event->getTask()->getProject());
+        }
+        if ($event->getTask()->getTaskGroup()) {
+            $this->updateTaskGroupTime($event->getTask()->getTaskGroup());
+        }
     }
 
     /**
@@ -118,6 +149,11 @@ class TimeMediator implements SingletonInterface
      */
     public function handleTaskBatchDateChangedEvent(TaskBatchDateChangedEvent $event)
     {
-        $this->updateProjectTime($event->getTask()->getProject());
+        if ($event->getTask()->getProject()) {
+            $this->updateProjectTime($event->getTask()->getProject());
+        }
+        if ($event->getTask()->getTaskGroup()) {
+            $this->updateTaskGroupTime($event->getTask()->getTaskGroup());
+        }
     }
 }

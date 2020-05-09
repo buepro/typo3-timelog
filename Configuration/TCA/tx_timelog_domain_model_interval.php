@@ -42,7 +42,6 @@ return [
                 'max' => 255,
             ],
         ],
-
         'start_time' => [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_interval.start_time',

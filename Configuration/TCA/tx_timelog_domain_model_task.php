@@ -30,11 +30,11 @@ return [
     ],
     'types' => [
         '1' => [
-            'showitem' =>
-                '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                        project, worker, title, description, active_time, intervals, 
-                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle, 
-                        --palette--;;batch',
+            'showitem' => '
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
+                    project, worker, task_group, title, description, active_time, intervals, 
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle, 
+                    --palette--;;batch',
         ]
     ],
     'columns' => [
@@ -46,7 +46,6 @@ return [
                 'max' => 255,
             ],
         ],
-
         'handle' => [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.handle',
@@ -112,6 +111,21 @@ return [
                 'maxitems' => 1,
             ],
         ],
+        'task_group' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_taskgroup',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_timelog_domain_model_taskgroup',
+                'foreign_table_where' => '{#tx_timelog_domain_model_taskgroup}.{#project} = ###REC_FIELD_project### ORDER BY tx_timelog_domain_model_taskgroup.tstamp DESC',
+                'default' => 0,
+                'size' => 3,
+                'autoSizeMax' => 5,
+                'minitems' => 0,
+                'maxitems' => 1,
+            ],
+        ],
         'worker' => [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.worker',
@@ -163,6 +177,5 @@ return [
             ],
 
         ],
-
     ],
 ];

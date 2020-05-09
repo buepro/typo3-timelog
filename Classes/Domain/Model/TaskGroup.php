@@ -10,9 +10,9 @@
 namespace Buepro\Timelog\Domain\Model;
 
 /**
- * Project
+ * TaskGroup
  */
-class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Buepro\Timelog\Domain\Model\UpdateInterface
+class TaskGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Buepro\Timelog\Domain\Model\UpdateInterface
 {
 
     /**
@@ -44,6 +44,20 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     protected $internalNote = '';
 
     /**
+     * timeTarget in hours
+     *
+     * @var float
+     */
+    protected $timeTarget = 0.0;
+
+    /**
+     * timeDeviation in hours
+     *
+     * @var float
+     */
+    protected $timeDeviation = 0.0;
+
+    /**
      * Sum from the tasks activeTime in hours
      *
      * @var float
@@ -65,25 +79,11 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     protected $batchTime = 0.0;
 
     /**
-     * client
+     * project
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+     * @var Project
      */
-    protected $client = null;
-
-    /**
-     * owner
-     *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
-     */
-    protected $owner = null;
-
-    /**
-     * ccEmail
-     *
-     * @var string
-     */
-    protected $ccEmail = '';
+    protected $project = null;
 
     /**
      * tasks
@@ -92,14 +92,6 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
      */
     protected $tasks = null;
-
-    /**
-     * taskGroups
-     *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\TaskGroup>
-     * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
-     */
-    protected $taskGroups = null;
 
     /**
      * __construct
@@ -121,7 +113,6 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     protected function initStorageObjects()
     {
         $this->tasks = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->taskGroups = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
     /**
@@ -209,6 +200,48 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     }
 
     /**
+     * Returns the timeTarget
+     *
+     * @return float $timeTarget
+     */
+    public function getTimeTarget()
+    {
+        return $this->timeTarget;
+    }
+
+    /**
+     * Sets the timeTarget
+     *
+     * @param float $timeTarget
+     * @return void
+     */
+    public function setTimeTarget($timeTarget)
+    {
+        $this->timeTarget = $timeTarget;
+    }
+
+    /**
+     * Returns the timeDeviation
+     *
+     * @return float $timeDeviation
+     */
+    public function getTimeDeviation()
+    {
+        return $this->timeDeviation;
+    }
+
+    /**
+     * Sets the timeDeviation
+     *
+     * @param float $timeDeviation
+     * @return void
+     */
+    public function setTimeDeviation($timeDeviation)
+    {
+        $this->timeDeviation = $timeDeviation;
+    }
+
+    /**
      * Returns the activeTime
      *
      * @return float $activeTime
@@ -227,6 +260,7 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     public function setActiveTime($activeTime)
     {
         $this->activeTime = $activeTime;
+        $this->update();
     }
 
     /**
@@ -272,66 +306,24 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     }
 
     /**
-     * Returns the client
+     * Returns the project
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $client
+     * @return \Buepro\Timelog\Domain\Model\Project $project
      */
-    public function getClient()
+    public function getProject()
     {
-        return $this->client;
+        return $this->project;
     }
 
     /**
-     * Sets the client
+     * Sets the project
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $client
+     * @param \Buepro\Timelog\Domain\Model\Project $project
      * @return void
      */
-    public function setClient(\TYPO3\CMS\Extbase\Domain\Model\FrontendUser $client)
+    public function setProject(\Buepro\Timelog\Domain\Model\Project $project)
     {
-        $this->client = $client;
-    }
-
-    /**
-     * Returns the owner
-     *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $owner
-     */
-    public function getOwner()
-    {
-        return $this->owner;
-    }
-
-    /**
-     * Sets the owner
-     *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $owner
-     * @return void
-     */
-    public function setOwner(\TYPO3\CMS\Extbase\Domain\Model\FrontendUser $owner)
-    {
-        $this->owner = $owner;
-    }
-
-    /**
-     * Returns the ccEmail
-     *
-     * @return string $ccEmail
-     */
-    public function getCcEmail()
-    {
-        return $this->ccEmail;
-    }
-
-    /**
-     * Sets the ccEmail
-     *
-     * @param string $ccEmail
-     * @return void
-     */
-    public function setCcEmail($ccEmail)
-    {
-        $this->ccEmail = $ccEmail;
+        $this->project = $project;
     }
 
     /**
@@ -378,55 +370,10 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     }
 
     /**
-     * Adds a TaskGroup
-     *
-     * @param \Buepro\Timelog\Domain\Model\TaskGroup $taskGroup
-     * @return void
-     */
-    public function addTaskGroup(\Buepro\Timelog\Domain\Model\TaskGroup $taskGroup)
-    {
-        $this->taskGroups->attach($taskGroup);
-    }
-
-    /**
-     * Removes a TaskGroup
-     *
-     * @param \Buepro\Timelog\Domain\Model\TaskGroup $taskGroupToRemove The TaskGroup to be removed
-     * @return void
-     */
-    public function removeTaskGroup(\Buepro\Timelog\Domain\Model\TaskGroup $taskGroupToRemove)
-    {
-        $this->taskGroups->detach($taskGroupToRemove);
-    }
-
-    /**
-     * Returns the taskGroups
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\TaskGroup> $taskGroups
-     */
-    public function getTaskGroups()
-    {
-        return $this->taskGroups;
-    }
-
-    /**
-     * Sets the taskGroups
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\TaskGroup> $taskGroups
-     * @return void
-     */
-    public function setTaskGroups(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $taskGroups)
-    {
-        $this->taskGroups = $taskGroups;
-    }
-
-    /**
-     * Updates its state
-     *
-     * @return void
+     * Updates the object state
      */
     public function update()
     {
-        // TODO: Implement Update() method.
+        $this->timeDeviation = $this->getTimeTarget() - $this->getActiveTime();
     }
 }
