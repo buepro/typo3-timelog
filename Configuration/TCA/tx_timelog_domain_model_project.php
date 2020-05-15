@@ -45,7 +45,8 @@ return [
                         --palette--;;texts,
                         --palette--;;times,
                         tasks,
-                    --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle',
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:extended, task_groups,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle',
         ]
     ],
     'columns' => [
@@ -57,7 +58,6 @@ return [
                 'max' => 255,
             ],
         ],
-
         'handle' => [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.handle',
@@ -212,7 +212,7 @@ return [
         ],
         'tasks' => [
             'exclude' => false,
-            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.tasks',
+            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tasks',
             'config' => [
                 'type' => 'inline',
                 'foreign_table' => 'tx_timelog_domain_model_task',
@@ -226,8 +226,23 @@ return [
                     'showAllLocalizationLink' => 1
                 ],
             ],
-
         ],
-
+        'task_groups' => [
+            'exclude' => false,
+            'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.task_groups',
+            'config' => [
+                'type' => 'inline',
+                'foreign_table' => 'tx_timelog_domain_model_taskgroup',
+                'foreign_field' => 'project',
+                'maxitems' => 9999,
+                'appearance' => [
+                    'collapseAll' => 1,
+                    'levelLinksPosition' => 'top',
+                    'showSynchronizationLink' => 1,
+                    'showPossibleLocalizationRecords' => 1,
+                    'showAllLocalizationLink' => 1
+                ],
+            ],
+        ],
     ],
 ];

@@ -69,8 +69,44 @@
 			<trans-unit id="tx_timelog_domain_model_project.owner">
 				<source>Owner</source>
 			</trans-unit>
+
+			<trans-unit id="batch">
+				<source>Batch</source>
+			</trans-unit>
+			<trans-unit id="taskGroup">
+				<source>Task group</source>
+			</trans-unit>
+
+			<trans-unit id="active_time">
+				<source>Active time</source>
+			</trans-unit>
+			<trans-unit id="heap_time">
+				<source>Heap time</source>
+			</trans-unit>
+			<trans-unit id="batch_time">
+				<source>Batch time</source>
+			</trans-unit>
+			<trans-unit id="handle">
+				<source>Handle</source>
+			</trans-unit>
+			<trans-unit id="projectHandle">
+				<source>Project handle</source>
+			</trans-unit>
+			<trans-unit id="taskGroupHandle">
+				<source>Task group handle</source>
+			</trans-unit>
+			<trans-unit id="batchHandle">
+				<source>Batch handle</source>
+			</trans-unit>
+			<trans-unit id="taskHandle">
+				<source>Task handle</source>
+			</trans-unit>
+
 			<trans-unit id="hourAbbreviation">
 				<source>h</source>
+			</trans-unit>
+			<trans-unit id="date">
+				<source>Date</source>
 			</trans-unit>
 			<trans-unit id="sendMailTo">
 				<source>Send email to %s</source>
@@ -87,9 +123,6 @@
 			<trans-unit id="projectProgressText">
 				<source>Your project %s is progressing. Currently there are %.1f hours registered in our time recording (%.1f heap houres). The following work has been done recently:</source>
 			</trans-unit>
-			<trans-unit id="date">
-				<source>Date</source>
-			</trans-unit>
 			<trans-unit id="greeting">
 				<source>Best regards</source>
 			</trans-unit>
@@ -105,6 +138,18 @@
 			<trans-unit id="heapedTasks">
 				<source>Heaped tasks</source>
 			</trans-unit>
+			<trans-unit id="heapProjectListTitle">
+				<source>Heaped tasks from project %s</source>
+			</trans-unit>
+			<trans-unit id="heapGroupListTitle">
+				<source>Heaped tasks from group %s</source>
+			</trans-unit>
+			<trans-unit id="batchProjectListTitle">
+				<source>Batched tasks (%s) from project %s</source>
+			</trans-unit>
+			<trans-unit id="batchGroupListTitle">
+				<source>Batched tasks (%s) from group %s</source>
+			</trans-unit>
 			<trans-unit id="sendEmailToClient">
 				<source>Send email to client</source>
 			</trans-unit>
@@ -113,15 +158,6 @@
 			</trans-unit>
 			<trans-unit id="tasks">
 				<source>Tasks</source>
-			</trans-unit>
-			<trans-unit id="projectHandle">
-				<source>Project handle</source>
-			</trans-unit>
-			<trans-unit id="batchHandle">
-				<source>Batch handle</source>
-			</trans-unit>
-			<trans-unit id="taskHandle">
-				<source>Task handle</source>
 			</trans-unit>
 			<trans-unit id="findtasks">
 				<source>Find tasks</source>
@@ -140,6 +176,12 @@
 			</trans-unit>
 			<trans-unit id="noProjectsFound">
 				<source>No projects were found for the given criteria.</source>
+			</trans-unit>
+			<trans-unit id="includeAll">
+				<source>Include all</source>
+			</trans-unit>
+			<trans-unit id="excludeAll">
+				<source>Exclude all</source>
 			</trans-unit>
 		</body>
 	</file>

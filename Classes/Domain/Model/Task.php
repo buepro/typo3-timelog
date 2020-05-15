@@ -13,16 +13,6 @@ use Buepro\Timelog\Event\TaskActiveTimeChangedEvent;
 use Buepro\Timelog\Event\TaskBatchDateChangedEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 
-/***
- *
- * This file is part of the "Timelog" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2019 Roman Büchler <rb@buechler.pro>, buechler.pro
- *
- ***/
 /**
  * Task
  */
@@ -70,6 +60,13 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
      * @var \Buepro\Timelog\Domain\Model\Project
      */
     protected $project = null;
+
+    /**
+     * taskGroup
+     *
+     * @var \Buepro\Timelog\Domain\Model\TaskGroup
+     */
+    protected $taskGroup = null;
 
     /**
      * worker
@@ -316,6 +313,27 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     public function setProject(\Buepro\Timelog\Domain\Model\Project $project)
     {
         $this->project = $project;
+    }
+
+    /**
+     * Returns the taskGroup
+     *
+     * @return \Buepro\Timelog\Domain\Model\TaskGroup $taskGroup
+     */
+    public function getTaskGroup()
+    {
+        return $this->taskGroup;
+    }
+
+    /**
+     * Sets the taskGroup
+     *
+     * @param \Buepro\Timelog\Domain\Model\TaskGroup $taskGroup
+     * @return void
+     */
+    public function setTaskGroup(\Buepro\Timelog\Domain\Model\TaskGroup $taskGroup)
+    {
+        $this->taskGroup = $taskGroup;
     }
 
     /**

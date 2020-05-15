@@ -16,5 +16,5 @@ namespace Buepro\Timelog\Domain\Model;
  */
 interface UpdateInterface
 {
-    public function Update();
+    public function update();
 }

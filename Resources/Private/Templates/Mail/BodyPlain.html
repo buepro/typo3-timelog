@@ -22,7 +22,7 @@
 
 <f:section name="PlainTextTask">
 =====================================
-{task.endTime -> f:format.date(format: 'd.m.Y')} | {task.activeTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation', extensionName: 'timelog')} | {task.handle}
+{task.endTime -> f:format.date(format: 'd.m.Y')} | {task.activeTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation', extensionName: 'timelog')} | {task.handle}<f:if condition="task.taskGroup"> | <f:format.crop maxCharacters="16" append="..">{task.taskGroup.title}</f:format.crop></f:if>
 -------------------------------------
 {task.title}
 -------------------------------------

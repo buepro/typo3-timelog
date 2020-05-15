@@ -3,6 +3,31 @@
 	<file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog">
 		<header/>
 		<body>
+			<trans-unit id="handle">
+				<source>Handle</source>
+			</trans-unit>
+			<trans-unit id="title">
+				<source>Title</source>
+			</trans-unit>
+			<trans-unit id="description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="internal_note">
+				<source>Internal note</source>
+			</trans-unit>
+			<trans-unit id="active_time">
+				<source>Active time</source>
+			</trans-unit>
+			<trans-unit id="heap_time">
+				<source>Heap time</source>
+			</trans-unit>
+			<trans-unit id="batch_time">
+				<source>Batch time</source>
+			</trans-unit>
+			<trans-unit id="tasks">
+				<source>Tasks</source>
+			</trans-unit>
+
 			<trans-unit id="tx_timelog_domain_model_task">
 				<source>Task</source>
 			</trans-unit>
@@ -16,7 +41,7 @@
 				<source>Description</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.active_time">
-				<source>Active Time</source>
+				<source>Active time</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.batch_date">
 				<source>Batch Date</source>
@@ -34,10 +59,10 @@
 				<source>Interval</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_interval.start_time">
-				<source>Start Time</source>
+				<source>Start time</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_interval.end_time">
-				<source>End Time</source>
+				<source>End time</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_interval.duration">
 				<source>Duration</source>
@@ -58,13 +83,13 @@
 				<source>Internal note</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.active_time">
-				<source>Active Time</source>
+				<source>Active time</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.heap_time">
-				<source>Heap Time</source>
+				<source>Heap time</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.batch_time">
-				<source>Batch Time</source>
+				<source>Batch time</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.client">
 				<source>Client</source>
@@ -72,17 +97,26 @@
 			<trans-unit id="tx_timelog_domain_model_project.owner">
 				<source>Owner</source>
 			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project.tasks">
-				<source>Tasks</source>
-			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.cc_email">
 				<source>CC Email</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.task_groups">
+				<source>Task groups</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_taskpanel.name">
 				<source>Task panel</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_taskpanel.description">
 				<source></source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_taskgroup">
+				<source>Task group</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_taskgroup.time_target">
+				<source>Time target</source>
+			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_taskgroup.time_deviation">
+				<source>Time deviation</source>
 			</trans-unit>
 		</body>
 	</file>

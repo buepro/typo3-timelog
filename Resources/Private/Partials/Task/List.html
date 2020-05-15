@@ -5,18 +5,59 @@
 
 <div class="tx-timelog-tasklist col">
     <header class="frame-header">
+        <f:variable name="taskGroupLink">
+            <f:link.action arguments="{taskGroupHandle: taskGroup.handle}" section="{project.handle}"
+                           absolute="1" title="{f:translate(key: 'taskGroupHandle')}">
+                {taskGroup.title} ({taskGroup.handle})
+            </f:link.action>
+        </f:variable>
+        <f:variable name="projectLink">
+            <f:link.action arguments="{projectHandle: project.handle}" section="{project.handle}"
+                           absolute="1" title="{f:translate(key: 'projectHandle')}">
+                {project.title} ({project.handle})
+            </f:link.action>
+        </f:variable>
         <f:if condition="{batch}">
             <f:then>
-                <f:variable name="batchLink">
-                    <f:link.action arguments="{batchHandle: batch.handle}" section="{project.handle}"
-                                   absolute="1" title="{f:translate(key: 'batchHandle')}">
-                        {batch.handle}
-                    </f:link.action>
-                </f:variable>
-                <h4>Gestapelte Arbeiten ({batchLink -> f:format.htmlentitiesDecode()})</h4>
+                <f:variable name="batchLink"><f:link.action
+                    arguments="{batchHandle: batch.handle}"
+                    section="{project.handle}"
+                    absolute="1"
+                    title="{f:translate(key: 'batchHandle')}">{batch.handle}</f:link.action></f:variable>
+                <h4>
+                    <f:format.htmlentitiesDecode>
+                        <f:if condition="{taskGroup}">
+                            <f:then>
+                                <f:format.printf arguments="{0: batchLink, 1: taskGroupLink}">
+                                    {f:translate(key: 'batchGroupListTitle')}
+                                </f:format.printf>
+                            </f:then>
+                            <f:else>
+                                <f:format.printf arguments="{0: batchLink, 1: projectLink}">
+                                    {f:translate(key: 'batchProjectListTitle')}
+                                </f:format.printf>
+                            </f:else>
+                        </f:if>
+                    </f:format.htmlentitiesDecode>
+                </h4>
             </f:then>
             <f:else>
-                <h4>Gehäufte Arbeiten</h4>
+                <h4>
+                    <f:format.htmlentitiesDecode>
+                        <f:if condition="{taskGroup}">
+                            <f:then>
+                                <f:format.printf arguments="{0: taskGroupLink}">
+                                    {f:translate(key: 'heapGroupListTitle')}
+                                </f:format.printf>
+                            </f:then>
+                            <f:else>
+                                <f:format.printf arguments="{0: projectLink}">
+                                    {f:translate(key: 'heapProjectListTitle')}
+                                </f:format.printf>
+                            </f:else>
+                        </f:if>
+                    </f:format.htmlentitiesDecode>
+                </h4>
             </f:else>
         </f:if>
     </header>
@@ -29,10 +70,23 @@
                         {task.activeTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation')}
                     </div>
                     <div class="col-auto col-md-12">
-                        <f:link.action arguments="{taskHandle: task.handle}" section="{task.handle}">
-                            {task.handle}
+                        <f:link.action arguments="{taskHandle: task.handle}"
+                                       section="{task.handle}"
+                                       title="{f:translate(key: 'taskHandle')}">
+                            <small>{task.handle}</small>
                         </f:link.action>
                     </div>
+                    <f:if condition="{task.taskGroup}">
+                        <div class="col-auto col-md-12">
+                            <f:link.action arguments="{taskGroupHandle: task.taskGroup.handle}"
+                                           title="{task.taskGroup.title}">
+                                <small>
+                                    <f:format.crop maxCharacters="10" append="..">{task.taskGroup.title}</f:format.crop>
+                                </small>
+                            </f:link.action>
+                        </div>
+                    </f:if>
+
                 </div>
             </div>
             <div class="tlc-desc col py-3">

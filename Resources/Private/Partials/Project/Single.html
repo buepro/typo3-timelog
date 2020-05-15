@@ -37,14 +37,14 @@
             <div class="col-md-7">
                 <table class="table table-sm table-striped">
                     <tbody>
-                    <f:if condition="{clientName}">
-                        <tr>
-                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.client')}</th>
-                            <td>
-                                {clientName}
-                            </td>
-                        </tr>
-                    </f:if>
+                        <f:if condition="{clientName}">
+                            <tr>
+                                <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.client')}</th>
+                                <td>
+                                    {clientName}
+                                </td>
+                            </tr>
+                        </f:if>
                     <tr>
                         <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.handle')}</th>
                         <td>
@@ -57,10 +57,8 @@
                             </f:if>
                         </td>
                     </tr>
-                    {f:variable(name: 'showCreateBatch', value: 1)
-                        -> f:if(condition: '{project.heapTime} > 0')}
                     <f:be.security.ifAuthenticated>
-                        <f:if condition="{sendMailToClient} || {showCreateBatch}">
+                        <f:if condition="{sendMailToClient} || {hasTasksOnHeap}">
                             <tr>
                                 <th scope="row">{f:translate(key: 'actions')}</th>
                                 <td>
@@ -74,8 +72,11 @@
                                         <ion-icon class="text-danger" name="close"></ion-icon>
                                     </span><br />
                                     </f:if>
-                                    <f:if condition="{showCreateBatch}">
-                                        <f:link.action action="createBatch" arguments="{projectHandle: project.handle}"
+                                    <f:if condition="{hasTasksOnHeap}">
+                                        {f:variable(name: '_taskGroupHandle', value: 'exclude') -> f:if(condition: taskGroupExclude)}
+                                        {f:variable(name: '_taskGroupHandle', value: taskGroup.handle) -> f:if(condition: taskGroup)}
+                                        <f:link.action action="createBatch"
+                                                       arguments="{projectHandle: project.handle, taskGroupHandle: _taskGroupHandle}"
                                                        title="{f:translate(key: 'createBatch')}">
                                             {settings.icons.batchTasksTag -> f:format.htmlentitiesDecode()} {f:translate(key: 'createBatch')}<br />
                                         </f:link.action>
@@ -84,7 +85,6 @@
                             </tr>
                         </f:if>
                     </f:be.security.ifAuthenticated>
-
                     </tbody>
                 </table>
             </div>
@@ -92,43 +92,123 @@
                 <table class="table table-sm table-striped">
                     <tbody>
                         <tr>
-                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.active_time')}</th>
-                            <td>{project.activeTime -> f:format.number(decimals: 2)}h</td>
+                            <th scope="row">{f:translate(key: 'active_time')}</th>
+                            <td>{project.activeTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
                         </tr>
                         <tr>
-                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.heap_time')}</th>
-                            <td>{project.heapTime -> f:format.number(decimals: 2)}h</td>
+                            <th scope="row">{f:translate(key: 'heap_time')}</th>
+                            <td>{project.heapTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
                         </tr>
                         <tr>
-                            <th scope="row">{f:translate(key: 'tx_timelog_domain_model_project.batch_time')}</th>
-                            <td>{project.batchTime -> f:format.number(decimals: 2)}h</td>
+                            <th scope="row">{f:translate(key: 'batch_time')}</th>
+                            <td>{project.batchTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <f:if condition="{batches}">
-            <div class="mt-2">
-                <h5>{f:translate(key: 'tasks')}</h5>
-                <f:form action="list" arguments="{projectHandle: project.handle}">
-                    <div class="form-group">
-                        <f:form.select name="batchHandle" class="form-control" additionalAttributes="{onchange: 'this.form.submit()'}">
-                            <f:form.select.option value="" selected="{batch.handle} == ''">
-                                {f:translate(key: 'heapedTasks')}
-                            </f:form.select.option>
-                            <f:for each="{batches}" as="abatch">
-                                <f:form.select.option value="{abatch.handle}" selected="{batch.handle} == {abatch.handle}">
-                                    {abatch.date -> f:format.date(format: settings.general.dateTimeFormat)}
-                                    - {abatch.sumActiveTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation')}
-                                    - {abatch.handle}
-                                </f:form.select.option>
-                            </f:for>
-                        </f:form.select>
-                    </div>
-                </f:form>
-            </div>
-        </f:if>
+        <f:render section="taskFilter" arguments="{_all}" />
     </div>
 </div>
+
+<f:section name="taskFilter">
+    <f:if condition="{taskGroups} || {batches}">
+        <div class="tx-timelog-taskfilter">
+            <f:form action="list" arguments="{projectHandle: project.handle}">
+                <f:if condition="{taskGroups}">
+                    <div class="tx-timelog-taskgroupfilter mt-3">
+                        <h5>{f:translate(key: 'taskGroup')}</h5>
+                        <div class="form-group">
+                            <f:form.select name="taskGroupHandle" class="form-control" additionalAttributes="{onchange: '$(\'#tx-timelog-formfield-batchhandle\').val (\'\'); this.form.submit()'}">
+                                <f:form.select.option value="" selected="{v:condition.variable.isNull(value: taskGroup, then: 1, else: 0)}">
+                                    {f:translate(key: 'includeAll')}
+                                </f:form.select.option>
+                                <f:form.select.option value="exclude" selected="{taskGroupExclude}">
+                                    {f:translate(key: 'excludeAll')}
+                                </f:form.select.option>
+                                <f:for each="{taskGroups}" as="aTaskGroup">
+                                    <f:form.select.option value="{aTaskGroup.handle}" selected="{taskGroup.handle} == {aTaskGroup.handle}">
+                                        {aTaskGroup.title} - {aTaskGroup.handle}
+                                    </f:form.select.option>
+                                </f:for>
+                            </f:form.select>
+                        </div>
+                    </div>
+                    <f:render section="taskGroupInfo" arguments="{taskGroup: taskGroup}" />
+                </f:if>
+                <f:if condition="{batches}">
+                    <div class="tx-timelog-batchfilter mt-3">
+                        <h5>{f:translate(key: 'batch')}</h5>
+                        <div class="form-group">
+                            <f:form.select id="tx-timelog-formfield-batchhandle" name="batchHandle" class="form-control" additionalAttributes="{onchange: 'this.form.submit()'}">
+                                <f:form.select.option value="" selected="{batch.handle} == ''">
+                                    {f:translate(key: 'heapedTasks')}
+                                </f:form.select.option>
+                                <f:for each="{batches}" as="aBatch">
+                                    <f:form.select.option value="{aBatch.handle}" selected="{batch.handle} == {aBatch.handle}">
+                                        {aBatch.date -> f:format.date(format: settings.general.dateTimeFormat)}
+                                        - {aBatch.sumActiveTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation')}
+                                        - {aBatch.handle}
+                                    </f:form.select.option>
+                                </f:for>
+                            </f:form.select>
+                        </div>
+                    </div>
+                </f:if>
+            </f:form>
+        </div>
+    </f:if>
+</f:section>
+
+<f:section name="taskGroupInfo">
+    <f:if condition="{v:condition.variable.isNull(value: taskGroup, then: 0, else: 1)}">
+        <div class="tx-timelog-taskgroup-info row">
+            <div class="col-md-7">
+                <table class="table table-sm table-striped">
+                    <tbody>
+                        <f:if condition="{taskGroup.description}">
+                            <tr>
+                                <td colspan="2">
+                                    <f:render partial="Helper/Parsedown"
+                                              arguments="{text: taskGroup.description, settings: settings.markdown}" />
+                                </td>
+                            </tr>
+                        </f:if>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'handle')}</th>
+                            <td>
+                                <f:if condition="{taskGroup.handle}">
+                                    <f:link.action controller="Task" action="list"
+                                                   arguments="{taskGroupHandle: taskGroup.handle}" section="{project.handle}"
+                                                   absolute="1" title="{f:translate(key: 'taskGroupHandle')}">
+                                        {taskGroup.handle}
+                                    </f:link.action>
+                                </f:if>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-5">
+                <table class="table table-sm table-striped">
+                    <tbody>
+                    <tr>
+                        <th scope="row">{f:translate(key: 'active_time')}</th>
+                        <td>{taskGroup.activeTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{f:translate(key: 'heap_time')}</th>
+                        <td>{taskGroup.heapTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">{f:translate(key: 'batch_time')}</th>
+                        <td>{taskGroup.batchTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </f:if>
+</f:section>
 </html>
 
