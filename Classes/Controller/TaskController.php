@@ -111,17 +111,19 @@ class TaskController extends ActionController
         string $batchHandle = '',
         string $taskHandle = ''
     ) {
+        $emptyModels = [
+            'project' => null,
+            'tasks' => null,
+            'taskGroup' => null,
+            'taskGroups' => null,
+            'batch' => null,
+            'batches' => null
+        ];
+
         // Return empty result in case no handle is provided
         $handles = implode('', func_get_args());
         if ($handles === '' || $handles === 'exclude') {
-            return [
-                'project' => null,
-                'tasks' => null,
-                'taskGroup' => null,
-                'taskGroups' => null,
-                'batch' => null,
-                'batches' => null
-            ];
+            return $emptyModels;
         }
 
         /**
@@ -265,8 +267,10 @@ class TaskController extends ActionController
             'batches' => $batches
         ] = $models;
 
+        $tasksCount = 0;
         $hasTasksOnHeap = false;
         if ($tasks instanceof QueryResultInterface && $tasks->count()) {
+            $tasksCount = $tasks->count();
             foreach($tasks as $aTask) {
                 if (!$aTask->getBatchDate()) {
                     $hasTasksOnHeap = true;
@@ -284,7 +288,7 @@ class TaskController extends ActionController
             'taskGroups' => $taskGroups,
             'batch' => $batch,
             'batches' => $batches,
-            'noTasksFound' => ($projectHandle || $taskGroupHandle || $batchHandle || $taskHandle) && !$tasks->count(),
+            'noTasksFound' => ($projectHandle || $taskGroupHandle || $batchHandle || $taskHandle) && !$tasksCount,
             'hasTasksOnHeap' => $hasTasksOnHeap,
             'settings' => $this->settings,
         ]);

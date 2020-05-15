@@ -180,7 +180,7 @@ class TaskRepository extends Repository
      * @param int $batchTime
      * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
      */
-    public function findForFilter(Project $project, Task $task = null, $taskGroupFilter = null, int $batchTime = 0)
+    public function findForFilter(Project $project = null, Task $task = null, $taskGroupFilter = null, int $batchTime = 0)
     {
         if (!$project && !$task && !($taskGroupFilter instanceof TaskGroup)) {
             return null;
