@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog" target-language="fi">
+    <header/>
+    <body>
+      <trans-unit id="handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Kahva</target>
+      </trans-unit>
+      <trans-unit id="title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titteli</target>
+      </trans-unit>
+      <trans-unit id="description" approved="yes">
+        <source>Description</source>
+        <target state="final">Kuvaus</target>
+      </trans-unit>
+      <trans-unit id="internal_note" approved="yes">
+        <source>Internal note</source>
+        <target state="final">Sisäinen huomautus</target>
+      </trans-unit>
+      <trans-unit id="active_time" approved="yes">
+        <source>Active time</source>
+        <target state="final">Aktiivinen aika</target>
+      </trans-unit>
+      <trans-unit id="heap_time" approved="yes">
+        <source>Heap time</source>
+        <target state="final">Lajittelematon aika</target>
+      </trans-unit>
+      <trans-unit id="batch_time" approved="yes">
+        <source>Batch time</source>
+        <target state="final">Erän nimi</target>
+      </trans-unit>
+      <trans-unit id="tasks" approved="yes">
+        <source>Tasks</source>
+        <target state="final">Tehtävät</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task" approved="yes">
+        <source>Task</source>
+        <target state="final">Tehtävä</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Viite</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titteli</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.description" approved="yes">
+        <source>Description</source>
+        <target state="final">Kuvaus</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.active_time" approved="yes">
+        <source>Active time</source>
+        <target state="final">Aktiivinen aika</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
+        <source>Batch Date</source>
+        <target state="final">Erän päivämäärä</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.project" approved="yes">
+        <source>Project</source>
+        <target state="final">Projekti</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.worker" approved="yes">
+        <source>Worker</source>
+        <target state="final">Tekijä</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.intervals" approved="yes">
+        <source>Intervals</source>
+        <target state="final">Aikaväli</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval" approved="yes">
+        <source>Interval</source>
+        <target state="final">Aikaväli</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.start_time" approved="yes">
+        <source>Start time</source>
+        <target state="final">Start time</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.end_time" approved="yes">
+        <source>End time</source>
+        <target state="final">Päättymisaika</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.duration" approved="yes">
+        <source>Duration</source>
+        <target state="final">Kesto</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project" approved="yes">
+        <source>Project</source>
+        <target state="final">Projekti</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Viite</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titteli</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.description" approved="yes">
+        <source>Description</source>
+        <target state="final">Kuvaus</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.internal_note" approved="yes">
+        <source>Internal note</source>
+        <target state="final">Sisäinen huomautus</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.active_time" approved="yes">
+        <source>Active time</source>
+        <target state="final">Aktiivinen aika</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.heap_time" approved="yes">
+        <source>Heap time</source>
+        <target state="final">Lajittelematon aika</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.batch_time" approved="yes">
+        <source>Batch time</source>
+        <target state="final">Erän nimi</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
+        <source>Client</source>
+        <target state="final">Asiakas</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.owner" approved="yes">
+        <source>Owner</source>
+        <target state="final">Omistaja</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.cc_email" approved="yes">
+        <source>CC Email</source>
+        <target state="final">CC-sähköposti</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.task_groups" approved="yes">
+        <source>Task groups</source>
+        <target state="final">Tehtäväryhmät</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_taskpanel.name" approved="yes">
+        <source>Task panel</source>
+        <target state="final">Tehtäväpaneeli</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_taskpanel.description">
+        <source/>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_taskgroup" approved="yes">
+        <source>Task group</source>
+        <target state="final">Tehtäväryhmä</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_taskgroup.time_target" approved="yes">
+        <source>Time target</source>
+        <target state="final">Aikatavoite</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_taskgroup.time_deviation" approved="yes">
+        <source>Time deviation</source>
+        <target state="final">Ajan poikkeama</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
