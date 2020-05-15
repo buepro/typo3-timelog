@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog" target-language="fi">
+    <header/>
+    <body>
+      <trans-unit id="active_time.description" approved="yes">
+        <source>Sum from the tasks activeTime in hours</source>
+        <target state="final">Aktiivisten tehtävien summa tunteina</target>
+      </trans-unit>
+      <trans-unit id="heap_time.description" approved="yes">
+        <source>Sum from active time from tasks that are not batched yet</source>
+        <target state="final">Aktiivisten tehtävien summa, joita ei ole lajiteltu vielä</target>
+      </trans-unit>
+      <trans-unit id="batch_time.description" approved="yes">
+        <source>Sum from active time from tasks that are batched</source>
+        <target state="final">Aktiivisten tehtävien summa, jotka on lajiteltu</target>
+      </trans-unit>
+      <trans-unit id="cc_email.description" approved="yes">
+        <source>Single email address or coma separated list from email addresses receiving the email as CC.</source>
+        <target state="final">Yksinkertainen sähköpostiosoite tai pilkulla eritelty lista sähköpostiosoitteista, jotka vastaanottavat sähköpostia CC:nä.</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
