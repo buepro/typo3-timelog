@@ -6,23 +6,8 @@
 			<trans-unit id="tx_timelog_domain_model_task">
 				<source>Task</source>
 			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.handle">
-				<source>Handle</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.description">
-				<source>Description</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.active_time">
-				<source>Active Time</source>
-			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.batch_date">
 				<source>Batch Date</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_task.project">
-				<source>Project</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_task.worker">
 				<source>Worker</source>
@@ -42,27 +27,6 @@
 			<trans-unit id="tx_timelog_domain_model_interval.duration">
 				<source>Duration</source>
 			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project">
-				<source>Project</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project.handle">
-				<source>Handle</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project.title">
-				<source>Title</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project.description">
-				<source>Description</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project.active_time">
-				<source>Active Time</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project.heap_time">
-				<source>Heap Time</source>
-			</trans-unit>
-			<trans-unit id="tx_timelog_domain_model_project.batch_time">
-				<source>Batch Time</source>
-			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.client">
 				<source>Client</source>
 			</trans-unit>
@@ -70,13 +34,18 @@
 				<source>Owner</source>
 			</trans-unit>
 
-			<trans-unit id="batch">
-				<source>Batch</source>
+			<trans-unit id="handle">
+				<source>Handle</source>
 			</trans-unit>
-			<trans-unit id="taskGroup">
-				<source>Task group</source>
+			<trans-unit id="title">
+				<source>Title</source>
 			</trans-unit>
-
+			<trans-unit id="description">
+				<source>Description</source>
+			</trans-unit>
+			<trans-unit id="project">
+				<source>Project</source>
+			</trans-unit>
 			<trans-unit id="active_time">
 				<source>Active time</source>
 			</trans-unit>
@@ -86,8 +55,12 @@
 			<trans-unit id="batch_time">
 				<source>Batch time</source>
 			</trans-unit>
-			<trans-unit id="handle">
-				<source>Handle</source>
+
+			<trans-unit id="batch">
+				<source>Batch</source>
+			</trans-unit>
+			<trans-unit id="taskGroup">
+				<source>Task group</source>
 			</trans-unit>
 			<trans-unit id="projectHandle">
 				<source>Project handle</source>
@@ -101,7 +74,6 @@
 			<trans-unit id="taskHandle">
 				<source>Task handle</source>
 			</trans-unit>
-
 			<trans-unit id="hourAbbreviation">
 				<source>h</source>
 			</trans-unit>
