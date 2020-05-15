@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog" target-language="fi">
+    <header/>
+    <body>
+      <trans-unit id="tx_timelog_domain_model_task" approved="yes">
+        <source>Task</source>
+        <target state="final">Tehtävä</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
+        <source>Batch Date</source>
+        <target state="final">Erän päivämäärä</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.worker" approved="yes">
+        <source>Worker</source>
+        <target state="final">Tekijä</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.intervals" approved="yes">
+        <source>Intervals</source>
+        <target state="final">Aikaväli</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval" approved="yes">
+        <source>Interval</source>
+        <target state="final">Aikaväli</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.start_time" approved="yes">
+        <source>Start Time</source>
+        <target state="final">Alkamisaika</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.end_time" approved="yes">
+        <source>End Time</source>
+        <target state="final">Päättymisaika</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.duration" approved="yes">
+        <source>Duration</source>
+        <target state="final">Kesto</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
+        <source>Client</source>
+        <target state="final">Asiakas</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.owner" approved="yes">
+        <source>Owner</source>
+        <target state="final">Omistaja</target>
+      </trans-unit>
+      <trans-unit id="handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Kahva</target>
+      </trans-unit>
+      <trans-unit id="title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titteli</target>
+      </trans-unit>
+      <trans-unit id="description" approved="yes">
+        <source>Description</source>
+        <target state="final">Kuvaus</target>
+      </trans-unit>
+      <trans-unit id="project" approved="yes">
+        <source>Project</source>
+        <target state="final">Projekti</target>
+      </trans-unit>
+      <trans-unit id="active_time" approved="yes">
+        <source>Active time</source>
+        <target state="final">Aktiivinen aika</target>
+      </trans-unit>
+      <trans-unit id="heap_time" approved="yes">
+        <source>Heap time</source>
+        <target state="final">Lajittelematon aika</target>
+      </trans-unit>
+      <trans-unit id="batch_time" approved="yes">
+        <source>Batch time</source>
+        <target state="final">Erän nimi</target>
+      </trans-unit>
+      <trans-unit id="batch" approved="yes">
+        <source>Batch</source>
+        <target state="final">Erän</target>
+      </trans-unit>
+      <trans-unit id="taskGroup" approved="yes">
+        <source>Task group</source>
+        <target state="final">Tehtäväryhmä</target>
+      </trans-unit>
+      <trans-unit id="projectHandle" approved="yes">
+        <source>Project handle</source>
+        <target state="final">Projektin kahva</target>
+      </trans-unit>
+      <trans-unit id="taskGroupHandle" approved="yes">
+        <source>Task group handle</source>
+        <target state="final">Tehtäväryhmän kahva</target>
+      </trans-unit>
+      <trans-unit id="batchHandle" approved="yes">
+        <source>Batch handle</source>
+        <target state="final">Eräkahva</target>
+      </trans-unit>
+      <trans-unit id="taskHandle" approved="yes">
+        <source>Task handle</source>
+        <target state="final">Tehtäväkahva</target>
+      </trans-unit>
+      <trans-unit id="hourAbbreviation" approved="yes">
+        <source>h</source>
+        <target state="final">t</target>
+      </trans-unit>
+      <trans-unit id="date" approved="yes">
+        <source>Date</source>
+        <target state="final">Pvm</target>
+      </trans-unit>
+      <trans-unit id="sendMailTo" approved="yes">
+        <source>Send email to %s</source>
+        <target state="final">Lähetä sähköpostia osoitteeseen %s</target>
+      </trans-unit>
+      <trans-unit id="mailSubject" approved="yes">
+        <source>Project progress - %s</source>
+        <target state="final">Projektin eteneminen - %s</target>
+      </trans-unit>
+      <trans-unit id="salutationNeutral" approved="yes">
+        <source>Dear client</source>
+        <target state="final">Hyvä asiakas</target>
+      </trans-unit>
+      <trans-unit id="salutationPersonal" approved="yes">
+        <source>Dear Miss/Mr. %s</source>
+        <target state="final">Rakas neiti / herra %s</target>
+      </trans-unit>
+      <trans-unit id="projectProgressText" approved="yes">
+        <source>Your project %s is progressing. Currently there are %.1f hours registered in our time recording (%.1f heap houres). The following work has been done recently:</source>
+        <target state="final">Projekti %s etenee. Tällä hetkellä aikatietoihimme on rekisteröity %.1f tuntia (%.1f kasan hourea). Seuraava työ on tehty viime aikoina:</target>
+      </trans-unit>
+      <trans-unit id="greeting" approved="yes">
+        <source>Best regards</source>
+        <target state="final">Parhain terveisin</target>
+      </trans-unit>
+      <trans-unit id="aboutTimelog" approved="yes">
+        <source>This report has been created by %s with the extension %s from %s.</source>
+        <target state="final">Tämän raportin on luonut %s laajentamisen kanssa %s alkaen %s.</target>
+      </trans-unit>
+      <trans-unit id="actions" approved="yes">
+        <source>Actions</source>
+        <target state="final">Toiminnot</target>
+      </trans-unit>
+      <trans-unit id="batchedTasks" approved="yes">
+        <source>Batched tasks</source>
+        <target state="final">Erätehtävät</target>
+      </trans-unit>
+      <trans-unit id="heapedTasks" approved="yes">
+        <source>Heaped tasks</source>
+        <target state="final">Kasaan tehtäviä</target>
+      </trans-unit>
+      <trans-unit id="heapProjectListTitle" approved="yes">
+        <source>Heaped tasks from project %s</source>
+        <target state="final">Kasa tehtäviä projektin %s</target>
+      </trans-unit>
+      <trans-unit id="heapGroupListTitle" approved="yes">
+        <source>Heaped tasks from group %s</source>
+        <target state="final">Ryhmän %s kasatut tehtävät</target>
+      </trans-unit>
+      <trans-unit id="batchProjectListTitle" approved="yes">
+        <source>Batched tasks (%s) from project %s</source>
+        <target state="final">Erätehtävät (%s) projektista %s</target>
+      </trans-unit>
+      <trans-unit id="batchGroupListTitle" approved="yes">
+        <source>Batched tasks (%s) from group %s</source>
+        <target state="final">Erätehtävät (%s) ryhmästä %s</target>
+      </trans-unit>
+      <trans-unit id="sendEmailToClient" approved="yes">
+        <source>Send email to client</source>
+        <target state="final">Lähetä sähköpostia osoitteeseen</target>
+      </trans-unit>
+      <trans-unit id="createBatch" approved="yes">
+        <source>Create batch</source>
+        <target state="final">Luo erä</target>
+      </trans-unit>
+      <trans-unit id="tasks" approved="yes">
+        <source>Tasks</source>
+        <target state="final">Tehtävät</target>
+      </trans-unit>
+      <trans-unit id="findtasks" approved="yes">
+        <source>Find tasks</source>
+        <target state="final">Etsi tehtäviä</target>
+      </trans-unit>
+      <trans-unit id="find" approved="yes">
+        <source>Find</source>
+        <target state="final">Etsi</target>
+      </trans-unit>
+      <trans-unit id="noTasksFound" approved="yes">
+        <source>No tasks were found for the given criteria.</source>
+        <target state="final">Annetuille kriteereille ei löytynyt tehtäviä.</target>
+      </trans-unit>
+      <trans-unit id="projects" approved="yes">
+        <source>Projects</source>
+        <target state="final">Projektit</target>
+      </trans-unit>
+      <trans-unit id="projectListInfo" approved="yes">
+        <source>The following list shows all projects having hashed tasks.</source>
+        <target state="final">Seuraava luettelo näyttää kaikki projektit, joilla on suoritettu tehtäviä.</target>
+      </trans-unit>
+      <trans-unit id="noProjectsFound" approved="yes">
+        <source>No projects were found for the given criteria.</source>
+        <target state="final">Hankkeita ei löytynyt annettujen kriteerien perusteella.</target>
+      </trans-unit>
+      <trans-unit id="includeAll" approved="yes">
+        <source>Include all</source>
+        <target state="final">Sisällytä kaikki</target>
+      </trans-unit>
+      <trans-unit id="excludeAll" approved="yes">
+        <source>Exclude all</source>
+        <target state="final">Sulje pois kaikki</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
