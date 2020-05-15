@@ -3,6 +3,38 @@
   <file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog" target-language="de">
     <header/>
     <body>
+      <trans-unit id="handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Referenz</target>
+      </trans-unit>
+      <trans-unit id="title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titel</target>
+      </trans-unit>
+      <trans-unit id="description" approved="yes">
+        <source>Description</source>
+        <target state="final">Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="internal_note" approved="yes">
+        <source>Internal note</source>
+        <target state="final">Interne Notiz</target>
+      </trans-unit>
+      <trans-unit id="active_time" approved="yes">
+        <source>Active time</source>
+        <target state="final">Aktive Zeit</target>
+      </trans-unit>
+      <trans-unit id="heap_time" approved="yes">
+        <source>Heap time</source>
+        <target state="final">Gehäufte Zeit</target>
+      </trans-unit>
+      <trans-unit id="batch_time" approved="yes">
+        <source>Batch time</source>
+        <target state="final">Gestapelte Zeit</target>
+      </trans-unit>
+      <trans-unit id="tasks" approved="yes">
+        <source>Tasks</source>
+        <target state="final">Aufgaben</target>
+      </trans-unit>
       <trans-unit id="tx_timelog_domain_model_task" approved="yes">
         <source>Task</source>
         <target state="final">Aufgabe</target>
@@ -20,7 +52,7 @@
         <target state="final">Beschreibung</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_task.active_time" approved="yes">
-        <source>Active Time</source>
+        <source>Active time</source>
         <target state="final">Aktive Zeit</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
@@ -44,11 +76,11 @@
         <target state="final">Intervall</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_interval.start_time" approved="yes">
-        <source>Start Time</source>
+        <source>Start time</source>
         <target state="final">Startzeit</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_interval.end_time" approved="yes">
-        <source>End Time</source>
+        <source>End time</source>
         <target state="final">Endzeit</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_interval.duration" approved="yes">
@@ -76,15 +108,15 @@
         <target state="final">Interne Notiz</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_project.active_time" approved="yes">
-        <source>Active Time</source>
+        <source>Active time</source>
         <target state="final">Aktive Zeit</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_project.heap_time" approved="yes">
-        <source>Heap Time</source>
+        <source>Heap time</source>
         <target state="final">Gehäufte Zeit</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_project.batch_time" approved="yes">
-        <source>Batch Time</source>
+        <source>Batch time</source>
         <target state="final">Gestapelte Zeit</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
@@ -99,12 +131,28 @@
         <source>CC Email</source>
         <target state="final">CC E-Mail</target>
       </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.task_groups" approved="yes">
+        <source>Task groups</source>
+        <target state="final">Aufgabengruppen</target>
+      </trans-unit>
       <trans-unit id="tx_timelog_taskpanel.name" approved="yes">
         <source>Task panel</source>
         <target state="final">Arbeitspanel</target>
       </trans-unit>
       <trans-unit id="tx_timelog_taskpanel.description">
         <source/>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_taskgroup" approved="yes">
+        <source>Task group</source>
+        <target state="final">Aufgabengruppe</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_taskgroup.time_target" approved="yes">
+        <source>Time target</source>
+        <target state="final">Zeitziel</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_taskgroup.time_deviation" approved="yes">
+        <source>Time deviation</source>
+        <target state="final">Zeitabweichung</target>
       </trans-unit>
     </body>
   </file>
