@@ -7,29 +7,9 @@
         <source>Task</source>
         <target state="final">Tâche</target>
       </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_task.handle" approved="yes">
-        <source>Handle</source>
-        <target state="final">Poignée</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_task.title" approved="yes">
-        <source>Title</source>
-        <target state="final">Titre</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_task.description" approved="yes">
-        <source>Description</source>
-        <target state="final">Description</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_task.active_time" approved="yes">
-        <source>Active Time</source>
-        <target state="final">Temps d'activité</target>
-      </trans-unit>
       <trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
         <source>Batch Date</source>
         <target state="final">Date du lot</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_task.project" approved="yes">
-        <source>Project</source>
-        <target state="final">Projet</target>
       </trans-unit>
       <trans-unit id="tx_timelog_domain_model_task.worker" approved="yes">
         <source>Worker</source>
@@ -55,34 +35,6 @@
         <source>Duration</source>
         <target state="final">Duration</target>
       </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_project" approved="yes">
-        <source>Project</source>
-        <target state="final">Projet</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_project.handle" approved="yes">
-        <source>Handle</source>
-        <target state="final">Poignée</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_project.title" approved="yes">
-        <source>Title</source>
-        <target state="final">Titre</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_project.description" approved="yes">
-        <source>Description</source>
-        <target state="final">Description</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_project.active_time" approved="yes">
-        <source>Active Time</source>
-        <target state="final">Temps actif</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_project.heap_time" approved="yes">
-        <source>Heap Time</source>
-        <target state="final">Temps heap</target>
-      </trans-unit>
-      <trans-unit id="tx_timelog_domain_model_project.batch_time" approved="yes">
-        <source>Batch Time</source>
-        <target state="final">Temps du lot</target>
-      </trans-unit>
       <trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
         <source>Client</source>
         <target state="final">Client</target>
@@ -91,9 +43,65 @@
         <source>Owner</source>
         <target state="final">Propriétaire</target>
       </trans-unit>
+      <trans-unit id="handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Poignée</target>
+      </trans-unit>
+      <trans-unit id="title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titre</target>
+      </trans-unit>
+      <trans-unit id="description" approved="yes">
+        <source>Description</source>
+        <target state="final">Description</target>
+      </trans-unit>
+      <trans-unit id="project" approved="yes">
+        <source>Project</source>
+        <target state="final">Projet</target>
+      </trans-unit>
+      <trans-unit id="active_time" approved="yes">
+        <source>Active time</source>
+        <target state="final">Temps actif</target>
+      </trans-unit>
+      <trans-unit id="heap_time" approved="yes">
+        <source>Heap time</source>
+        <target state="final">Temps heap</target>
+      </trans-unit>
+      <trans-unit id="batch_time" approved="yes">
+        <source>Batch time</source>
+        <target state="final">Temps du lot</target>
+      </trans-unit>
+      <trans-unit id="batch" approved="yes">
+        <source>Batch</source>
+        <target state="final">Lot</target>
+      </trans-unit>
+      <trans-unit id="taskGroup" approved="yes">
+        <source>Task group</source>
+        <target state="final">Groupe de tâches</target>
+      </trans-unit>
+      <trans-unit id="projectHandle" approved="yes">
+        <source>Project handle</source>
+        <target state="final">Handle du projet</target>
+      </trans-unit>
+      <trans-unit id="taskGroupHandle" approved="yes">
+        <source>Task group handle</source>
+        <target state="final">Poignée de groupe de tâches</target>
+      </trans-unit>
+      <trans-unit id="batchHandle" approved="yes">
+        <source>Batch handle</source>
+        <target state="final">Handle du lot</target>
+      </trans-unit>
+      <trans-unit id="taskHandle" approved="yes">
+        <source>Task handle</source>
+        <target state="final">Handle du tâches</target>
+      </trans-unit>
       <trans-unit id="hourAbbreviation" approved="yes">
         <source>h</source>
         <target state="final">h</target>
+      </trans-unit>
+      <trans-unit id="date" approved="yes">
+        <source>Date</source>
+        <target state="final">Date</target>
       </trans-unit>
       <trans-unit id="sendMailTo" approved="yes">
         <source>Send email to %s</source>
@@ -115,10 +123,6 @@
         <source>Your project %s is progressing. Currently there are %.1f hours registered in our time recording (%.1f heap houres). The following work has been done recently:</source>
         <target state="final">Votre projet %s progresse. Il y a actuellement %.1f heures enregistrées dans notre enregistrement de temps (%.1f heures de pile). Le travail suivant a été fait récemment:</target>
       </trans-unit>
-      <trans-unit id="date" approved="yes">
-        <source>Date</source>
-        <target state="final">Date</target>
-      </trans-unit>
       <trans-unit id="greeting" approved="yes">
         <source>Best regards</source>
         <target state="final">Meilleures salutations</target>
@@ -139,6 +143,22 @@
         <source>Heaped tasks</source>
         <target state="final">Tâches chauffées</target>
       </trans-unit>
+      <trans-unit id="heapProjectListTitle" approved="yes">
+        <source>Heaped tasks from project %s</source>
+        <target state="final">Tâches en tas du projet %s</target>
+      </trans-unit>
+      <trans-unit id="heapGroupListTitle" approved="yes">
+        <source>Heaped tasks from group %s</source>
+        <target state="final">Tâches en tas du groupe %s</target>
+      </trans-unit>
+      <trans-unit id="batchProjectListTitle" approved="yes">
+        <source>Batched tasks (%s) from project %s</source>
+        <target state="final">Tâches battues (%s) du projet %s</target>
+      </trans-unit>
+      <trans-unit id="batchGroupListTitle" approved="yes">
+        <source>Batched tasks (%s) from group %s</source>
+        <target state="final">Tâches battues (%s) du groupe %s</target>
+      </trans-unit>
       <trans-unit id="sendEmailToClient" approved="yes">
         <source>Send email to client</source>
         <target state="final">Envoyer un email au client</target>
@@ -150,18 +170,6 @@
       <trans-unit id="tasks" approved="yes">
         <source>Tasks</source>
         <target state="final">Tâches</target>
-      </trans-unit>
-      <trans-unit id="projectHandle" approved="yes">
-        <source>Project handle</source>
-        <target state="final">Handle du projet</target>
-      </trans-unit>
-      <trans-unit id="batchHandle" approved="yes">
-        <source>Batch handle</source>
-        <target state="final">Handle du lot</target>
-      </trans-unit>
-      <trans-unit id="taskHandle" approved="yes">
-        <source>Task handle</source>
-        <target state="final">Handle du tâches</target>
       </trans-unit>
       <trans-unit id="findtasks" approved="yes">
         <source>Find tasks</source>
@@ -186,6 +194,14 @@
       <trans-unit id="noProjectsFound" approved="yes">
         <source>No projects were found for the given criteria.</source>
         <target state="final">Aucun projet n'a été trouvé pour les critères donnés.</target>
+      </trans-unit>
+      <trans-unit id="includeAll" approved="yes">
+        <source>Include all</source>
+        <target state="final">Inclure tous</target>
+      </trans-unit>
+      <trans-unit id="excludeAll" approved="yes">
+        <source>Exclude all</source>
+        <target state="final">Exclure tout</target>
       </trans-unit>
     </body>
   </file>
