@@ -23,6 +23,7 @@ class TcaUserFunc
             $client = BackendUtility::getRecord('fe_users', $parameters['row']['client']);
             $parts[] = $client['company'] ?? $client['name'] ?? $client['last_name'] ?? '';
         }
+        $parts[] = $parameters['row']['handle'];
         $parameters['title'] = implode(' - ', array_filter($parts));
     }
 

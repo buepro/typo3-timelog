@@ -26,12 +26,16 @@ following:
 
 ```
 TCEMAIN.preview {
-  disableButtonForDokType = 255, 199
-  tx_timelog_domain_model_project {
-    previewPageId = pluginPid
-  }
-  tx_timelog_domain_model_task {
-    previewPageId = pluginPid
+    disableButtonForDokType = 255, 199
+    tx_timelog_domain_model_project {
+        previewPageId = pluginPid
+    }
+    tx_timelog_domain_model_taskgroup {
+        previewPageId = pluginPid
+    }
+    tx_timelog_domain_model_task {
+        previewPageId = pluginPid
+    }
 }
 ```
 

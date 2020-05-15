@@ -96,6 +96,7 @@ class SendMailMiddleware implements MiddlewareInterface
                 return $this->getErrorResponse('Client email isn\'t available');
             }
             // Initializes tasks
+            /** @var TaskRepository $taskRepository */
             $taskRepository = DiUtility::getObject(TaskRepository::class);
             $tasks = $taskRepository->findRecentForProject($project);
             // Initializes views

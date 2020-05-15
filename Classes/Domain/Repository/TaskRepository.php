@@ -11,10 +11,10 @@ namespace Buepro\Timelog\Domain\Repository;
 
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
+use Buepro\Timelog\Domain\Model\TaskGroup;
 use Buepro\Timelog\Utility\DiUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Persistence\Generic\Query;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
@@ -46,94 +46,6 @@ class TaskRepository extends Repository
             $querySettings->setRespectStoragePage(false);
             $this->setDefaultQuerySettings($querySettings);
         }
-    }
-
-    /**
-     * Outputs debug information for a query
-     *
-     * @param Query $query
-     */
-    private function debugQuery(Query $query)
-    {
-        $queryParser = DiUtility::getObject(\TYPO3\CMS\Extbase\Persistence\Generic\Storage\Typo3DbQueryParser::class);
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($queryParser->convertQueryToDoctrineQueryBuilder($query)->getSQL());
-        \TYPO3\CMS\Extbase\Utility\DebuggerUtility::var_dump($queryParser->convertQueryToDoctrineQueryBuilder($query)->getParameters());
-    }
-
-    /**
-     * @param Project $project
-     * @param int $timestamp
-     * @return array
-     * @throws \TYPO3\CMS\Extbase\Property\Exception
-     */
-    private function findTasks(Project $project, int $timestamp)
-    {
-        /* @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
-        $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
-            ->getQueryBuilderForTable('tx_timelog_domain_model_task');
-
-        $queryBuilder
-            ->add('select', 'task.*, MAX(interval.start_time) AS max_start_time')
-            ->from('tx_timelog_domain_model_task', 'task')
-            ->leftJoin(
-                'task',
-                'tx_timelog_domain_model_interval',
-                'interval',
-                $queryBuilder->expr()->eq('task.uid', $queryBuilder->quoteIdentifier('interval.task'))
-            )
-            ->andWhere(
-                $queryBuilder->expr()->eq('task.project', $queryBuilder->createNamedParameter($project->getUid(), \PDO::PARAM_INT)),
-                $queryBuilder->expr()->eq('task.batch_date', $queryBuilder->createNamedParameter($timestamp, \PDO::PARAM_INT))
-            )
-            ->groupBy('task.uid')
-            ->orderBy('max_start_time', 'DESC');
-
-//        $sql = $queryBuilder->getSQL();
-//        $params = $queryBuilder->getParameters();
-
-        $tasks = $queryBuilder->execute();
-        $result = [];
-        $propertyMapper = DiUtility::getObject(PropertyMapper::class);
-        foreach ($tasks as $task) {
-            $result[] = $propertyMapper->convert((string) $task['uid'], Task::class);
-        }
-        return $result;
-    }
-
-    /**
-     * Finds all tasks for a project that don't belong to a batch yet.
-     *
-     * @param Project $project
-     * @return array
-     * @throws \TYPO3\CMS\Extbase\Property\Exception
-     */
-    public function findHeapTasks(Project $project)
-    {
-        return $this->findTasks($project, 0);
-    }
-
-    /**
-     * Finds all tasks from a batch for a project.
-     *
-     * @param string $batchHandle
-     * @return array
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
-     * @throws \TYPO3\CMS\Extbase\Property\Exception
-     */
-    public function findBatchTasks(string $batchHandle)
-    {
-        $decodedBatchHandle = \Buepro\Timelog\Utility\GeneralUtility::decodeBatchHandle($batchHandle);
-        if (!$decodedBatchHandle) {
-            return [];
-        }
-        /* @var Task $task */
-        $task = $this->findByUid($decodedBatchHandle['taskUid']);
-        $project = null;
-        if ($task) {
-            $project = $task->getProject();
-        }
-        return $this->findTasks($project, $decodedBatchHandle['timestamp']);
     }
 
     /**
@@ -185,39 +97,56 @@ class TaskRepository extends Repository
     }
 
     /**
-     * Gets the available batches for a project.
+     * Gets the available batches for a project or task group.
+     * If the scope is a `Project` and `includeAllBatches` is set all batches assigned to a project will be gathered.
+     * In case it isn't set batches assigned to a task group won't be included.
      *
-     * @param $project
+     * @param Project | TaskGroup $scope
+     * @param bool $includeAllBatches Used in case the scope is a `Project` to control inclusion from batches
      * @return array
      * @throws \Exception
      */
-    public function getBatches($project)
+    public function getBatches($scope, $includeAllBatches = true)
     {
-        if (!$project) {
+        if (!($scope instanceof Project) && !($scope instanceof TaskGroup)) {
             return [];
         }
-
+        if ($scope instanceof Project) {
+            $fieldName = 'task.project';
+        } else {
+            $fieldName = 'task.task_group';
+        }
         /* @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_timelog_domain_model_task');
         $queryBuilder
             ->add(
                 'select',
-                'task.uid AS aTaskUid, task.batch_date AS timestamp, SUM(task.active_time) AS sumActiveTime'
+                'task.uid AS aTaskUid, task.project AS project, task.task_group AS taskGroup, ' .
+                'task.batch_date AS timestamp , SUM(task.active_time) AS sumActiveTime'
             )
             ->from('tx_timelog_domain_model_task', 'task')
             ->andWhere(
                 $queryBuilder->expr()->eq(
-                    'task.project',
-                    $queryBuilder->createNamedParameter($project->getUid(), \PDO::PARAM_INT)
+                    $fieldName,
+                    $queryBuilder->createNamedParameter($scope->getUid(), \PDO::PARAM_INT)
                 ),
                 $queryBuilder->expr()->neq(
                     'task.batch_date',
                     0
                 )
             )
-            ->groupBy('task.batch_date')
+            ->groupBy('task.task_group', 'task.batch_date')
             ->orderBy('task.batch_date', 'DESC');
+
+        if ($scope instanceof Project && !$includeAllBatches) {
+            $queryBuilder->andWhere(
+                $queryBuilder->expr()->eq(
+                    'task.task_group',
+                    $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
+                )
+            );
+        }
 
 //        $sql = $queryBuilder->getSQL();
 //        $params = $queryBuilder->getParameters();
@@ -240,5 +169,46 @@ class TaskRepository extends Repository
             return $batches;
         }
         return [];
+    }
+
+    /**
+     * Finds tasks for given filters. In case a filter is `null` it won't be included in the constraints.
+     *
+     * @param Project $project
+     * @param Task $task
+     * @param TaskGroup|int $taskGroupFilter 0 to exclude all task groups
+     * @param int $batchTime
+     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     */
+    public function findForFilter(Project $project, Task $task = null, $taskGroupFilter = null, int $batchTime = 0)
+    {
+        if (!$project && !$task && !($taskGroupFilter instanceof TaskGroup)) {
+            return null;
+        }
+
+        $query = $this->createQuery();
+        $constraints = [];
+
+        // Project constraint
+        if ($project) {
+            $constraints['project'] = $query->equals('project', $project);
+        }
+
+        // Task constraint
+        if ($task) {
+            $constraints['task'] = $query->equals('uid', $task);
+        }
+
+        // Task group constraint
+        if ($taskGroupFilter !== null) {
+            $constraints['taskGroup'] = $query->equals('taskGroup', $taskGroupFilter);
+        }
+
+        // Batch constraint
+        $constraints['batchDate'] = $query->equals('batchDate', $batchTime);
+
+        $query->matching($query->logicalAnd($constraints));
+        $query->setOrderings(['intervals.startTime' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
+        return $query->execute();
     }
 }

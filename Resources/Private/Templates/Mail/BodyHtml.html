@@ -24,9 +24,18 @@
             {task.activeTime -> f:format.number(decimals: 2)} {f:translate(key: 'hourAbbreviation',
             extensionName: 'timelog')}&nbsp;|&nbsp;
             <f:link.action extensionName="timelog" pluginName="taskpanel" controller="Task" absolute="1"
-                           arguments="{taskHandle: task.handle}" section="{task.handle}">
+                           arguments="{taskHandle: task.handle}" section="{task.handle}"
+                           title="{f:translate(key: 'taskHandle')}">
                 {task.handle}
             </f:link.action>
+            <f:if condition="{task.taskGroup}">
+                &nbsp;|&nbsp;
+                <f:link.action extensionName="timelog" pluginName="taskpanel" controller="Task" absolute="1"
+                               arguments="{taskGroupHandle: task.taskGroup.handle}" section="{project.handle}"
+                               title="{task.taskGroup.title}">
+                    <f:format.crop maxCharacters="16" append="..">{task.taskGroup.title}</f:format.crop>
+                </f:link.action>
+            </f:if>
         </p>
         <f:if condition="{task.title}">
             <h4>{task.title}</h4>
