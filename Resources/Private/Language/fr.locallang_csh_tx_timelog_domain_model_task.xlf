@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog" target-language="fr">
+    <header/>
+    <body>
+      <trans-unit id="active_time.description" approved="yes">
+        <source>The duration in houres</source>
+        <target state="final">Durée en heures</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
