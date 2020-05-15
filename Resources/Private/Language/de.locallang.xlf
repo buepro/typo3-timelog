@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<xliff version="1.0">
+  <file source-language="en" datatype="plaintext" original="messages" date="2019-03-29T11:48:27Z" product-name="timelog" target-language="de">
+    <header/>
+    <body>
+      <trans-unit id="tx_timelog_domain_model_task" approved="yes">
+        <source>Task</source>
+        <target state="final">Aufgabe</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.batch_date" approved="yes">
+        <source>Batch Date</source>
+        <target state="final">Stapeldatum</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.worker" approved="yes">
+        <source>Worker</source>
+        <target state="final">Arbeiter</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_task.intervals" approved="yes">
+        <source>Intervals</source>
+        <target state="final">Intervalle</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval" approved="yes">
+        <source>Interval</source>
+        <target state="final">Intervall</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.start_time" approved="yes">
+        <source>Start Time</source>
+        <target state="final">Startzeit</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.end_time" approved="yes">
+        <source>End Time</source>
+        <target state="final">Endzeit</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_interval.duration" approved="yes">
+        <source>Duration</source>
+        <target state="final">Dauer</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.client" approved="yes">
+        <source>Client</source>
+        <target state="final">Kunde</target>
+      </trans-unit>
+      <trans-unit id="tx_timelog_domain_model_project.owner" approved="yes">
+        <source>Owner</source>
+        <target state="final">Inhaber</target>
+      </trans-unit>
+      <trans-unit id="handle" approved="yes">
+        <source>Handle</source>
+        <target state="final">Referenz</target>
+      </trans-unit>
+      <trans-unit id="title" approved="yes">
+        <source>Title</source>
+        <target state="final">Titel</target>
+      </trans-unit>
+      <trans-unit id="description" approved="yes">
+        <source>Description</source>
+        <target state="final">Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="project" approved="yes">
+        <source>Project</source>
+        <target state="final">Projekt</target>
+      </trans-unit>
+      <trans-unit id="active_time" approved="yes">
+        <source>Active time</source>
+        <target state="final">Aktive Zeit</target>
+      </trans-unit>
+      <trans-unit id="heap_time" approved="yes">
+        <source>Heap time</source>
+        <target state="final">Gehäufte Zeit</target>
+      </trans-unit>
+      <trans-unit id="batch_time" approved="yes">
+        <source>Batch time</source>
+        <target state="final">Gestapelte Zeit</target>
+      </trans-unit>
+      <trans-unit id="batch" approved="yes">
+        <source>Batch</source>
+        <target state="final">Stapel</target>
+      </trans-unit>
+      <trans-unit id="taskGroup" approved="yes">
+        <source>Task group</source>
+        <target state="final">Aufgabengruppe</target>
+      </trans-unit>
+      <trans-unit id="projectHandle" approved="yes">
+        <source>Project handle</source>
+        <target state="final">Projektreferenz</target>
+      </trans-unit>
+      <trans-unit id="taskGroupHandle" approved="yes">
+        <source>Task group handle</source>
+        <target state="final">Referenz Aufgabengruppe</target>
+      </trans-unit>
+      <trans-unit id="batchHandle" approved="yes">
+        <source>Batch handle</source>
+        <target state="final">Stapelreferenz</target>
+      </trans-unit>
+      <trans-unit id="taskHandle" approved="yes">
+        <source>Task handle</source>
+        <target state="final">Arbeitsreferenz</target>
+      </trans-unit>
+      <trans-unit id="hourAbbreviation" approved="yes">
+        <source>h</source>
+        <target state="final">h</target>
+      </trans-unit>
+      <trans-unit id="date" approved="yes">
+        <source>Date</source>
+        <target state="final">Datum</target>
+      </trans-unit>
+      <trans-unit id="sendMailTo" approved="yes">
+        <source>Send email to %s</source>
+        <target state="final">E-Mail an %s versenden</target>
+      </trans-unit>
+      <trans-unit id="mailSubject" approved="yes">
+        <source>Project progress - %s</source>
+        <target state="final">Projektfortschritt - %s</target>
+      </trans-unit>
+      <trans-unit id="salutationNeutral" approved="yes">
+        <source>Dear client</source>
+        <target state="final">Guten Tag</target>
+      </trans-unit>
+      <trans-unit id="salutationPersonal" approved="yes">
+        <source>Dear Miss/Mr. %s</source>
+        <target state="final">Guten Tag Frau/Herr %s</target>
+      </trans-unit>
+      <trans-unit id="projectProgressText" approved="yes">
+        <source>Your project %s is progressing. Currently there are %.1f hours registered in our time recording (%.1f heap houres). The following work has been done recently:</source>
+        <target state="final">Ihr Projekt %s schreitet voran. Aktuell sind %.1f Stunden in unserer Zeiterfassung registriert (%.1f ungeordnet). Folgende Arbeiten wurden kürzlich durchgeführt:</target>
+      </trans-unit>
+      <trans-unit id="greeting" approved="yes">
+        <source>Best regards</source>
+        <target state="final">Freundliche Grüsse</target>
+      </trans-unit>
+      <trans-unit id="aboutTimelog" approved="yes">
+        <source>This report has been created by %s with the extension %s from %s.</source>
+        <target state="final">Dieser Bericht wurde mit %s und der Erweiterung %s von %s erstellt.</target>
+      </trans-unit>
+      <trans-unit id="actions" approved="yes">
+        <source>Actions</source>
+        <target state="final">Aktionen</target>
+      </trans-unit>
+      <trans-unit id="batchedTasks" approved="yes">
+        <source>Batched tasks</source>
+        <target state="final">Gestapelte Arbeiten</target>
+      </trans-unit>
+      <trans-unit id="heapedTasks" approved="yes">
+        <source>Heaped tasks</source>
+        <target state="final">Gehäufte Arbeiten</target>
+      </trans-unit>
+      <trans-unit id="heapProjectListTitle" approved="yes">
+        <source>Heaped tasks from project %s</source>
+        <target state="final">Angehäufte Aufgaben des Projektes %s</target>
+      </trans-unit>
+      <trans-unit id="heapGroupListTitle" approved="yes">
+        <source>Heaped tasks from group %s</source>
+        <target state="final">Angehäufte Aufgaben der Gruppe %s</target>
+      </trans-unit>
+      <trans-unit id="batchProjectListTitle" approved="yes">
+        <source>Batched tasks (%s) from project %s</source>
+        <target state="final">Gestapelte Aufgaben (%s) des Projektes %s</target>
+      </trans-unit>
+      <trans-unit id="batchGroupListTitle" approved="yes">
+        <source>Batched tasks (%s) from group %s</source>
+        <target state="final">Gestapelte Aufgaben (%s) der Gruppe %s</target>
+      </trans-unit>
+      <trans-unit id="sendEmailToClient" approved="yes">
+        <source>Send email to client</source>
+        <target state="final">Email an Kunde senden</target>
+      </trans-unit>
+      <trans-unit id="createBatch" approved="yes">
+        <source>Create batch</source>
+        <target state="final">Arbeitsstapel erstellen</target>
+      </trans-unit>
+      <trans-unit id="tasks" approved="yes">
+        <source>Tasks</source>
+        <target state="final">Arbeiten</target>
+      </trans-unit>
+      <trans-unit id="findtasks" approved="yes">
+        <source>Find tasks</source>
+        <target state="final">Arbeiten finden</target>
+      </trans-unit>
+      <trans-unit id="find" approved="yes">
+        <source>Find</source>
+        <target state="final">Finden</target>
+      </trans-unit>
+      <trans-unit id="noTasksFound" approved="yes">
+        <source>No tasks were found for the given criteria.</source>
+        <target state="final">Für die gegebenen Kriterien konnten keine Arbeiten gefunden werden.</target>
+      </trans-unit>
+      <trans-unit id="projects" approved="yes">
+        <source>Projects</source>
+        <target state="final">Projekte</target>
+      </trans-unit>
+      <trans-unit id="projectListInfo" approved="yes">
+        <source>The following list shows all projects having hashed tasks.</source>
+        <target state="final">Die folgende Liste enthält alle Projekte, welche noch gehäufte Arbeiten enthalten.</target>
+      </trans-unit>
+      <trans-unit id="noProjectsFound" approved="yes">
+        <source>No projects were found for the given criteria.</source>
+        <target state="final">Für die gegebenen Kriterien konnten keine Projekte gefunden werden.</target>
+      </trans-unit>
+      <trans-unit id="includeAll" approved="yes">
+        <source>Include all</source>
+        <target state="final">Alle einbeziehen</target>
+      </trans-unit>
+      <trans-unit id="excludeAll" approved="yes">
+        <source>Exclude all</source>
+        <target state="final">Alle ausschließen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
