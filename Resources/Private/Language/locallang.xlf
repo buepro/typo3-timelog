@@ -55,6 +55,9 @@
 			<trans-unit id="batch_time">
 				<source>Batch time</source>
 			</trans-unit>
+			<trans-unit id="time_target">
+				<source>Time target</source>
+			</trans-unit>
 
 			<trans-unit id="batch">
 				<source>Batch</source>

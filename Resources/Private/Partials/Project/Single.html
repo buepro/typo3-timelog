@@ -192,18 +192,22 @@
             <div class="col-md-5">
                 <table class="table table-sm table-striped">
                     <tbody>
-                    <tr>
-                        <th scope="row">{f:translate(key: 'active_time')}</th>
-                        <td>{taskGroup.activeTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{f:translate(key: 'heap_time')}</th>
-                        <td>{taskGroup.heapTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">{f:translate(key: 'batch_time')}</th>
-                        <td>{taskGroup.batchTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
-                    </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'time_target')}</th>
+                            <td>{taskGroup.timeTarget -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'active_time')}</th>
+                            <td>{taskGroup.activeTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'heap_time')}</th>
+                            <td>{taskGroup.heapTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">{f:translate(key: 'batch_time')}</th>
+                            <td>{taskGroup.batchTime -> f:format.number(decimals: 2)}{f:translate(id: 'hourAbbreviation')}</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
