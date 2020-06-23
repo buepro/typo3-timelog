@@ -9,7 +9,6 @@
 
 namespace Buepro\Timelog\Controller;
 
-use ArrayObject;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
@@ -17,7 +16,6 @@ use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use Buepro\Timelog\Domain\Repository\TaskGroupRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
 use Buepro\Timelog\Utility\GeneralUtility;
-use Countable;
 use DateTime;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
@@ -30,7 +28,6 @@ use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Persistence\Exception\IllegalObjectTypeException;
 use TYPO3\CMS\Extbase\Persistence\Exception\UnknownObjectException;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
-use TYPO3\CMS\Extbase\Property\Exception;
 
 /***
  *
@@ -271,7 +268,7 @@ class TaskController extends ActionController
         $hasTasksOnHeap = false;
         if ($tasks instanceof QueryResultInterface && $tasks->count()) {
             $tasksCount = $tasks->count();
-            foreach($tasks as $aTask) {
+            foreach ($tasks as $aTask) {
                 if (!$aTask->getBatchDate()) {
                     $hasTasksOnHeap = true;
                     break;
