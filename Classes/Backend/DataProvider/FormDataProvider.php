@@ -21,6 +21,16 @@ use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
  */
 class FormDataProvider implements FormDataProviderInterface
 {
+    /**
+     * Adds an interval to a task by JS
+     */
+    private function addInterval()
+    {
+        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+            \TYPO3\CMS\Core\Page\PageRenderer::class
+        );
+        $pageRenderer->loadRequireJsModule('TYPO3/CMS/Timelog/Backend/Task');
+    }
 
     /**
      * Adds form data to result array
@@ -66,6 +76,7 @@ class FormDataProvider implements FormDataProviderInterface
             if ($latest && $latest['worker']) {
                 $result['databaseRow']['worker'] = $latest['worker'];
             }
+            $this->addInterval();
         }
 
         return $result;
