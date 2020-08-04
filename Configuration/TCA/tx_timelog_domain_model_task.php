@@ -21,7 +21,7 @@ return [
         ],
         'searchFields' => 'handle,title,description',
         'default_sortby' => 'crdate DESC',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_task.svg'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-task.svg'
     ],
     'palettes' => [
         'batch' => [
@@ -32,8 +32,8 @@ return [
         '1' => [
             'showitem' => '
                 --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
-                    project, worker, task_group, title, description, active_time, intervals, 
-                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle, 
+                    project, worker, task_group, title, description, active_time, intervals,
+                --div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:access, handle,
                     --palette--;;batch',
         ]
     ],

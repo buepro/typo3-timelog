@@ -21,7 +21,7 @@ return [
         ],
         'searchFields' => 'handle,title,description',
         'default_sortby' => 'tstamp DESC',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_taskgroup.svg'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-taskgroup.svg'
     ],
     'palettes' => [
         'texts' => [
@@ -36,7 +36,7 @@ return [
             'showitem' =>
                 '--div--;LLL:EXT:core/Resources/Private/Language/Form/locallang_tabs.xlf:general,
                     project,
-                    title, 
+                    title,
                     --palette--;;texts,
                     --palette--;;times,
                     tasks,

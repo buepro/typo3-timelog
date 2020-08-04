@@ -56,7 +56,7 @@ defined('TYPO3_MODE') || die('Access denied.');
             wizards.newContentElement.wizardItems.plugins {
                 elements {
                     taskpanel {
-                        iconIdentifier = timelog-plugin-taskpanel
+                        iconIdentifier = tx-timelog-plugin-taskpanel
                         title = LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_taskpanel.name
                         description = LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_taskpanel.description
                         tt_content_defValues {
@@ -102,14 +102,15 @@ defined('TYPO3_MODE') || die('Access denied.');
     if (1) {
         $iconRegistry = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Imaging\IconRegistry::class);
         $icons = [
-            'user_plugin_taskpanel',
-            'tx_timelog_domain_model_project',
-            'tx_timelog_domain_model_task',
-            'tx_timelog_domain_model_interval'
+            'plugin-taskpanel',
+            'domain-model-project',
+            'domain-model-task',
+            'domain-model-interval',
+            'domain-model-taskgroup'
         ];
         foreach ($icons as $icon) {
             $iconRegistry->registerIcon(
-                $icon,
+                'tx-timelog-' . $icon,
                 \TYPO3\CMS\Core\Imaging\IconProvider\SvgIconProvider::class,
                 ['source' => 'EXT:timelog/Resources/Public/Icons/' . $icon . '.svg']
             );

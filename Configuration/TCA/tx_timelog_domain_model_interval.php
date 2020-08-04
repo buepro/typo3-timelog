@@ -21,7 +21,7 @@ return [
         'enablecolumns' => [
         ],
         'searchFields' => '',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/tx_timelog_domain_model_interval.svg'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-interval.svg'
     ],
     'palettes' => [
         'time' => [
