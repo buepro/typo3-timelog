@@ -118,6 +118,12 @@
 			<trans-unit id="tx_timelog_domain_model_taskgroup.time_deviation">
 				<source>Time deviation</source>
 			</trans-unit>
+			<trans-unit id="fe_users.owner_email">
+				<source>Timelog owner email</source>
+			</trans-unit>
+			<trans-unit id="fe_users.owner_email.description">
+				<source>Overrides the sender email address in timelog notifications from projects where this user is a client. If undefined the sender email address is derived from the project owner. Note: The sender name is still taken from the owner.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

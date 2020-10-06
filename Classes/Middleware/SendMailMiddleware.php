@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Middleware;
 
+use Buepro\Timelog\Domain\Model\Client;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
@@ -74,13 +75,13 @@ class SendMailMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        // Gets url parameters
+        // Get url parameters
         $sendMailTo = $request->getParsedBody()['smt'] ?? $request->getQueryParams()['smt'] ?? null;
         $projectHandle = $request->getParsedBody()['tx_timelog_taskpanel']['projectHandle'] ??
             $request->getQueryParams()['tx_timelog_taskpanel']['projectHandle'] ?? null;
 
         if ($sendMailTo === 'client' && $projectHandle) {
-            // Initializes project
+            // Initialize project
             $projectUid = \Buepro\Timelog\Utility\GeneralUtility::decodeHashid(
                 (string)$projectHandle,
                 Project::class
@@ -95,7 +96,7 @@ class SendMailMiddleware implements MiddlewareInterface
             if (!$client || !$client->getEmail()) {
                 return $this->getErrorResponse('Client email isn\'t available');
             }
-            // Initializes tasks
+            // Initialize tasks
             /** @var TaskRepository $taskRepository */
             $taskRepository = DiUtility::getObject(TaskRepository::class);
             $tasks = $taskRepository->findRecentForProject($project);
@@ -114,7 +115,7 @@ class SendMailMiddleware implements MiddlewareInterface
                 'project' => $project,
                 'tasks' => $tasks
             ]);
-            // Sends email
+            // Set email text and recipient
             $mail = GeneralUtility::makeInstance(MailMessage::class);
             $subject = trim($this->standaloneSubjectView->render());
             $htmlText = $this->standaloneBodyHtmlView->render();
@@ -124,11 +125,23 @@ class SendMailMiddleware implements MiddlewareInterface
                 ->setTo(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($client))
                 ->html($htmlText)
                 ->text($plainText);
-
-            if ($project->getOwner() && $project->getOwner()->getEmail()) {
-                $mail->setFrom(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner()));
-                $mail->setCc(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner()));
+            // Set email sender ($client->ownerEamil overrides $owner->email)
+            $from = '';
+            if ($project->getOwner() && GeneralUtility::validEmail($project->getOwner()->getEmail())) {
+                $from = \Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner());
             }
+            if (GeneralUtility::validEmail($client->getOwnerEmail())) {
+                $from = [$client->getOwnerEmail()];
+                if ($project->getOwner()) {
+                    $project->getOwner()->setEmail($client->getOwnerEmail());
+                    $from = \Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner());
+                }
+            }
+            if ($from) {
+                $mail->setFrom($from);
+                $mail->setCc($from);
+            }
+            // Set additional cc recipients
             if ($project->getCcEmail()) {
                 $ccEmails = GeneralUtility::trimExplode(',', $project->getCcEmail());
                 foreach ($ccEmails as $ccEmail) {
@@ -137,6 +150,7 @@ class SendMailMiddleware implements MiddlewareInterface
                     }
                 }
             }
+            // Send email
             $mail->send();
             //return new HtmlResponse($htmlText);
             //return new HtmlResponse($plainText);

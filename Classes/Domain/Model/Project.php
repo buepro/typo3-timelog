@@ -67,7 +67,7 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     /**
      * client
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+     * @var Client
      */
     protected $client = null;
 
@@ -274,7 +274,7 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     /**
      * Returns the client
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $client
+     * @return Client $client
      */
     public function getClient()
     {
@@ -284,10 +284,10 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     /**
      * Sets the client
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $client
+     * @param Client $client
      * @return void
      */
-    public function setClient(\TYPO3\CMS\Extbase\Domain\Model\FrontendUser $client)
+    public function setClient(Client $client)
     {
         $this->client = $client;
     }

@@ -65,3 +65,12 @@ CREATE TABLE tx_timelog_domain_model_interval (
     duration double(11,2) DEFAULT '0.00' NOT NULL
 
 );
+
+#
+# Table structure for table 'fe_users'
+#
+CREATE TABLE fe_users (
+
+    tx_timelog_owner_email varchar(255) DEFAULT '' NOT NULL,
+
+);
