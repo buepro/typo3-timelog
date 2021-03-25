@@ -7,7 +7,7 @@
  * LICENSE file that was distributed with this source code.
  */
 
-defined('TYPO3_MODE') || die('Access denied.');
+defined('TYPO3') || die('Access denied.');
 
 (function () {
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::addLLrefForTCAdescr('tx_timelog_domain_model_project', 'EXT:timelog/Resources/Private/Language/locallang_csh_tx_timelog_domain_model_project.xlf');

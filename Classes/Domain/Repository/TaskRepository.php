@@ -13,7 +13,9 @@ use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
 use Buepro\Timelog\Utility\DiUtility;
+use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
+use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\Repository;
@@ -41,7 +43,9 @@ class TaskRepository extends Repository
      */
     public function initializeObject()
     {
-        if (TYPO3_MODE === 'BE') {
+        if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
+            && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()
+        ) {
             $querySettings = DiUtility::getObject(Typo3QuerySettings::class);
             $querySettings->setRespectStoragePage(false);
             $this->setDefaultQuerySettings($querySettings);
