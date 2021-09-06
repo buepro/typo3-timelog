@@ -15,8 +15,8 @@
   "homepage": "https://github.com/buepro/typo3-timelog/",
   "license": ["GPL-2.0-or-later"],
   "require": {
-    "typo3/cms-core": "^10.4.11 || ^11.1@dev",
-    "buepro/typo3-auxlibs": "^1.2.1 || ^1.6@dev"
+    "typo3/cms-core": "^10.4.11 || ^11.3",
+    "buepro/typo3-auxlibs": "^1.4"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
@@ -35,7 +35,7 @@
       "extension-key": "timelog"
     },
     "branch-alias": {
-      "dev-master": "1.x-dev"
+      "dev-master": "1.7.x-dev"
     }
   }
 }
