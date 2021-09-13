@@ -32,3 +32,9 @@ services:
               identifier: 'timelog-core-mediator'
               method: handleAfterFormEnginePageInitializedEvent
               event: TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent
+
+    Buepro\Timelog\Service\ExtensionInstallService:
+        tags:
+            - name: event.listener
+              identifier: 'buepro/timelog/finalize-extension-installation'
+              event: TYPO3\CMS\Core\Package\Event\AfterPackageActivationEvent

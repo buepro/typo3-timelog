@@ -71,23 +71,6 @@ defined('TYPO3') || die('Access denied.');
     );
 
     /**
-     * Extension configuration
-     */
-    if (1) {
-        $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
-        );
-
-        // Sets hashid salt
-        $timelogConfiguration = $extensionConfiguration->get('timelog');
-        if ($timelogConfiguration['hashidSalt'] === '') {
-            $extensionConfiguration->set('timelog', 'hashidSalt', md5(
-                sprintf('%d Lihdfg!', time())
-            ));
-        }
-    }
-
-    /**
      * Page TS
      */
     if (1) {
