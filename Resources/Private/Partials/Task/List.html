@@ -3,7 +3,7 @@
       xmlns:auxlibs="http://typo3.org/ns/Buepro/Auxlibs/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<div class="tx-timelog-tasklist col">
+<div class="tx-timelog-tasklist">
     <header class="frame-header">
         <f:variable name="taskGroupLink">
             <f:link.action arguments="{taskGroupHandle: taskGroup.handle}" section="{project.handle}"
@@ -62,7 +62,7 @@
         </f:if>
     </header>
     <f:for each="{tasks}" as="task">
-        <div id="{task.handle}" class="tlc-task row align-items-center">
+        <div id="{task.handle}" class="tlc-task row mx-0 align-items-center">
             <div class="tlc-info col-md-2 py-3">
                 <div class="row">
                     <div class="col-auto col-md-12">{task.endTime -> f:format.date(format: 'd.m.Y')}</div>

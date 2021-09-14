@@ -7,27 +7,27 @@
             <h4>{f:translate(key: 'findtasks')}</h4>
         </header>
         <f:form action="list">
-            <div class="form-row">
-                <div class="col">
+            <div class="form-row row g-2 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+                <div class="col mb-2">
                     <f:form.textfield class="form-control tlc-findfield" name="projectHandle"
                                       placeholder="{f:translate(key: 'projectHandle')}"
                                       value="{project.handle}"/>
                 </div>
-                <div class="col">
+                <div class="col mb-2">
                     <f:form.textfield class="form-control tlc-findfield" name="taskGroupHandle"
                                       placeholder="{f:translate(key: 'taskGroupHandle')}"
                                       value="{taskGroup.handle}"/>
                 </div>
-                <div class="col">
+                <div class="col mb-2">
                     <f:form.textfield class="form-control tlc-findfield" name="batchHandle"
                                       placeholder="{f:translate(key: 'batchHandle')}"
                                       value="{batch.handle}"/>
                 </div>
-                <div class="col">
+                <div class="col mb-2">
                     <f:form.textfield class="form-control tlc-findfield" name="taskHandle"
                                       placeholder="{f:translate(key: 'taskHandle')}"/>
                 </div>
-                <div class="col">
+                <div class="col mb-2">
                     <button type="submit" class="btn btn-primary">{f:translate(key: 'find')}</button>
                 </div>
             </div>
