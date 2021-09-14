@@ -9,23 +9,12 @@
 
 namespace Buepro\Timelog\Domain\Repository;
 
+use Buepro\Timelog\Domain\Model\FrontendUser;
 use Buepro\Timelog\Domain\Model\Project;
-use Buepro\Timelog\Utility\DiUtility;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
-/***
- *
- * This file is part of the "Timelog" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2019 Roman Büchler <rb@buechler.pro>, buechler.pro
- *
- ***/
 /**
  * The repository for Projects
  */
@@ -67,7 +56,7 @@ class ProjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $projects = $queryBuilder->execute();
         $result = [];
-        $propertyMapper = DiUtility::getObject(PropertyMapper::class);
+        $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
         foreach ($projects as $project) {
             $result[] = $propertyMapper->convert((string) $project['uid'], Project::class);
         }

@@ -71,7 +71,7 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     /**
      * worker
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+     * @var FrontendUser
      */
     protected $worker = null;
 
@@ -339,7 +339,7 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     /**
      * Returns the worker
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $worker
+     * @return FrontendUser $worker
      */
     public function getWorker()
     {
@@ -349,10 +349,10 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     /**
      * Sets the worker
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $worker
+     * @param FrontendUser $worker
      * @return void
      */
-    public function setWorker(\TYPO3\CMS\Extbase\Domain\Model\FrontendUser $worker)
+    public function setWorker(FrontendUser $worker)
     {
         $this->worker = $worker;
     }

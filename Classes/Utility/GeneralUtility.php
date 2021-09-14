@@ -9,8 +9,10 @@
 
 namespace Buepro\Timelog\Utility;
 
+use Buepro\Timelog\Domain\Model\FrontendUser;
 use Buepro\Timelog\Domain\Model\Task;
-use TYPO3\CMS\Extbase\Domain\Model\FrontendUser;
+use Hashids\Hashids;
+use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class GeneralUtility
 {
@@ -19,18 +21,16 @@ class GeneralUtility
      * Gets an instance from Hashids for a model.
      *
      * @param string $model
-     * @return \Hashids\Hashids
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
+     * @return Hashids
      */
     private static function getHashids(string $model)
     {
         $extensionConfiguration = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
-            \TYPO3\CMS\Core\Configuration\ExtensionConfiguration::class
+            ExtensionConfiguration::class
         );
         $timelogConfiguration = $extensionConfiguration->get('timelog');
         $salt = sprintf('%s%s%s', $model, $timelogConfiguration['hashidSalt'], 'Lihdfg!');
-        return new \Hashids\Hashids($salt, $timelogConfiguration['hashidLength']);
+        return new Hashids($salt, $timelogConfiguration['hashidLength']);
     }
 
     /**
@@ -39,8 +39,6 @@ class GeneralUtility
      * @param int $uid UID from the model
      * @param string $className Qualified namespaced name of the class
      * @return string The hash
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
      */
     public static function encodeHashid(int $uid, string $className)
     {
@@ -53,14 +51,12 @@ class GeneralUtility
      *
      * @param string $hash
      * @param string $className Qualified namespaced name of the class
-     * @return array
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
+     * @return int
      */
     public static function decodeHashid(string $hash, string $className)
     {
         $hashids = self::getHashids($className);
-        return $hashids->decode($hash)[0];
+        return $hashids->decode($hash)[0] ?? 0;
     }
 
     /**
@@ -69,8 +65,6 @@ class GeneralUtility
      * @param int $timestamp
      * @param int $taskUid
      * @return string
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
      */
     public static function getBatchHandle(int $timestamp, int $taskUid)
     {
@@ -83,8 +77,6 @@ class GeneralUtility
      *
      * @param string $hash
      * @return array
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException
-     * @throws \TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException
      */
     public static function decodeBatchHandle(string $hash)
     {
@@ -107,26 +99,24 @@ class GeneralUtility
      */
     public static function getEmailAddress(FrontendUser $feUser)
     {
-        if ($feUser->getLastName() || $feUser->getFirstName()) {
-            $name = [];
-            if ($feUser->getFirstName()) {
-                $name[] = $feUser->getFirstName();
-            }
-            if ($feUser->getMiddleName()) {
-                $name[] = $feUser->getMiddleName();
-            }
-            if ($feUser->getLastName()) {
-                $name[] = $feUser->getLastName();
-            }
-            $name = implode(' ', $name);
-        } elseif ($feUser->getName()) {
-            $name = $feUser->getName();
-        } else {
-            $name = '';
+        $name = $feUser->getName() ?: '';
+        $nameParts = [];
+        if ($feUser->getFirstName()) {
+            $nameParts[] = $feUser->getFirstName();
         }
-        if ($feUser->getEmail() && $name) {
+        if ($feUser->getMiddleName()) {
+            $nameParts[] = $feUser->getMiddleName();
+        }
+        if ($feUser->getLastName()) {
+            $nameParts[] = $feUser->getLastName();
+        }
+        if ($nameParts) {
+            $name = implode(' ', $nameParts);
+        }
+        if ($name && $feUser->getEmail()) {
             return [$feUser->getEmail() => $name];
-        } elseif ($feUser->getEmail()) {
+        }
+        if ($feUser->getEmail()) {
             return [$feUser->getEmail()];
         }
         return [];

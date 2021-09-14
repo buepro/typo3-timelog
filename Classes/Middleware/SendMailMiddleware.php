@@ -10,17 +10,15 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Middleware;
 
-use Buepro\Timelog\Domain\Model\Client;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
-use Buepro\Timelog\Utility\DiUtility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use TYPO3\CMS\Core\Http\HtmlResponse;
 use TYPO3\CMS\Core\Http\NullResponse;
+use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Fluid\View\StandaloneView;
@@ -32,17 +30,20 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
 class SendMailMiddleware implements MiddlewareInterface
 {
     /**
-     * @var StandaloneSubjectView
+     * StandaloneSubjectView
+     * @var StandaloneView
      */
     protected $standaloneSubjectView;
 
     /**
-     * @var StandaloneBodyPlainView
+     * StandaloneBodyPlainView
+     * @var StandaloneView
      */
     protected $standaloneBodyPlainView;
 
     /**
-     * @var StandaloneBodyHtmlView
+     * StandaloneBodyHtmlView
+     * @var StandaloneView
      */
     protected $standaloneBodyHtmlView;
 
@@ -69,7 +70,7 @@ class SendMailMiddleware implements MiddlewareInterface
 
     private function getErrorResponse(string $reasonPhrase)
     {
-        $response = new \TYPO3\CMS\Core\Http\Response();
+        $response = new Response();
         return $response->withStatus(503, $reasonPhrase);
     }
 
@@ -86,8 +87,10 @@ class SendMailMiddleware implements MiddlewareInterface
                 (string)$projectHandle,
                 Project::class
             );
+            /** @var ProjectRepository $projectRepository */
+            $projectRepository = GeneralUtility::makeInstance(ProjectRepository::class);
             /** @var Project $project */
-            $project = DiUtility::getObject(ProjectRepository::class)->findByUid($projectUid);
+            $project = $projectRepository->findByUid($projectUid);
             if (!$project) {
                 return $this->getErrorResponse('Project isn\'t available.');
             }
@@ -98,7 +101,7 @@ class SendMailMiddleware implements MiddlewareInterface
             }
             // Initialize tasks
             /** @var TaskRepository $taskRepository */
-            $taskRepository = DiUtility::getObject(TaskRepository::class);
+            $taskRepository = GeneralUtility::makeInstance(TaskRepository::class);
             $tasks = $taskRepository->findRecentForProject($project);
             // Initializes views
             $this->standaloneSubjectView->assignMultiple([
@@ -116,6 +119,7 @@ class SendMailMiddleware implements MiddlewareInterface
                 'tasks' => $tasks
             ]);
             // Set email text and recipient
+            /** @var MailMessage $mail */
             $mail = GeneralUtility::makeInstance(MailMessage::class);
             $subject = trim($this->standaloneSubjectView->render());
             $htmlText = $this->standaloneBodyHtmlView->render();

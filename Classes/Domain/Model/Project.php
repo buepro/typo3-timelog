@@ -74,7 +74,7 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     /**
      * owner
      *
-     * @var \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+     * @var FrontendUser
      */
     protected $owner = null;
 
@@ -295,7 +295,7 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     /**
      * Returns the owner
      *
-     * @return \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $owner
+     * @return FrontendUser $owner
      */
     public function getOwner()
     {
@@ -305,10 +305,10 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
     /**
      * Sets the owner
      *
-     * @param \TYPO3\CMS\Extbase\Domain\Model\FrontendUser $owner
+     * @param FrontendUser $owner
      * @return void
      */
-    public function setOwner(\TYPO3\CMS\Extbase\Domain\Model\FrontendUser $owner)
+    public function setOwner(FrontendUser $owner)
     {
         $this->owner = $owner;
     }

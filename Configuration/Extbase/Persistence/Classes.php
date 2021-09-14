@@ -3,6 +3,9 @@
 declare(strict_types = 1);
 
 return [
+    \Buepro\Timelog\Domain\Model\FrontendUser::class => [
+        'tableName' => 'fe_users',
+    ],
     \Buepro\Timelog\Domain\Model\Client::class => [
         'tableName' => 'fe_users',
         'properties' => [

@@ -12,25 +12,15 @@ namespace Buepro\Timelog\Domain\Repository;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
-use Buepro\Timelog\Utility\DiUtility;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
+use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
-/***
- *
- * This file is part of the "Timelog" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2019 Roman Büchler <rb@buechler.pro>, buechler.pro
- *
- ***/
 /**
  * The repository for Tasks
  */
@@ -46,7 +36,8 @@ class TaskRepository extends Repository
         if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
             && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()
         ) {
-            $querySettings = DiUtility::getObject(Typo3QuerySettings::class);
+            /** @var Typo3QuerySettings $querySettings */
+            $querySettings = GeneralUtility::makeInstance(Typo3QuerySettings::class);
             $querySettings->setRespectStoragePage(false);
             $this->setDefaultQuerySettings($querySettings);
         }
@@ -60,8 +51,7 @@ class TaskRepository extends Repository
      *
      * @param Project $project
      * @param int $limit
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
-     * @throws \TYPO3\CMS\Extbase\Property\Exception
+     * @return array|QueryResultInterface
      */
     public function findRecentForProject(Project $project, int $limit = 2)
     {
@@ -93,7 +83,7 @@ class TaskRepository extends Repository
         $tasks = $queryBuilder->execute();
 
         $result = [];
-        $propertyMapper = DiUtility::getObject(PropertyMapper::class);
+        $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
         foreach ($tasks as $task) {
             $result[] = $propertyMapper->convert((string) $task['uid'], Task::class);
         }
@@ -182,7 +172,7 @@ class TaskRepository extends Repository
      * @param Task $task
      * @param TaskGroup|int $taskGroupFilter 0 to exclude all task groups
      * @param int $batchTime
-     * @return array|\TYPO3\CMS\Extbase\Persistence\QueryResultInterface
+     * @return array|QueryResultInterface
      */
     public function findForFilter(Project $project = null, Task $task = null, $taskGroupFilter = null, int $batchTime = 0)
     {

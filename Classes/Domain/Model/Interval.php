@@ -9,16 +9,6 @@
 
 namespace Buepro\Timelog\Domain\Model;
 
-/***
- *
- * This file is part of the "Timelog" Extension for TYPO3 CMS.
- *
- * For the full copyright and license information, please read the
- * LICENSE.txt file that was distributed with this source code.
- *
- *  (c) 2019 Roman Büchler <rb@buechler.pro>, buechler.pro
- *
- ***/
 /**
  * Interval
  */

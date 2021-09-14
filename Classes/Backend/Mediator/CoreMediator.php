@@ -10,9 +10,8 @@
 namespace Buepro\Timelog\Backend\Mediator;
 
 use Buepro\Timelog\Domain\Model\UpdateInterface;
-use Buepro\Timelog\Utility\DiUtility;
 use TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent;
-use TYPO3\CMS\Extbase\Object\ObjectManager;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 
 /**
@@ -28,11 +27,6 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
-     * @var ObjectManager
-     */
-    protected $objectManager;
-
-    /**
      * @var PersistenceManager
      */
     protected $persistenceManager;
@@ -45,9 +39,8 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
      */
     private $changedObjectUidList = [];
 
-    public function __construct(ObjectManager $objectManager, PersistenceManager $persistenceManager)
+    public function __construct(PersistenceManager $persistenceManager)
     {
-        $this->objectManager = $objectManager;
         $this->persistenceManager = $persistenceManager;
     }
 
@@ -71,7 +64,7 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
             foreach ($uidList as $uid => $n) {
                 $repositoryClassName = str_replace('Model', 'Repository', $className) . 'Repository';
                 if (class_exists($repositoryClassName)) {
-                    $repository = DiUtility::getObject($repositoryClassName);
+                    $repository = GeneralUtility::makeInstance($repositoryClassName);
                     if (!$repository) {
                         continue;
                     }

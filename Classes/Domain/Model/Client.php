@@ -4,7 +4,7 @@
 namespace Buepro\Timelog\Domain\Model;
 
 
-class Client extends \TYPO3\CMS\Extbase\Domain\Model\FrontendUser
+class Client extends FrontendUser
 {
     /**
      * @var string

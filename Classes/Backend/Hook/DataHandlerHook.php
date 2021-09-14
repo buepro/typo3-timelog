@@ -9,12 +9,6 @@
 
 namespace Buepro\Timelog\Backend\Hook;
 
-/**
- * Created by PhpStorm.
- * User: roman
- * Date: 20/02/2019
- * Time: 12:04
- */
 use Buepro\Timelog\Backend\Mediator\CoreMediator;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 

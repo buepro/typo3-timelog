@@ -6,6 +6,7 @@ services:
 
     Buepro\Timelog\:
         resource: '../Classes/*'
+        exclude: '../Classes/Domain/Model/*'
 
     # Event listeners
     Buepro\Timelog\Mediator\HandleMediator:
