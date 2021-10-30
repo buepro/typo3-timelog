@@ -128,7 +128,7 @@
                                 </f:form.select.option>
                                 <f:for each="{taskGroups}" as="aTaskGroup">
                                     <f:form.select.option value="{aTaskGroup.handle}" selected="{taskGroup.handle} == {aTaskGroup.handle}">
-                                        {aTaskGroup.title} - {aTaskGroup.handle}
+                                        {aTaskGroup.title} - {aTaskGroup.handle} <f:if condition="{aTaskGroup.heapTime}">({aTaskGroup.heapTime -> f:format.number(decimals: 1)} h)</f:if>
                                     </f:form.select.option>
                                 </f:for>
                             </f:form.select>
