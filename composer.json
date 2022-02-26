@@ -16,7 +16,8 @@
   "license": ["GPL-2.0-or-later"],
   "require": {
     "typo3/cms-core": "^10.4.11 || ^11.5",
-    "buepro/typo3-auxlibs": "^1.4"
+    "buepro/typo3-auxlibs": "^1.4",
+    "fluidtypo3/vhs": "^6.0.5"
   },
   "require-dev": {
     "roave/security-advisories": "dev-master"
