@@ -24,9 +24,21 @@ class ExtensionInstallService
         // Ensure hashid salt is set
         $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $timelogConfiguration = $extensionConfiguration->get('timelog');
-        if ($timelogConfiguration['hashidSalt'] === '') {
+        if (isset($timelogConfiguration['hashidSalt']) && $timelogConfiguration['hashidSalt'] === '') {
             $timelogConfiguration['hashidSalt'] = md5(sprintf('%d Lihdfg!', time()));
-            $extensionConfiguration->set('timelog', $timelogConfiguration);
+
+            // Workaround for
+            // https://review.typo3.org/c/Packages/TYPO3.CMS/+/62650
+            $reflection = new \ReflectionClass(ExtensionConfiguration::class);
+            $parameters = $reflection->getMethod('set')->getParameters();
+            $arguments = [];
+            $arguments[] = 'timelog';
+            if (count($parameters) === 3) {
+                $arguments[] = '';
+            }
+            $arguments[] = $timelogConfiguration;
+
+            $extensionConfiguration->set(...$arguments);
         }
     }
 }
