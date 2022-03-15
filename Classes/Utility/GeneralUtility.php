@@ -42,8 +42,7 @@ class GeneralUtility
      */
     public static function encodeHashid(int $uid, string $className)
     {
-        $hashids = self::getHashids($className);
-        return $hashids->encode($uid);
+        return self::getHashids($className)->encode($uid);
     }
 
     /**
@@ -55,8 +54,7 @@ class GeneralUtility
      */
     public static function decodeHashid(string $hash, string $className)
     {
-        $hashids = self::getHashids($className);
-        return $hashids->decode($hash)[0] ?? 0;
+        return self::getHashids($className)->decode($hash)[0] ?? 0;
     }
 
     /**
@@ -68,8 +66,7 @@ class GeneralUtility
      */
     public static function getBatchHandle(int $timestamp, int $taskUid)
     {
-        $hashids = self::getHashids(Task::class);
-        return $hashids->encode($timestamp, $taskUid);
+        return self::getHashids(Task::class)->encode($timestamp, $taskUid);
     }
 
     /**

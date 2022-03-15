@@ -9,6 +9,7 @@
 
 namespace Buepro\Timelog\Mediator;
 
+use Buepro\Timelog\Domain\Model\HandleInterface;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
@@ -28,8 +29,12 @@ class HandleMediator implements SingletonInterface
     public function handlePersistEvent(EntityPersistedEvent $event): void
     {
         $object = $event->getObject();
-        if (in_array(get_class($object), [Project::class, Task::class, TaskGroup::class], true) && !$object->getHandle()) {
-            $handle = GeneralUtility::encodeHashid($object->getUid(), get_class($object));
+        if (
+            $object instanceof HandleInterface &&
+            $object->getHandle() === '' &&
+            ($objectUid = (int)$object->getUid()) > 0
+        ) {
+            $handle = GeneralUtility::encodeHashid($objectUid, get_class($object));
             // Sets the handle for the model in memory
             $object->setHandle($handle);
             // Sets the handle for the model in the db
@@ -37,7 +42,7 @@ class HandleMediator implements SingletonInterface
             $tableName = 'tx_timelog_domain_model_' . $tableName;
             (\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(DatabaseService::class))->updateRecord(
                 $tableName,
-                $object->getUid(),
+                $objectUid,
                 'handle',
                 $handle
             );

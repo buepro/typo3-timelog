@@ -18,7 +18,7 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 /**
  * Task
  */
-class Task extends AbstractEntity implements UpdateInterface
+class Task extends AbstractEntity implements UpdateInterface, HandleInterface
 {
 
     /**

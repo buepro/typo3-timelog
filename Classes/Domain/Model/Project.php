@@ -9,10 +9,12 @@
 
 namespace Buepro\Timelog\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Project
  */
-class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Buepro\Timelog\Domain\Model\UpdateInterface
+class Project extends AbstractEntity implements UpdateInterface, HandleInterface
 {
 
     /**

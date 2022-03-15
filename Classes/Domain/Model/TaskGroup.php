@@ -14,7 +14,7 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 /**
  * TaskGroup
  */
-class TaskGroup extends AbstractEntity implements UpdateInterface
+class TaskGroup extends AbstractEntity implements UpdateInterface, HandleInterface
 {
 
     /**
