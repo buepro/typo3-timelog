@@ -68,17 +68,18 @@ class SendMailMiddleware implements MiddlewareInterface
         );
     }
 
-    private function getErrorResponse(string $reasonPhrase)
+    private function getErrorResponse(string $reasonPhrase): Response
     {
-        $response = new Response();
-        return $response->withStatus(503, $reasonPhrase);
+        return (new Response())->withStatus(503, $reasonPhrase);
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         // Get url parameters
-        $sendMailTo = $request->getParsedBody()['smt'] ?? $request->getQueryParams()['smt'] ?? null;
-        $projectHandle = $request->getParsedBody()['tx_timelog_taskpanel']['projectHandle'] ??
+        $parsedBody = $request->getParsedBody();
+        $parsedBody = is_array($parsedBody) ? $parsedBody : [];
+        $sendMailTo = $parsedBody['smt'] ?? $request->getQueryParams()['smt'] ?? null;
+        $projectHandle = $parsedBody['tx_timelog_taskpanel']['projectHandle'] ??
             $request->getQueryParams()['tx_timelog_taskpanel']['projectHandle'] ?? null;
 
         if ($sendMailTo === 'client' && $projectHandle) {
@@ -89,14 +90,16 @@ class SendMailMiddleware implements MiddlewareInterface
             );
             /** @var ProjectRepository $projectRepository */
             $projectRepository = GeneralUtility::makeInstance(ProjectRepository::class);
-            /** @var Project $project */
+            /** @var Project|null $project */
             $project = $projectRepository->findByUid($projectUid);
-            if (!$project) {
+            if ($project === null) {
                 return $this->getErrorResponse('Project isn\'t available.');
             }
             // Initializes client
-            $client = $project->getClient();
-            if (!$client || !$client->getEmail()) {
+            if (
+                ($client = $project->getClient()) === null ||
+                $client->getEmailAddress() === null
+            ) {
                 return $this->getErrorResponse('Client email isn\'t available');
             }
             // Initialize tasks
@@ -131,22 +134,25 @@ class SendMailMiddleware implements MiddlewareInterface
                 ->text($plainText);
             // Set email sender ($client->ownerEamil overrides $owner->email)
             $from = '';
-            if ($project->getOwner() && GeneralUtility::validEmail($project->getOwner()->getEmail())) {
+            if (
+                $project->getOwner() !== null &&
+                GeneralUtility::validEmail($project->getOwner()->getEmail())
+            ) {
                 $from = $project->getOwner()->getEmailAddress();
             }
             if (GeneralUtility::validEmail($client->getOwnerEmail())) {
                 $from = [$client->getOwnerEmail()];
-                if ($project->getOwner()) {
+                if ($project->getOwner() !== null) {
                     $project->getOwner()->setEmail($client->getOwnerEmail());
                     $from = $project->getOwner()->getEmailAddress();
                 }
             }
-            if ($from) {
+            if (is_array($from)) {
                 $mail->setFrom($from);
                 $mail->setCc($from);
             }
             // Set additional cc recipients
-            if ($project->getCcEmail()) {
+            if (GeneralUtility::validEmail($project->getCcEmail())) {
                 $ccEmails = GeneralUtility::trimExplode(',', $project->getCcEmail());
                 foreach ($ccEmails as $ccEmail) {
                     if (GeneralUtility::validEmail($ccEmail)) {
