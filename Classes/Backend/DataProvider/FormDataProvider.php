@@ -9,8 +9,9 @@
 
 namespace Buepro\Timelog\Backend\DataProvider;
 
-use Buepro\Timelog\Utility\DatabaseUtility;
+use Buepro\Timelog\Service\DatabaseService;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class FormDataProvider
@@ -26,7 +27,7 @@ class FormDataProvider implements FormDataProviderInterface
      */
     private function addInterval()
     {
-        $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(
+        $pageRenderer = GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Page\PageRenderer::class
         );
         $pageRenderer->loadRequireJsModule('TYPO3/CMS/Timelog/Backend/Task');
@@ -68,7 +69,7 @@ class FormDataProvider implements FormDataProviderInterface
         // Add data to task
         if ($result['tableName'] === 'tx_timelog_domain_model_task' && $result['command'] === 'new') {
             // Sets last used worker by be-user to task
-            $latest = DatabaseUtility::getLatestRecord(
+            $latest = (GeneralUtility::makeInstance(DatabaseService::class))->getLatestRecord(
                 'tx_timelog_domain_model_task',
                 '*',
                 sprintf('cruser_id = %d', $GLOBALS['BE_USER']->user['uid'])

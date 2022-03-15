@@ -12,7 +12,7 @@ namespace Buepro\Timelog\Mediator;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
-use Buepro\Timelog\Utility\DatabaseUtility;
+use Buepro\Timelog\Service\DatabaseService;
 use Buepro\Timelog\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent;
@@ -35,7 +35,7 @@ class HandleMediator implements SingletonInterface
             // Sets the handle for the model in the db
             $tableName = strtolower(str_replace('Buepro\\Timelog\\Domain\\Model\\', '', get_class($object)));
             $tableName = 'tx_timelog_domain_model_' . $tableName;
-            DatabaseUtility::updateRecord(
+            (\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(DatabaseService::class))->updateRecord(
                 $tableName,
                 $object->getUid(),
                 'handle',

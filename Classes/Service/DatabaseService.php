@@ -7,17 +7,19 @@
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Buepro\Timelog\Utility;
+namespace Buepro\Timelog\Service;
 
+use Doctrine\DBAL\Driver\Statement;
+use Doctrine\DBAL\ForwardCompatibility\DriverResultStatement;
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use TYPO3\CMS\Core\Database\ConnectionPool;
-use TYPO3\CMS\Core\Database\Query\QueryHelper;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * Class DatabaseUtility
  */
-class DatabaseUtility
+class DatabaseService
 {
 
     /**
@@ -26,10 +28,10 @@ class DatabaseUtility
      * @param string $tableName
      * @param int $recordUid Uid from the record to be updated
      * @param string $fieldName
-     * @param $fieldValue
+     * @param mixed $fieldValue
      * @return int The number of affected rows
      */
-    public static function updateRecord(string $tableName, int $recordUid, string $fieldName, $fieldValue)
+    public function updateRecord(string $tableName, int $recordUid, string $fieldName, $fieldValue)
     {
         return GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($tableName)
@@ -42,14 +44,20 @@ class DatabaseUtility
      * @param string $tableName
      * @param int $uid
      * @param array $fields
-     * @return mixed
      */
-    public static function getRecordByUid(string $tableName, int $uid, array $fields)
+    public function getRecordByUid(string $tableName, int $uid, array $fields): ?array
     {
-        return GeneralUtility::makeInstance(ConnectionPool::class)
+        $statement = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($tableName)
-            ->select($fields, $tableName, ['uid' => $uid])
-            ->fetch();
+            ->select($fields, $tableName, ['uid' => $uid]);
+        if (
+            $statement instanceof DriverResultStatement &&
+            ($row = $statement->fetchAssociative()) !== false &&
+            $row !== []
+        ) {
+            return $row;
+        }
+        return null;
     }
 
     /**
@@ -59,9 +67,8 @@ class DatabaseUtility
      * @param string $fields List of fields to select
      * @param string $where Additional WHERE clause, eg. " AND blablabla = 0
      * @param bool $useDeleteClause Use the deleteClause to check if a record is deleted (default TRUE)
-     * @return mixed|null
      */
-    public static function getLatestRecord(string $table, $fields = '*', $where = '', $useDeleteClause = true)
+    public function getLatestRecord(string $table, $fields = '*', $where = '', $useDeleteClause = true): ?array
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable($table);
@@ -79,12 +86,15 @@ class DatabaseUtility
             ->setMaxResults(1);
 
         // add custom where clause
-        if ($where) {
-            $queryBuilder->andWhere(QueryHelper::stripLogicalOperatorPrefix($where));
+        if ($where !== '') {
+            $queryBuilder->andWhere($where);
         }
 
-        $row = $queryBuilder->execute()->fetch();
-        if ($row) {
+        if (
+            ($statement = $queryBuilder->execute()) instanceof Result &&
+            ($row = $statement->fetchAssociative()) !== false &&
+            $row !== []
+        ){
             return $row;
         }
         return null;
@@ -97,7 +107,7 @@ class DatabaseUtility
      * @param int $taskUid
      * @return bool
      */
-    public static function taskIsInProgress(int $taskUid)
+    public function taskIsInProgress(int $taskUid)
     {
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_timelog_domain_model_interval');
@@ -110,7 +120,7 @@ class DatabaseUtility
                 $queryBuilder->expr()->eq('end_time', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
             )
             ->execute();
-        if ($result) {
+        if ($result instanceof Statement) {
             return $result->rowCount() > 0;
         }
         return false;
