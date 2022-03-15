@@ -72,17 +72,16 @@ class TimeMediator implements SingletonInterface
      * @param QueryResultInterface $tasks
      * @return array Contains the keys active, heap and stack
      */
-    private function calcTimeForTasks(QueryResultInterface $tasks)
+    private function calcTimeForTasks(QueryResultInterface $tasks): array
     {
         $result = [
             'active' => 0.0,
             'heap' => 0.0,
-            'batch' => 0.0,
         ];
         /** @var Task $task */
         foreach ($tasks as $task) {
             $result['active'] += $task->getActiveTime();
-            if (!$task->getBatchDate() || $task->getBatchDate()->getTimestamp() === 0) {
+            if ($task->getBatchDate() === null || $task->getBatchDate()->getTimestamp() === 0) {
                 $result['heap'] += $task->getActiveTime();
             }
         }
@@ -93,33 +92,36 @@ class TimeMediator implements SingletonInterface
     /**
      * Updates the active, batch and heap time from a project.
      *
-     * @param Project | null $project
      * @throws IllegalObjectTypeException
      * @throws UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    private function updateProjectTime($project)
+    private function updateProjectTime(?Project $project): void
     {
-        if ($project) {
-            $tasks = $this->taskRepository->findByProject($project);
-            $projectTime = $this->calcTimeForTasks($tasks);
-            $project->setActiveTime($projectTime['active']);
-            $project->setHeapTime($projectTime['heap']);
-            $project->setBatchTime($projectTime['batch']);
-            $this->projectRepository->update($project);
+        if ($project === null) {
+            return;
         }
+        // @phpstan-ignore-next-line
+        $tasks = $this->taskRepository->findByProject($project);
+        $projectTime = $this->calcTimeForTasks($tasks);
+        $project->setActiveTime($projectTime['active']);
+        $project->setHeapTime($projectTime['heap']);
+        $project->setBatchTime($projectTime['batch']);
+        $this->projectRepository->update($project);
     }
 
-    private function updateTaskGroupTime(TaskGroup $taskGroup)
+    private function updateTaskGroupTime(?TaskGroup $taskGroup): void
     {
-        if ($taskGroup) {
-            $tasks = $this->taskRepository->findByTaskGroup($taskGroup);
-            $taskGroupTime = $this->calcTimeForTasks($tasks);
-            $taskGroup->setActiveTime($taskGroupTime['active']);
-            $taskGroup->setHeapTime($taskGroupTime['heap']);
-            $taskGroup->setBatchTime($taskGroupTime['batch']);
-            $this->taskGroupRepository->update($taskGroup);
+        if ($taskGroup === null) {
+            return;
         }
+        // @phpstan-ignore-next-line
+        $tasks = $this->taskRepository->findByTaskGroup($taskGroup);
+        $taskGroupTime = $this->calcTimeForTasks($tasks);
+        $taskGroup->setActiveTime($taskGroupTime['active']);
+        $taskGroup->setHeapTime($taskGroupTime['heap']);
+        $taskGroup->setBatchTime($taskGroupTime['batch']);
+        $this->taskGroupRepository->update($taskGroup);
     }
 
     /**
@@ -131,12 +133,12 @@ class TimeMediator implements SingletonInterface
      * @throws UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function handleTaskActiveTimeChangedEvent(TaskActiveTimeChangedEvent $event)
+    public function handleTaskActiveTimeChangedEvent(TaskActiveTimeChangedEvent $event): void
     {
-        if ($event->getTask()->getProject()) {
+        if ($event->getTask()->getProject() !== null) {
             $this->updateProjectTime($event->getTask()->getProject());
         }
-        if ($event->getTask()->getTaskGroup()) {
+        if ($event->getTask()->getTaskGroup() !== null) {
             $this->updateTaskGroupTime($event->getTask()->getTaskGroup());
         }
     }
@@ -147,12 +149,12 @@ class TimeMediator implements SingletonInterface
      * @throws UnknownObjectException
      * @throws \TYPO3\CMS\Extbase\Object\Exception
      */
-    public function handleTaskBatchDateChangedEvent(TaskBatchDateChangedEvent $event)
+    public function handleTaskBatchDateChangedEvent(TaskBatchDateChangedEvent $event): void
     {
-        if ($event->getTask()->getProject()) {
+        if ($event->getTask()->getProject() !== null) {
             $this->updateProjectTime($event->getTask()->getProject());
         }
-        if ($event->getTask()->getTaskGroup()) {
+        if ($event->getTask()->getTaskGroup() !== null) {
             $this->updateTaskGroupTime($event->getTask()->getTaskGroup());
         }
     }
