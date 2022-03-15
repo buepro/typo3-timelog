@@ -16,22 +16,13 @@ class Client extends FrontendUser
      */
     protected $ownerEmail = '';
 
-    /**
-     * Sets the ownerEmail value
-     *
-     * @param string $ownerEmail
-     */
-    public function setOwnerEmail($ownerEmail)
+    public function setOwnerEmail(string $ownerEmail): self
     {
         $this->ownerEmail = $ownerEmail;
+        return $this;
     }
 
-    /**
-     * Returns the ownerEmail value
-     *
-     * @return string
-     */
-    public function getOwnerEmail()
+    public function getOwnerEmail(): string
     {
         return $this->ownerEmail;
     }

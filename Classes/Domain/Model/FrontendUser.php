@@ -45,122 +45,68 @@ class FrontendUser extends AbstractEntity
      */
     protected $company = '';
 
-    /**
-     * Sets the name value
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
+        return $this;
     }
 
-    /**
-     * Returns the name value
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Sets the firstName value
-     *
-     * @param string $firstName
-     */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName): self
     {
         $this->firstName = $firstName;
+        return $this;
     }
 
-    /**
-     * Returns the firstName value
-     *
-     * @return string
-     */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
 
-    /**
-     * Sets the middleName value
-     *
-     * @param string $middleName
-     */
-    public function setMiddleName($middleName)
+    public function setMiddleName(string $middleName): self
     {
         $this->middleName = $middleName;
+        return $this;
     }
 
-    /**
-     * Returns the middleName value
-     *
-     * @return string
-     */
-    public function getMiddleName()
+    public function getMiddleName(): string
     {
         return $this->middleName;
     }
 
-    /**
-     * Sets the lastName value
-     *
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+        return $this;
     }
 
-    /**
-     * Returns the lastName value
-     *
-     * @return string
-     */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
 
-    /**
-     * Sets the email value
-     *
-     * @param string $email
-     */
-    public function setEmail($email)
+    public function setEmail(string $email): self
     {
         $this->email = $email;
+        return $this;
     }
 
-    /**
-     * Returns the email value
-     *
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * Sets the company value
-     *
-     * @param string $company
-     */
-    public function setCompany($company)
+    public function setCompany(string $company): self
     {
         $this->company = $company;
+        return $this;
     }
 
-    /**
-     * Returns the company value
-     *
-     * @return string
-     */
-    public function getCompany()
+    public function getCompany(): string
     {
         return $this->company;
     }

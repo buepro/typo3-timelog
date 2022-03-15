@@ -36,66 +36,36 @@ class Interval extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     protected $duration = 0;
 
-    /**
-     * Returns the startTime
-     *
-     * @return \DateTime $startTime
-     */
-    public function getStartTime()
+    public function getStartTime(): ?\DateTime
     {
         return $this->startTime;
     }
 
-    /**
-     * Sets the startTime
-     *
-     * @param \DateTime $startTime
-     * @return void
-     */
-    public function setStartTime(\DateTime $startTime)
+    public function setStartTime(\DateTime $startTime): self
     {
         $this->startTime = $startTime;
+        return $this;
     }
 
-    /**
-     * Returns the endTime
-     *
-     * @return \DateTime $endTime
-     */
-    public function getEndTime()
+    public function getEndTime(): ?\DateTime
     {
         return $this->endTime;
     }
 
-    /**
-     * Sets the endTime
-     *
-     * @param \DateTime $endTime
-     * @return void
-     */
-    public function setEndTime(\DateTime $endTime)
+    public function setEndTime(\DateTime $endTime): self
     {
         $this->endTime = $endTime;
+        return $this;
     }
 
-    /**
-     * Returns the duration
-     *
-     * @return float duration
-     */
-    public function getDuration()
+    public function getDuration(): float
     {
         return $this->duration;
     }
 
-    /**
-     * Sets the duration
-     *
-     * @param int $duration
-     * @return void
-     */
-    public function setDuration($duration)
+    public function setDuration(float $duration): self
     {
         $this->duration = $duration;
+        return $this;
     }
 }

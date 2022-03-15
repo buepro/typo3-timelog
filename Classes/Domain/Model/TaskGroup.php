@@ -9,10 +9,12 @@
 
 namespace Buepro\Timelog\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * TaskGroup
  */
-class TaskGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Buepro\Timelog\Domain\Model\UpdateInterface
+class TaskGroup extends AbstractEntity implements UpdateInterface
 {
 
     /**
@@ -112,240 +114,131 @@ class TaskGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implement
      */
     protected function initStorageObjects()
     {
+        // @phpstan-ignore-next-line
         $this->tasks = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
-    /**
-     * Returns the handle
-     *
-     * @return string $handle
-     */
-    public function getHandle()
+    public function getHandle(): string
     {
         return $this->handle;
     }
 
-    /**
-     * Sets the handle
-     *
-     * @param string $handle
-     * @return void
-     */
-    public function setHandle($handle)
+    public function setHandle(string $handle): self
     {
         $this->handle = $handle;
+        return $this;
     }
 
-    /**
-     * Returns the title
-     *
-     * @return string $title
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Sets the title
-     *
-     * @param string $title
-     * @return void
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+        return $this;
     }
 
-    /**
-     * Returns the description
-     *
-     * @return string $description
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Sets the description
-     *
-     * @param string $description
-     * @return void
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
+        return $this;
     }
 
-    /**
-     * Returns the internalNote
-     *
-     * @return string $internalNote
-     */
-    public function getInternalNote()
+    public function getInternalNote(): string
     {
         return $this->internalNote;
     }
 
-    /**
-     * Sets the internalNote
-     *
-     * @param string $internalNote
-     * @return void
-     */
-    public function setInternalNote($internalNote)
+    public function setInternalNote(string $internalNote): self
     {
         $this->internalNote = $internalNote;
+        return $this;
     }
 
-    /**
-     * Returns the timeTarget
-     *
-     * @return float $timeTarget
-     */
-    public function getTimeTarget()
+    public function getTimeTarget(): float
     {
         return $this->timeTarget;
     }
 
-    /**
-     * Sets the timeTarget
-     *
-     * @param float $timeTarget
-     * @return void
-     */
-    public function setTimeTarget($timeTarget)
+    public function setTimeTarget(float $timeTarget): self
     {
         $this->timeTarget = $timeTarget;
+        return $this;
     }
 
-    /**
-     * Returns the timeDeviation
-     *
-     * @return float $timeDeviation
-     */
-    public function getTimeDeviation()
+    public function getTimeDeviation(): float
     {
         return $this->timeDeviation;
     }
 
-    /**
-     * Sets the timeDeviation
-     *
-     * @param float $timeDeviation
-     * @return void
-     */
-    public function setTimeDeviation($timeDeviation)
+    public function setTimeDeviation(float $timeDeviation): self
     {
         $this->timeDeviation = $timeDeviation;
+        return $this;
     }
 
-    /**
-     * Returns the activeTime
-     *
-     * @return float $activeTime
-     */
-    public function getActiveTime()
+    public function getActiveTime(): float
     {
         return $this->activeTime;
     }
 
-    /**
-     * Sets the activeTime
-     *
-     * @param float $activeTime
-     * @return void
-     */
-    public function setActiveTime($activeTime)
+    public function setActiveTime(float $activeTime): self
     {
         $this->activeTime = $activeTime;
         $this->update();
+        return $this;
     }
 
-    /**
-     * Returns the heapTime
-     *
-     * @return float $heapTime
-     */
-    public function getHeapTime()
+    public function getHeapTime(): float
     {
         return $this->heapTime;
     }
 
-    /**
-     * Sets the heapTime
-     *
-     * @param float $heapTime
-     * @return void
-     */
-    public function setHeapTime($heapTime)
+    public function setHeapTime(float $heapTime): self
     {
         $this->heapTime = $heapTime;
+        return $this;
     }
 
-    /**
-     * Returns the batchTime
-     *
-     * @return float $batchTime
-     */
-    public function getBatchTime()
+    public function getBatchTime(): float
     {
         return $this->batchTime;
     }
 
-    /**
-     * Sets the batchTime
-     *
-     * @param float $batchTime
-     * @return void
-     */
-    public function setBatchTime($batchTime)
+    public function setBatchTime(float $batchTime): self
     {
         $this->batchTime = $batchTime;
+        return $this;
     }
 
-    /**
-     * Returns the project
-     *
-     * @return \Buepro\Timelog\Domain\Model\Project $project
-     */
-    public function getProject()
+    public function getProject(): ?Project
     {
         return $this->project;
     }
 
-    /**
-     * Sets the project
-     *
-     * @param \Buepro\Timelog\Domain\Model\Project $project
-     * @return void
-     */
-    public function setProject(\Buepro\Timelog\Domain\Model\Project $project)
+    public function setProject(Project $project): self
     {
         $this->project = $project;
+        return $this;
     }
 
-    /**
-     * Adds a Task
-     *
-     * @param \Buepro\Timelog\Domain\Model\Task $task
-     * @return void
-     */
-    public function addTask(\Buepro\Timelog\Domain\Model\Task $task)
+    public function addTask(Task $task): self
     {
         $this->tasks->attach($task);
+        return $this;
     }
 
-    /**
-     * Removes a Task
-     *
-     * @param \Buepro\Timelog\Domain\Model\Task $taskToRemove The Task to be removed
-     * @return void
-     */
-    public function removeTask(\Buepro\Timelog\Domain\Model\Task $taskToRemove)
+    public function removeTask(Task $taskToRemove): self
     {
         $this->tasks->detach($taskToRemove);
+        return $this;
     }
 
     /**
@@ -362,17 +255,17 @@ class TaskGroup extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implement
      * Sets the tasks
      *
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task> $tasks
-     * @return void
      */
-    public function setTasks(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $tasks)
+    public function setTasks(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $tasks): self
     {
         $this->tasks = $tasks;
+        return $this;
     }
 
     /**
      * Updates the object state
      */
-    public function update()
+    public function update(): void
     {
         $this->timeDeviation = $this->getTimeTarget() - $this->getActiveTime();
     }

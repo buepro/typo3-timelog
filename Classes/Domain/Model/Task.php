@@ -12,11 +12,13 @@ namespace Buepro\Timelog\Domain\Model;
 use Buepro\Timelog\Event\TaskActiveTimeChangedEvent;
 use Buepro\Timelog\Event\TaskBatchDateChangedEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Task
  */
-class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Buepro\Timelog\Domain\Model\UpdateInterface
+class Task extends AbstractEntity implements UpdateInterface
 {
 
     /**
@@ -78,7 +80,7 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     /**
      * intervals
      *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Interval>
+     * @var ObjectStorage<Interval>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
      */
     protected $intervals = null;
@@ -101,7 +103,7 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     /**
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher)
+    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
     {
         $this->eventDispatcher = $eventDispatcher;
     }
@@ -111,100 +113,61 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
      * Do not modify this method!
      * It will be rewritten on each save in the extension builder
      * You may modify the constructor of this class instead
-     *
-     * @return void
      */
-    protected function initStorageObjects()
+    protected function initStorageObjects(): void
     {
-        $this->intervals = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        // @phpstan-ignore-next-line
+        $this->intervals = new ObjectStorage();
     }
 
-    /**
-     * @param float $previousActiveTime
-     * @param float $newActiveTime
-     */
-    private function triggerActiveTimeChangedEvent(float $previousActiveTime, float $newActiveTime)
+    private function triggerActiveTimeChangedEvent(float $previousActiveTime, float $newActiveTime): void
     {
         $this->eventDispatcher->dispatch(new TaskActiveTimeChangedEvent($this, $previousActiveTime, $newActiveTime));
     }
 
-    /**
-     * @param \DateTime|null $previousDate
-     * @param \DateTime|null $currentDate
-     */
-    private function triggerBatchDateChangedEvent($previousDate, $currentDate)
+    private function triggerBatchDateChangedEvent(?\DateTime $previousDate, ?\DateTime $currentDate): void
     {
         $this->eventDispatcher->dispatch(new TaskBatchDateChangedEvent($this, $previousDate, $currentDate));
     }
 
-    /**
-     * Returns the title
-     *
-     * @return string $title
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * Sets the title
-     *
-     * @param string $title
-     * @return void
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
+        return $this;
     }
 
-    /**
-     * Returns the description
-     *
-     * @return string $description
-     */
-    public function getDescription()
+    public function getDescription(): string
     {
         return $this->description;
     }
 
-    /**
-     * Sets the description
-     *
-     * @param string $description
-     * @return void
-     */
-    public function setDescription($description)
+    public function setDescription(string $description): self
     {
         $this->description = $description;
+        return $this;
     }
 
-    /**
-     * Adds a Interval
-     *
-     * @param \Buepro\Timelog\Domain\Model\Interval $interval
-     * @return void
-     */
-    public function addInterval(\Buepro\Timelog\Domain\Model\Interval $interval)
+    public function addInterval(Interval $interval): self
     {
         $this->intervals->attach($interval);
+        return $this;
     }
 
-    /**
-     * Removes a Interval
-     *
-     * @param \Buepro\Timelog\Domain\Model\Interval $intervalToRemove The Interval to be removed
-     * @return void
-     */
-    public function removeInterval(\Buepro\Timelog\Domain\Model\Interval $intervalToRemove)
+    public function removeInterval(Interval $intervalToRemove): self
     {
         $this->intervals->detach($intervalToRemove);
+        return $this;
     }
 
     /**
      * Returns the intervals
      *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Interval> $intervals
+     * @return null|ObjectStorage<Interval> $intervals
      */
     public function getIntervals()
     {
@@ -214,165 +177,118 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
     /**
      * Sets the intervals
      *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Interval> $intervals
-     * @return void
+     * @param ObjectStorage<Interval> $intervals
      */
-    public function setIntervals(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $intervals)
+    public function setIntervals(ObjectStorage $intervals): self
     {
         $this->intervals = $intervals;
+        return $this;
     }
 
-    /**
-     * Returns the activeTime
-     *
-     * @return float activeTime
-     */
-    public function getActiveTime()
+    public function getActiveTime(): float
     {
         return $this->activeTime;
     }
 
-    /**
-     * Sets the activeTime
-     *
-     * @param float $activeTime
-     * @return void
-     */
-    public function setActiveTime(float $activeTime)
+    public function setActiveTime(float $activeTime): self
     {
         if ($this->activeTime !== $activeTime) {
             $previousActiveTime = $this->activeTime;
             $this->activeTime = $activeTime;
             $this->triggerActiveTimeChangedEvent($previousActiveTime, $activeTime);
         }
+        return $this;
     }
 
-    /**
-     * Returns the handle
-     *
-     * @return string $handle
-     */
-    public function getHandle()
+    public function getHandle(): string
     {
         return $this->handle;
     }
 
-    /**
-     * Sets the handle
-     *
-     * @param string $handle
-     * @return void
-     */
-    public function setHandle($handle)
+    public function setHandle(string $handle): self
     {
         $this->handle = $handle;
+        return $this;
     }
 
-    /**
-     * Returns the batchDate
-     *
-     * @return \DateTime $batchDate
-     */
-    public function getBatchDate()
+    public function getBatchDate(): ?\DateTime
     {
         return $this->batchDate;
     }
 
-    /**
-     * Sets the batchDate
-     *
-     * @param \DateTime $batchDate
-     * @return void
-     */
-    public function setBatchDate(\DateTime $batchDate)
+    public function setBatchDate(\DateTime $batchDate): self
     {
-        if (($this->getBatchDate() xor $batchDate) ||
-            ($this->batchDate && $batchDate && ($this->batchDate->getTimestamp() !== $batchDate->getTimestamp()))) {
+        if (
+            ($this->getBatchDate() xor $batchDate) ||
+            (
+                $this->batchDate !== null &&
+                ($this->batchDate->getTimestamp() !== $batchDate->getTimestamp())
+            )
+        ) {
             $previousBatchDate = $this->batchDate;
             $this->batchDate = $batchDate;
             $this->triggerBatchDateChangedEvent($previousBatchDate, $batchDate);
         }
+        return $this;
     }
 
-    /**
-     * Returns the project
-     *
-     * @return \Buepro\Timelog\Domain\Model\Project $project
-     */
-    public function getProject()
+    public function getProject(): ?Project
     {
         return $this->project;
     }
 
-    /**
-     * Sets the project
-     *
-     * @param \Buepro\Timelog\Domain\Model\Project $project
-     * @return void
-     */
-    public function setProject(\Buepro\Timelog\Domain\Model\Project $project)
+    public function setProject(Project $project): self
     {
         $this->project = $project;
+        return $this;
     }
 
     /**
      * Returns the taskGroup
      *
-     * @return \Buepro\Timelog\Domain\Model\TaskGroup $taskGroup
+     * @return TaskGroup $taskGroup
      */
-    public function getTaskGroup()
+    public function getTaskGroup(): ?TaskGroup
     {
         return $this->taskGroup;
     }
 
-    /**
-     * Sets the taskGroup
-     *
-     * @param \Buepro\Timelog\Domain\Model\TaskGroup $taskGroup
-     * @return void
-     */
-    public function setTaskGroup(\Buepro\Timelog\Domain\Model\TaskGroup $taskGroup)
+    public function setTaskGroup(TaskGroup $taskGroup): self
     {
         $this->taskGroup = $taskGroup;
+        return $this;
     }
 
-    /**
-     * Returns the worker
-     *
-     * @return FrontendUser $worker
-     */
-    public function getWorker()
+    public function getWorker(): ?FrontendUser
     {
         return $this->worker;
     }
 
-    /**
-     * Sets the worker
-     *
-     * @param FrontendUser $worker
-     * @return void
-     */
-    public function setWorker(FrontendUser $worker)
+    public function setWorker(FrontendUser $worker): self
     {
         $this->worker = $worker;
+        return $this;
     }
 
     /**
      * Updates a task by calculating the active time
      */
-    public function update()
+    public function update(): void
     {
+        if (($intervals = $this->getIntervals()) === null) {
+            return;
+        }
         // Calculates the active time
         $activeTime = 0;
-        foreach ($this->getIntervals() as $interval) {
+        foreach ($intervals as $interval) {
 
             // Gets star and end timestamp for interval
             $startTime = 0;
             $endTime = 0;
-            if ($interval->getStartTime()) {
+            if ($interval->getStartTime() !== null) {
                 $startTime = $interval->getStartTime()->getTimestamp();
             }
-            if ($interval->getEndTime()) {
+            if ($interval->getEndTime() !== null) {
                 $endTime = $interval->getEndTime()->getTimestamp();
             }
 
@@ -400,19 +316,21 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
      */
     public function getStartTime()
     {
-        $intervals = $this->getIntervals();
-        if (!$intervals) {
+        if (($intervals = $this->getIntervals()) === null) {
             return 0;
         }
-        $result = $intervals[0]->getStartTime();
-        $startTime = $result->getTimestamp();
+        $now = time();
+        $result = (new \DateTime())->setTimestamp($now);
         foreach ($intervals as $interval) {
-            if ($interval->getStartTime()->getTimestamp() < $startTime) {
-                $result = $interval->getStartTime();
-                $startTime = $result->getTimestamp();
+            if (
+                ($startTime = $interval->getStartTime()) !== null &&
+                $startTime->getTimestamp() < $result->getTimestamp()
+            ) {
+                $result = $startTime;
             }
+
         }
-        return $startTime;
+        return $result->getTimestamp() === $now ? 0 : $result;
     }
 
     /**
@@ -421,18 +339,19 @@ class Task extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements \Bu
      */
     public function getEndTime()
     {
-        $intervals = $this->getIntervals();
-        if (!$intervals) {
+        if (($intervals = $this->getIntervals()) === null) {
             return 0;
         }
-        $result = $intervals[0]->getStartTime();
-        $startTime = $result->getTimestamp();
+        $result = (new \DateTime())->setTimestamp(0);
         foreach ($intervals as $interval) {
-            if ($interval->getStartTime()->getTimestamp() > $startTime) {
-                $result = $interval->getStartTime();
-                $startTime = $result->getTimestamp();
+            if (
+                ($endTime = $interval->getEndTime()) !== null &&
+                $endTime->getTimestamp() > $result->getTimestamp()
+            ) {
+                $result = $endTime;
             }
+
         }
-        return $startTime;
+        return $result->getTimestamp() === 0 ? 0 : $result;
     }
 }

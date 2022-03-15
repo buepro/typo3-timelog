@@ -118,7 +118,9 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
      */
     protected function initStorageObjects(): void
     {
+        // @phpstan-ignore-next-line
         $this->tasks = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        // @phpstan-ignore-next-line
         $this->taskGroups = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
@@ -303,7 +305,7 @@ class Project extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity implements 
      *
      * @return void
      */
-    public function update()
+    public function update(): void
     {
         // TODO: Implement Update() method.
     }

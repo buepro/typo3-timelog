@@ -12,9 +12,8 @@ namespace Buepro\Timelog\Domain\Model;
 /**
  * A UpdateInterface. Models might present an inconsistent state coming from setting data without using the setters.
  * Models implementing this interface provide methods to update them self for that their state is consistent.
- *
  */
 interface UpdateInterface
 {
-    public function update();
+    public function update(): void;
 }
