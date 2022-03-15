@@ -90,35 +90,4 @@ class GeneralUtility
             'taskUid' => $decoded[1]
         ];
     }
-
-    /**
-     * Returns an email address array to be used in a mailer.
-     *
-     * @param FrontendUser $feUser
-     * @return array In the form [email => name] | [email] | []
-     */
-    public static function getEmailAddress(FrontendUser $feUser)
-    {
-        $name = $feUser->getName() ?: '';
-        $nameParts = [];
-        if ($feUser->getFirstName()) {
-            $nameParts[] = $feUser->getFirstName();
-        }
-        if ($feUser->getMiddleName()) {
-            $nameParts[] = $feUser->getMiddleName();
-        }
-        if ($feUser->getLastName()) {
-            $nameParts[] = $feUser->getLastName();
-        }
-        if ($nameParts) {
-            $name = implode(' ', $nameParts);
-        }
-        if ($name && $feUser->getEmail()) {
-            return [$feUser->getEmail() => $name];
-        }
-        if ($feUser->getEmail()) {
-            return [$feUser->getEmail()];
-        }
-        return [];
-    }
 }

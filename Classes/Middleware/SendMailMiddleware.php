@@ -126,19 +126,19 @@ class SendMailMiddleware implements MiddlewareInterface
             $plainText = $this->standaloneBodyPlainView->render();
             $mail
                 ->setSubject($subject)
-                ->setTo(\Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($client))
+                ->setTo($client->getEmailAddress())
                 ->html($htmlText)
                 ->text($plainText);
             // Set email sender ($client->ownerEamil overrides $owner->email)
             $from = '';
             if ($project->getOwner() && GeneralUtility::validEmail($project->getOwner()->getEmail())) {
-                $from = \Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner());
+                $from = $project->getOwner()->getEmailAddress();
             }
             if (GeneralUtility::validEmail($client->getOwnerEmail())) {
                 $from = [$client->getOwnerEmail()];
                 if ($project->getOwner()) {
                     $project->getOwner()->setEmail($client->getOwnerEmail());
-                    $from = \Buepro\Timelog\Utility\GeneralUtility::getEmailAddress($project->getOwner());
+                    $from = $project->getOwner()->getEmailAddress();
                 }
             }
             if ($from) {

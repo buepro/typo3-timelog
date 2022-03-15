@@ -9,6 +9,8 @@
 
 namespace Buepro\Timelog\Domain\Model;
 
+use TYPO3\CMS\Core\Mail\MailMessage;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class FrontendUser extends AbstractEntity
@@ -161,5 +163,27 @@ class FrontendUser extends AbstractEntity
     public function getCompany()
     {
         return $this->company;
+    }
+
+    public function getDisplayName(): string
+    {
+        $name = trim($this->getFirstName() . ' ' . $this->getMiddleName());
+        $name = trim($name . ' ' . $this->getLastName());
+        return $name === '' ? $this->getName() : $name;
+    }
+
+    /**
+     * @return array|null [$email] or [$email => $displayName]
+     * @see MailMessage::setTo()
+     */
+    public function getEmailAddress(): ?array
+    {
+        if (!GeneralUtility::validEmail($this->getEmail())) {
+            return null;
+        }
+        if (($name = $this->getDisplayName()) !== '') {
+            return [$this->getEmail() => $name];
+        }
+        return [$this->getEmail()];
     }
 }
