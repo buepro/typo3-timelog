@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the package buepro/timelog.
+ * This file is part of the composer package buepro/typo3-timelog.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -56,7 +56,7 @@ class ProjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
                 $projects = $this->projectRepository->findAllWithHash();
             }
         } else {
-            /* @var Project $project */
+            /** @var Project $project */
             [$project] = $this->projectRepository->findByHandle($projectHandle);
             $projects = $this->projectRepository->findAllWithHash($project->getClient());
         }

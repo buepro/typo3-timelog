@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the package buepro/timelog.
+ * This file is part of the composer package buepro/typo3-timelog.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -27,7 +27,7 @@ class ProjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
      */
     public function findAllWithHash(FrontendUser $client = null)
     {
-        /* @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
+        /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getQueryBuilderForTable('tx_timelog_domain_model_project');
 

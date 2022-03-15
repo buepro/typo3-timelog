@@ -20,12 +20,15 @@
 	"homepage": "https://github.com/buepro/typo3-timelog/",
 	"require": {
 		"php": ">=7.3.0",
-		"typo3/cms-core": "^10.4.11 || ^11.5",
 		"buepro/typo3-auxlibs": "^1.4",
-		"fluidtypo3/vhs": "^6.0.5"
+		"fluidtypo3/vhs": "^6.0.5",
+		"typo3/cms-core": "^10.4.11 || ^11.5"
 	},
 	"require-dev": {
 		"buepro/typo3-pizpalue": "~v12.4.1",
+		"ergebnis/composer-normalize": "^2.15.0",
+		"friendsofphp/php-cs-fixer": "^3.0.0",
+		"overtrue/phplint": "^2.3.5",
 		"typo3/cms-base-distribution": "^10.4 || ^11.5",
 		"typo3/cms-impexp": "^10.4 || ^11.5",
 		"typo3/cms-lowlevel": "^10.4 || ^11.5",
@@ -62,6 +65,21 @@
 			"mkdir -p .build/config/sites/default",
 			"[ -L .build/config/sites/default/config.yaml ] || ln -svf ../../../../Build/site/config.yaml .build/config/sites/default/config.yaml"
 		],
+		"ci": [
+			"@ci:static"
+		],
+		"ci:composer:normalize": "@composer normalize --dry-run",
+		"ci:php:cs": [
+			"php-cs-fixer --diff -v --dry-run fix"
+		],
+		"ci:php:lint": [
+			"phplint"
+		],
+		"ci:static": [
+			"@ci:composer:normalize",
+			"@ci:php:cs",
+			"@ci:php:lint"
+		],
 		"ddev:install": [
 			"composer install",
 			"ddev start",
@@ -73,6 +91,14 @@
 			"ddev composer typo3cms:database:export",
 			"ddev delete",
 			"rm -rf .build/"
+		],
+		"fix": [
+			"@fix:composer:normalize",
+			"@fix:php:cs"
+		],
+		"fix:composer:normalize": "@composer normalize",
+		"fix:php:cs": [
+			"php-cs-fixer --diff -v fix"
 		],
 		"site:install": [
 			"@typo3cms:install:setup",
