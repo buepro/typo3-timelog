@@ -1,3 +1,10 @@
-.idea
+# Folders
+.build/
+.idea/
+Documentation-GENERATED-temp/
+
+# Files
+composer.lock
+*.cache
 *.zip
-.php_cs.cache
+Build/node_modules
