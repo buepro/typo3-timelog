@@ -11,8 +11,10 @@ namespace Buepro\Timelog\Backend\Mediator;
 
 use Buepro\Timelog\Domain\Model\UpdateInterface;
 use TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
+use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
  * Class CoreMediator
@@ -24,7 +26,7 @@ use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
  * Since clients are from the backend the scope is automatically backend.
  *
  */
-class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
+class CoreMediator implements SingletonInterface
 {
     /**
      * @var PersistenceManager
@@ -44,11 +46,7 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
         $this->persistenceManager = $persistenceManager;
     }
 
-    /**
-     * @param string $objectClassName
-     * @param int $uid
-     */
-    public function registerChangedObjectUid(string $objectClassName, int $uid)
+    public function registerChangedObjectUid(string $objectClassName, int $uid): void
     {
         $this->changedObjectUidList[$objectClassName][$uid] = 1;
     }
@@ -58,18 +56,19 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
      * A changed object needs to implement the \Buepro\Timelog\Domain\Model\UpdateInterface and a repository
      * needs to be available for it.
      */
-    private function updateChangedObjects()
+    private function updateChangedObjects(): void
     {
         foreach ($this->changedObjectUidList as $className => $uidList) {
             foreach ($uidList as $uid => $n) {
                 $repositoryClassName = str_replace('Model', 'Repository', $className) . 'Repository';
                 if (class_exists($repositoryClassName)) {
                     $repository = GeneralUtility::makeInstance($repositoryClassName);
-                    if (!$repository) {
+                    if (!($repository instanceof Repository)) {
                         continue;
                     }
+                    // @phpstan-ignore-next-line
                     $object = $repository->findByUid($uid);
-                    if ($object && $object instanceof UpdateInterface) {
+                    if ($object instanceof UpdateInterface) {
                         $object->update();
                         $this->persistenceManager->add($object);
                     }
@@ -79,17 +78,13 @@ class CoreMediator implements \TYPO3\CMS\Core\SingletonInterface
     }
 
     /**
-     * This signal is received after the view for the form has been initialized (data for form elements not fetched yet)
-     *
-     * @param $editDocumentController
-     * @param $request
+     * This event is received after the view for the form has been initialized (data for form elements not fetched yet)
      */
-    public function handleAfterFormEnginePageInitializedEvent(AfterFormEnginePageInitializedEvent $event)
+    public function handleAfterFormEnginePageInitializedEvent(AfterFormEnginePageInitializedEvent $event): void
     {
-        if (!$this->changedObjectUidList) {
+        if ($this->changedObjectUidList === []) {
             return;
         }
-
         // Updates objects
         $this->updateChangedObjects();
         // Persists objects
