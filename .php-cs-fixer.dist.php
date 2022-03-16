@@ -63,7 +63,8 @@ return (new PhpCsFixer\Config())
         'native_function_casing' => true,
         'self_accessor' => true,
         'no_short_bool_cast' => true,
-        'no_unneeded_control_parentheses' => true
+        'no_unneeded_control_parentheses' => true,
+//        'declare_strict_types' => true
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the composer package buepro/typo3-timelog.
  *
@@ -94,7 +96,7 @@ class DatabaseService
             ($statement = $queryBuilder->execute()) instanceof Result &&
             ($row = $statement->fetchAssociative()) !== false &&
             $row !== []
-        ){
+        ) {
             return $row;
         }
         return null;

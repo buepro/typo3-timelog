@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the composer package buepro/typo3-timelog.
  *
@@ -10,9 +12,6 @@
 namespace Buepro\Timelog\Mediator;
 
 use Buepro\Timelog\Domain\Model\HandleInterface;
-use Buepro\Timelog\Domain\Model\Project;
-use Buepro\Timelog\Domain\Model\Task;
-use Buepro\Timelog\Domain\Model\TaskGroup;
 use Buepro\Timelog\Service\DatabaseService;
 use Buepro\Timelog\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;

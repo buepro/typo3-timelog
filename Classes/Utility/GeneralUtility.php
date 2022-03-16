@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the composer package buepro/typo3-timelog.
  *
@@ -9,7 +11,6 @@
 
 namespace Buepro\Timelog\Utility;
 
-use Buepro\Timelog\Domain\Model\FrontendUser;
 use Buepro\Timelog\Domain\Model\Task;
 use Hashids\Hashids;
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;

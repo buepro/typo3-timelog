@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /*
  * This file is part of the composer package buepro/typo3-timelog.
  *
@@ -328,7 +330,6 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
             ) {
                 $result = $startTime;
             }
-
         }
         return $result->getTimestamp() === $now ? 0 : $result;
     }
@@ -350,7 +351,6 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
             ) {
                 $result = $endTime;
             }
-
         }
         return $result->getTimestamp() === 0 ? 0 : $result;
     }
