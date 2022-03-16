@@ -13,14 +13,15 @@ use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
 use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
-class ProjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionController
+class ProjectController extends ActionController
 {
     /**
      * projectRepository
      *
-     * @var \Buepro\Timelog\Domain\Repository\ProjectRepository
+     * @var ProjectRepository
      */
     protected $projectRepository = null;
 
@@ -34,7 +35,7 @@ class ProjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
      *
      * @param ViewInterface $view The view to be initialized
      */
-    protected function initializeView(ViewInterface $view)
+    protected function initializeView(ViewInterface $view): void
     {
         $view->assign('controller', 'Project');
     }
@@ -42,21 +43,18 @@ class ProjectController extends \TYPO3\CMS\Extbase\Mvc\Controller\ActionControll
     /**
      * Shows projects with hashed tasks from a client defined by a project handle.
      * In case no project handle is supplied and a be-user is logged in all hashed projects are shown.
-     *
-     * @param string $projectHandle
-     * @throws \TYPO3\CMS\Extbase\Property\Exception
-     * @throws \TYPO3\CMS\Core\Context\Exception\AspectNotFoundException
      */
-    public function listAction(string $projectHandle = '')
+    public function listAction(string $projectHandle = ''): void
     {
         $projects = null;
-        if (!$projectHandle) {
+        if ($projectHandle === '') {
             $context = GeneralUtility::makeInstance(Context::class);
-            if ($context->getPropertyFromAspect('backend.user', 'isLoggedIn')) {
+            if ((bool)$context->getPropertyFromAspect('backend.user', 'isLoggedIn')) {
                 $projects = $this->projectRepository->findAllWithHash();
             }
         } else {
             /** @var Project $project */
+            // @phpstan-ignore-next-line
             [$project] = $this->projectRepository->findByHandle($projectHandle);
             $projects = $this->projectRepository->findAllWithHash($project->getClient());
         }
