@@ -25,7 +25,7 @@ class FormDataProvider implements FormDataProviderInterface
     /**
      * Adds an interval to a task by JS
      */
-    private function addInterval()
+    private function addInterval(): void
     {
         $pageRenderer = GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Page\PageRenderer::class
@@ -74,7 +74,7 @@ class FormDataProvider implements FormDataProviderInterface
                 '*',
                 sprintf('cruser_id = %d', $GLOBALS['BE_USER']->user['uid'])
             );
-            if ($latest && $latest['worker']) {
+            if (isset($latest['worker']) && (int)$latest['worker'] > 0) {
                 $result['databaseRow']['worker'] = $latest['worker'];
             }
             $this->addInterval();
