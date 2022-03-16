@@ -10,6 +10,7 @@
 namespace Buepro\Timelog\Backend\Hook;
 
 use Buepro\Timelog\Backend\Mediator\CoreMediator;
+use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -26,14 +27,18 @@ class DataHandlerHook implements \TYPO3\CMS\Core\SingletonInterface
      *
      * Initializes task data.
      *
-     * @param $incomingFieldArray
-     * @param $table
-     * @param $id
-     * @param $dataHandler
+     * @param array $incomingFieldArray
+     * @param mixed|string $table
+     * @param int|string $id
+     * @param DataHandler $dataHandler
      * @throws \Exception
      */
-    public function processDatamap_preProcessFieldArray(&$incomingFieldArray, $table, $id, $dataHandler)
-    {
+    public function processDatamap_preProcessFieldArray(
+        array &$incomingFieldArray,
+        $table,
+        $id,
+        DataHandler $dataHandler
+    ): void {
         // Reviews task data
         if ($table === 'tx_timelog_domain_model_task') {
             if ($incomingFieldArray['active_time'] === '') {
@@ -67,13 +72,18 @@ class DataHandlerHook implements \TYPO3\CMS\Core\SingletonInterface
      * but you can easily translate it to the real uid of the inserted record using the $dataHandler->substNEWwithIDs array.
      *
      * @param string $status (reference) Status of the current operation, 'new' or 'update
-     * @param string $table (reference) The table currently processing data for
-     * @param string $id (reference) The record uid currently processing data for, [integer] or [string] (like 'NEW...')
+     * @param int|string $table (reference) The table currently processing data for
+     * @param int|string $id (reference) The record uid currently processing data for, [integer] or [string] (like 'NEW...')
      * @param array $fieldArray (reference) The field array of a record
-     * @param $dataHandler
+     * @param DataHandler $dataHandler
      */
-    public function processDatamap_afterDatabaseOperations($status, $table, $id, $fieldArray, $dataHandler)
-    {
+    public function processDatamap_afterDatabaseOperations(
+        string $status,
+        $table,
+        $id,
+        array $fieldArray,
+        DataHandler $dataHandler
+    ): void {
         if (in_array($table, [
             'tx_timelog_domain_model_project',
             'tx_timelog_domain_model_task',
