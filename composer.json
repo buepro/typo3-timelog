@@ -28,7 +28,11 @@
 		"buepro/typo3-pizpalue": "~v12.4.1",
 		"ergebnis/composer-normalize": "^2.15.0",
 		"friendsofphp/php-cs-fixer": "^3.0.0",
+		"friendsoftypo3/phpstan-typo3": "^0.8.1",
 		"overtrue/phplint": "^2.3.5",
+		"phpstan/phpstan-deprecation-rules": "^0.12.6",
+		"phpstan/phpstan-phpunit": "^0.12.19",
+		"phpstan/phpstan-strict-rules": "^0.12.9",
 		"typo3/cms-base-distribution": "^10.4 || ^11.5",
 		"typo3/cms-impexp": "^10.4 || ^11.5",
 		"typo3/cms-lowlevel": "^10.4 || ^11.5",
@@ -75,10 +79,14 @@
 		"ci:php:lint": [
 			"phplint"
 		],
+		"ci:php:stan": [
+			"phpstan analyze --configuration Build/phpstan.neon"
+		],
 		"ci:static": [
 			"@ci:composer:normalize",
 			"@ci:php:cs",
-			"@ci:php:lint"
+			"@ci:php:lint",
+			"@ci:php:stan"
 		],
 		"ddev:install": [
 			"composer install",
