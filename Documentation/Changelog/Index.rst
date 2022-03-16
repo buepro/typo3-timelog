@@ -4,7 +4,7 @@
 Changelog
 =========
 
-The project changes can as well be looked up at `Github <https://github.com/buepro/typo3-timelog/commits/master>`__.
+The project changes can as well be looked up at `Github <https://github.com/buepro/typo3-timelog/commits/main>`__.
 
 Releases
 ========
