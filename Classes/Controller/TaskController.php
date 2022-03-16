@@ -112,13 +112,11 @@ class TaskController extends ActionController
             return $emptyModels;
         }
 
-        /**
-         * @var Project $project
-         * @var Task $task
-         * @var TaskGroup $taskGroup
-         */
+        /** @var ?Project $project */
         $project = null;
+        /** @var ?Task $task */
         $task = null;
+        /** @var ?TaskGroup $taskGroup */
         $taskGroup = null;
         $taskGroups = null;
         $batch = null;
@@ -126,31 +124,34 @@ class TaskController extends ActionController
         $batchTime = 0;
 
         // Obtain models directly defined by handles
-        if ($taskHandle) {
+        if ($taskHandle !== '') {
+            // @phpstan-ignore-next-line
             $tasks = $this->taskRepository->findByHandle($taskHandle);
-            if ($tasks instanceof QueryResultInterface && $tasks->count()) {
+            if ($tasks instanceof QueryResultInterface && (bool)$tasks->count()) {
                 $task = $tasks->getFirst();
                 if (!($task instanceof Task)) {
                     $task = null;
                 }
             }
         }
-        if ($batchHandle) {
+        if ($batchHandle !== '') {
             $decodedBatchHandle = GeneralUtility::decodeBatchHandle($batchHandle);
-            if ($decodedBatchHandle && (int)$decodedBatchHandle['taskUid']) {
+            if ($decodedBatchHandle !== null && (bool)$decodedBatchHandle['taskUid']) {
                 $task = $this->taskRepository->findByUid((int)$decodedBatchHandle['taskUid']);
                 if (!($task instanceof Task)) {
                     $task = null;
                 }
             }
         }
-        if ($taskGroupHandle && $taskGroupHandle !== 'exclude') {
+        if ($taskGroupHandle !== '' && $taskGroupHandle !== 'exclude') {
+            // @phpstan-ignore-next-line
             $taskGroup = $this->taskGroupRepository->findByHandle($taskGroupHandle)->getFirst();
             if (!($taskGroup instanceof TaskGroup)) {
                 $taskGroup = null;
             }
         }
-        if ($projectHandle) {
+        if ($projectHandle !== '') {
+            // @phpstan-ignore-next-line
             $project = $this->projectRepository->findByHandle($projectHandle)->getFirst();
             if (!($project instanceof Project)) {
                 $project = null;
@@ -158,29 +159,29 @@ class TaskController extends ActionController
         }
 
         // Obtain dependent models and data
-        if ($task) {
-            if (!$project) {
+        if ($task !== null) {
+            if ($project === null) {
                 $project = $task->getProject();
             }
-            if (!$taskGroup) {
+            if ($taskGroup === null) {
                 $taskGroup = $task->getTaskGroup();
             }
         }
-        if (!$project && $taskGroup && $taskGroup->getProject()) {
+        if ($project === null && $taskGroup !== null && $taskGroup->getProject() !== null) {
             $project = $taskGroup->getProject();
         }
-        if ($project) {
+        if ($project !== null) {
             $taskGroups = $project->getTaskGroups();
         }
-        if ($taskGroup) {
+        if ($taskGroup !== null) {
             $batches = $this->taskRepository->getBatches($taskGroup);
-        } elseif ($project) {
+        } elseif ($project !== null) {
             $batches = $this->taskRepository->getBatches($project, !($taskGroupHandle === 'exclude'));
         }
-        if ($batches && $task && $task->getBatchDate()) {
+        if ($batches !== null && $task !== null && $task->getBatchDate() !== null) {
             $timestamp = $task->getBatchDate()->getTimestamp();
             $taskGroupUid = 0;
-            if ($task->getTaskGroup()) {
+            if ($task->getTaskGroup() !== null) {
                 $taskGroupUid = $task->getTaskGroup()->getUid();
             }
             foreach ($batches as $aBatch) {
@@ -192,7 +193,7 @@ class TaskController extends ActionController
                 $batchTime = $batch['timestamp'];
             }
         }
-        if ($task && ($project || $taskGroup || $batch)) {
+        if ($task !== null && ((bool)$project || (bool)$taskGroup || (bool)$batch)) {
             $task = null;
         }
 
@@ -255,7 +256,7 @@ class TaskController extends ActionController
 
         $tasksCount = 0;
         $hasTasksOnHeap = false;
-        if ($tasks instanceof QueryResultInterface && $tasks->count()) {
+        if ($tasks instanceof QueryResultInterface && (bool)$tasks->count()) {
             $tasksCount = $tasks->count();
             foreach ($tasks as $aTask) {
                 if (!$aTask->getBatchDate()) {
@@ -274,7 +275,9 @@ class TaskController extends ActionController
             'taskGroups' => $taskGroups,
             'batch' => $batch,
             'batches' => $batches,
-            'noTasksFound' => ($projectHandle || $taskGroupHandle || $batchHandle || $taskHandle) && !$tasksCount,
+            'noTasksFound' =>
+                ((bool)$projectHandle || (bool)$taskGroupHandle || (bool)$batchHandle || (bool)$taskHandle) &&
+                $tasksCount === 0,
             'hasTasksOnHeap' => $hasTasksOnHeap,
             'settings' => $this->settings,
         ]);
@@ -282,16 +285,8 @@ class TaskController extends ActionController
 
     /**
      * Creates a task batch from the task heap
-     *
-     * @param string $projectHandle
-     * @param string $taskGroupHandle
-     * @throws ExtensionConfigurationExtensionNotConfiguredException
-     * @throws ExtensionConfigurationPathDoesNotExistException
-     * @throws IllegalObjectTypeException
-     * @throws StopActionException
-     * @throws UnknownObjectException
      */
-    public function createBatchAction(string $projectHandle = '', string $taskGroupHandle = '')
+    public function createBatchAction(string $projectHandle = '', string $taskGroupHandle = ''): void
     {
         $models = $this->getModelsForFilter($projectHandle, $taskGroupHandle);
         if (!$models['tasks'] instanceof QueryResultInterface || $models['tasks']->count() < 1) {
@@ -307,13 +302,13 @@ class TaskController extends ActionController
 //        $this->projectRepository->update($project);
         $batchHandle = GeneralUtility::getBatchHandle(
             $batchDate->getTimestamp(),
-            $tasks->getFirst()->getUid()
+            $tasks->getFirst() !== null ? $tasks->getFirst()->getUid() : 0
         );
         // @extensionScannerIgnoreLine
         $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
     }
 
-    public function errorAction()
+    public function errorAction(): string
     {
         if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
             // @extensionScannerIgnoreLine
@@ -324,6 +319,7 @@ class TaskController extends ActionController
                 true
             );
         }
+        return parent::errorAction();
     }
 
     /**
@@ -332,7 +328,7 @@ class TaskController extends ActionController
      * @throws StopActionException
      * @throws UnsupportedRequestTypeException
      */
-    protected function initializeAction()
+    protected function initializeAction(): void
     {
         // Forwards to errorAction
         if ($this->actionMethodName === 'errorAction') {
@@ -343,7 +339,10 @@ class TaskController extends ActionController
         $configuration = $this->configurationManager->getConfiguration(
             ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
         );
-        if (empty($configuration['persistence']['storagePid'])) {
+        if (
+            !isset($configuration['persistence']['storagePid']) ||
+            (int)$configuration['persistence']['storagePid'] < 1
+        ) {
             // @extensionScannerIgnoreLine
             $this->redirect('error');
         }
@@ -354,7 +353,7 @@ class TaskController extends ActionController
      *
      * @param ViewInterface $view The view to be initialized
      */
-    protected function initializeView(ViewInterface $view)
+    protected function initializeView(ViewInterface $view): void
     {
         $view->assign('controller', 'Task');
     }

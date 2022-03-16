@@ -24,23 +24,16 @@ final class TaskBatchDateChangedEvent
     private $task;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      */
     private $previousDate;
 
     /**
-     * @var DateTime
+     * @var DateTime|null
      */
     private $currentDate;
 
-    /**
-     * TaskBatchDateChangedEvent constructor.
-     *
-     * @param Task $task
-     * @param \DateTime|null $previousDate
-     * @param \DateTime|null $currentDate
-     */
-    public function __construct(Task $task, $previousDate, $currentDate)
+    public function __construct(Task $task, ?DateTime $previousDate, ?DateTime $currentDate)
     {
         $this->task = $task;
         $this->previousDate = $previousDate;
@@ -52,12 +45,12 @@ final class TaskBatchDateChangedEvent
         return $this->task;
     }
 
-    public function getPreviousDate(): DateTime
+    public function getPreviousDate(): ?DateTime
     {
         return $this->previousDate;
     }
 
-    public function getCurrentDate(): DateTime
+    public function getCurrentDate(): ?DateTime
     {
         return $this->currentDate;
     }

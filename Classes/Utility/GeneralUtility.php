@@ -71,16 +71,13 @@ class GeneralUtility
 
     /**
      * Decodes a batch handle to get the timestamp and uid from a task belonging to the batch batch.
-     *
-     * @param string $hash
-     * @return array
      */
-    public static function decodeBatchHandle(string $hash)
+    public static function decodeBatchHandle(string $hash): ?array
     {
         $hashids = self::getHashids(Task::class);
         $decoded = $hashids->decode($hash);
         if (!isset($decoded[1])) {
-            return [];
+            return null;
         }
         return [
             'timestamp' => $decoded[0],

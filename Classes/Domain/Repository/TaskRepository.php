@@ -12,6 +12,7 @@ namespace Buepro\Timelog\Domain\Repository;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
@@ -31,7 +32,7 @@ class TaskRepository extends Repository
     /**
      * Sets parameters when used in BE.
      */
-    public function initializeObject()
+    public function initializeObject(): void
     {
         if (($GLOBALS['TYPO3_REQUEST'] ?? null) instanceof ServerRequestInterface
             && ApplicationType::fromRequest($GLOBALS['TYPO3_REQUEST'])->isBackend()
@@ -83,10 +84,13 @@ class TaskRepository extends Repository
         $tasks = $queryBuilder->execute();
 
         $result = [];
-        $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
-        foreach ($tasks as $task) {
-            $result[] = $propertyMapper->convert((string) $task['uid'], Task::class);
+        if ($tasks instanceof Result) {
+            $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
+            foreach ($tasks as $task) {
+                $result[] = $propertyMapper->convert((string) $task['uid'], Task::class);
+            }
         }
+
         return $result;
     }
 
@@ -95,16 +99,12 @@ class TaskRepository extends Repository
      * If the scope is a `Project` and `includeAllBatches` is set all batches assigned to a project will be gathered.
      * In case it isn't set batches assigned to a task group won't be included.
      *
-     * @param Project | TaskGroup $scope
+     * @param Project|TaskGroup $scope
      * @param bool $includeAllBatches Used in case the scope is a `Project` to control inclusion from batches
-     * @return array
      * @throws \Exception
      */
-    public function getBatches($scope, $includeAllBatches = true)
+    public function getBatches($scope, bool $includeAllBatches = true): array
     {
-        if (!($scope instanceof Project) && !($scope instanceof TaskGroup)) {
-            return [];
-        }
         if ($scope instanceof Project) {
             $fieldName = 'task.project';
         } else {
@@ -145,9 +145,10 @@ class TaskRepository extends Repository
 //        $sql = $queryBuilder->getSQL();
 //        $params = $queryBuilder->getParameters();
 
-        $queryResult = $queryBuilder->execute();
-
-        if ($queryResult->rowCount()) {
+        if (
+            ($queryResult = $queryBuilder->execute()) instanceof Result &&
+            (int)$queryResult->rowCount() > 0
+        ) {
             $batches = [];
             foreach ($queryResult as $batch) {
                 $date = new \DateTime();
@@ -168,15 +169,12 @@ class TaskRepository extends Repository
     /**
      * Finds tasks for given filters. In case a filter is `null` it won't be included in the constraints.
      *
-     * @param Project $project
-     * @param Task $task
-     * @param TaskGroup|int $taskGroupFilter 0 to exclude all task groups
-     * @param int $batchTime
-     * @return array|QueryResultInterface
+     * @param TaskGroup|int|null $taskGroupFilter 0 to exclude all task groups
+     * @return array|QueryResultInterface|null
      */
-    public function findForFilter(Project $project = null, Task $task = null, $taskGroupFilter = null, int $batchTime = 0)
+    public function findForFilter(?Project $project = null, ?Task $task = null, $taskGroupFilter = null, int $batchTime = 0)
     {
-        if (!$project && !$task && !($taskGroupFilter instanceof TaskGroup)) {
+        if ($project === null && $task === null && !($taskGroupFilter instanceof TaskGroup)) {
             return null;
         }
 
@@ -184,12 +182,12 @@ class TaskRepository extends Repository
         $constraints = [];
 
         // Project constraint
-        if ($project) {
+        if ($project !== null) {
             $constraints['project'] = $query->equals('project', $project);
         }
 
         // Task constraint
-        if ($task) {
+        if ($task !== null) {
             $constraints['task'] = $query->equals('uid', $task);
         }
 

@@ -11,6 +11,7 @@ namespace Buepro\Timelog\Domain\Repository;
 
 use Buepro\Timelog\Domain\Model\FrontendUser;
 use Buepro\Timelog\Domain\Model\Project;
+use Doctrine\DBAL\ForwardCompatibility\Result;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
@@ -22,10 +23,9 @@ class ProjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 {
     /**
      * @param FrontendUser|null $client
-     * @return array
      * @throws \TYPO3\CMS\Extbase\Property\Exception
      */
-    public function findAllWithHash(FrontendUser $client = null)
+    public function findAllWithHash(FrontendUser $client = null): array
     {
         /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
@@ -42,7 +42,7 @@ class ProjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             )
             ->groupBy('project.uid')
             ->orderBy('project.tstamp', 'DESC');
-        if ($client) {
+        if ($client !== null) {
             $queryBuilder->andWhere(
                 $queryBuilder->expr()->eq('task.batch_date', '""'),
                 $queryBuilder->expr()->eq('project.client', $client->getUid())
@@ -56,9 +56,12 @@ class ProjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
 
         $projects = $queryBuilder->execute();
         $result = [];
-        $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
-        foreach ($projects as $project) {
-            $result[] = $propertyMapper->convert((string) $project['uid'], Project::class);
+
+        if ($projects instanceof Result) {
+            $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
+            foreach ($projects as $project) {
+                $result[] = $propertyMapper->convert((string) $project['uid'], Project::class);
+            }
         }
         return $result;
     }
