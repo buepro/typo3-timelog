@@ -53,14 +53,16 @@ following:
 .. code-block:: typoscript
 
    TCEMAIN.preview {
-       disableButtonForDokType = 255, 199
        tx_timelog_domain_model_project {
+           disableButtonForDokType = 255, 199
            previewPageId = pluginPid
        }
        tx_timelog_domain_model_taskgroup {
+           disableButtonForDokType = 255, 199
            previewPageId = pluginPid
        }
        tx_timelog_domain_model_task {
+           disableButtonForDokType = 255, 199
            previewPageId = pluginPid
        }
    }
