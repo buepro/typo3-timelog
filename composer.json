@@ -21,7 +21,7 @@
 	"require": {
 		"php": ">=7.3.0",
 		"buepro/typo3-auxlibs": "^1.4",
-		"fluidtypo3/vhs": "^6.0.5",
+		"buepro/typo3-pvh": "^1.1.0",
 		"typo3/cms-core": "^10.4.11 || ^11.5"
 	},
 	"require-dev": {

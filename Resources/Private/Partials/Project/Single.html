@@ -1,15 +1,9 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:pvh="http://typo3.org/ns/Buepro/Pvh/ViewHelpers"
       xmlns:auxlibs="http://typo3.org/ns/Buepro/Auxlibs/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
-<!-- Compiles client name -->
-{f:variable(name: 'client', value: project.client)}
-{f:variable(name: 'clientName', value: '{client.firstName} {client.lastName}') -> f:if(condition: client.lastName)}
-{f:variable(name: 'clientName', value: client.name) -> f:if(condition: client.name)}
-{v:iterator.filter(subject: {0: client.company, 1: clientName}, nullFilter: 1, invert: 1)
-    -> v:iterator.implode(glue: ', ')
-    -> f:variable(name: 'clientName')}
+{f:variable(name: 'clientName', value: project.client.companyAndDisplayName)}
 
 <!-- Creates icon to send email to client -->
 {f:uri.action(arguments: {projectHandle: project.handle}, additionalParams: {smt: 'client'}) -> f:variable(name: 'mailUri')}
@@ -120,7 +114,7 @@
                         <h5>{f:translate(key: 'taskGroup')}</h5>
                         <div class="form-group">
                             <f:form.select name="taskGroupHandle" class="form-control" additionalAttributes="{onchange: '$(\'#tx-timelog-formfield-batchhandle\').val (\'\'); this.form.submit()'}">
-                                <f:form.select.option value="" selected="{v:condition.variable.isNull(value: taskGroup, then: 1, else: 0)}">
+                                <f:form.select.option value="" selected="{pvh:condition.variable.isNull(value: taskGroup, then: 1, else: 0)}">
                                     {f:translate(key: 'includeAll')}
                                 </f:form.select.option>
                                 <f:form.select.option value="exclude" selected="{taskGroupExclude}">
@@ -161,7 +155,7 @@
 </f:section>
 
 <f:section name="taskGroupInfo">
-    <f:if condition="{v:condition.variable.isNull(value: taskGroup, then: 0, else: 1)}">
+    <f:if condition="{pvh:condition.variable.isNull(value: taskGroup, then: 0, else: 1)}">
         <div class="tx-timelog-taskgroup-info row">
             <div class="col-md-7">
                 <table class="table table-sm table-striped">

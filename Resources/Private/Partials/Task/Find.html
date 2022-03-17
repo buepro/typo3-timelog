@@ -1,5 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <div class="tx-timelog-projectsearch card overflow-hidden">
     <div class="card-body">
@@ -35,7 +34,7 @@
     </div>
 </div>
 
-<v:asset.script name="timelog-task-find" movable="true">
+<f:asset.script identifier="timelog-task-find">
 ;+function ( $ ) {
     $(function () {
         $('.tx-timelog-projectsearch input').on('click',function () {
@@ -44,6 +43,6 @@
         })
     });
 }(jQuery);
-</v:asset.script>
+</f:asset.script>
 
 </html>

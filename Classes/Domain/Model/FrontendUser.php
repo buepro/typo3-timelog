@@ -120,6 +120,18 @@ class FrontendUser extends AbstractEntity
         return $name === '' ? $this->getName() : $name;
     }
 
+    public function getCompanyAndDisplayName(): string
+    {
+        $parts = [];
+        if ($this->getCompany() !== '') {
+            $parts[] = $this->getCompany();
+        }
+        if (($name = $this->getDisplayName()) !== '') {
+            $parts[] = $name;
+        }
+        return implode(', ', $parts);
+    }
+
     /**
      * @return array|null [$email] or [$email => $displayName]
      * @see MailMessage::setTo()

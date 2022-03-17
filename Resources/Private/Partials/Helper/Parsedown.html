@@ -1,5 +1,5 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers"
+      xmlns:pvh="http://typo3.org/ns/Buepro/Pvh/ViewHelpers"
       xmlns:auxlibs="http://typo3.org/ns/Buepro/Auxlibs/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
@@ -8,17 +8,17 @@
 </f:if>
 <f:if condition="{settings.transform} == 1">
     <div class="tx-timelog-markdown">
-        {v:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
+        {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
             -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)}
     </div>
 </f:if>
 <f:if condition="{settings.transform} == 2">
     {f:variable(name: 'transform', value: 1)
-        -> v:condition.string.contains(haystack: text, needle: settings.token)}
+        -> pvh:condition.string.contains(haystack: text, needle: settings.token)}
     <f:if condition="{transform}">
         <f:then>
             <div class="tx-timelog-markdown">
-                {v:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
+                {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
                     -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)}
             </div>
         </f:then>

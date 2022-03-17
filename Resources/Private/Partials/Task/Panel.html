@@ -1,5 +1,4 @@
-<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
-      xmlns:v="http://typo3.org/ns/FluidTYPO3/Vhs/ViewHelpers" data-namespace-typo3-fluid="true">
+<html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers" data-namespace-typo3-fluid="true">
 
 <f:flashMessages/>
 
@@ -26,6 +25,6 @@
     </f:if>
 </div>
 
-<v:asset.script path="EXT:timelog/Resources/Public/JavaScript/Src/sendmail.jquery.js" />
+<f:asset.script identifier="timelog-sendmail" src="EXT:timelog/Resources/Public/JavaScript/Src/sendmail.jquery.js" />
 
 </html>
