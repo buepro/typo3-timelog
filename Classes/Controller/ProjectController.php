@@ -15,8 +15,6 @@ use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 
 class ProjectController extends ActionController
 {
@@ -30,16 +28,6 @@ class ProjectController extends ActionController
     public function __construct(ProjectRepository $projectRepository)
     {
         $this->projectRepository = $projectRepository;
-    }
-
-    /**
-     * Initializes the view before invoking an action method.
-     *
-     * @param ViewInterface $view The view to be initialized
-     */
-    protected function initializeView(ViewInterface $view): void
-    {
-        $view->assign('controller', 'Project');
     }
 
     /**

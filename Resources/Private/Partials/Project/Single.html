@@ -5,7 +5,7 @@
 
 {f:variable(name: 'clientName', value: project.client.companyAndDisplayName)}
 
-<!-- Creates icon to send email to client -->
+<f:comment>Creates icon to send email to client</f:comment>
 {f:uri.action(arguments: {projectHandle: project.handle}, additionalParams: {smt: 'client'}) -> f:variable(name: 'mailUri')}
 {f:translate(key: 'sendMailTo') -> f:format.printf(arguments: {0: clientName}) -> f:variable(name: 'sendMailTitle')}
 <f:if condition="{project.client.email}">
@@ -16,8 +16,8 @@
         </a>
     </f:variable>
 </f:if>
-<f:comment>The 'p-'-prefix is needed for the project link to work.</f:comment>
-<div id="{f:if(condition: '{controller} != \'Task\'', then: 'p-')}{project.handle}" class="tx-timelog-project card">
+<f:comment>The 'p-'-prefix is needed for the project link to work in the project list view.</f:comment>
+<div id="{f:if(condition: '{settings.controller.name} != \'Task\'', then: 'p-')}{project.handle}" class="tx-timelog-project card">
     <div class="card-body">
         <div class="tlc-desc overflow-hidden mb-4">
             <f:if condition="{project.title}">

@@ -23,10 +23,6 @@ use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotCon
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
-use TYPO3\CMS\Extbase\Mvc\Exception\StopActionException;
-use TYPO3\CMS\Extbase\Mvc\Exception\UnsupportedRequestTypeException;
-use TYPO3\CMS\Extbase\Mvc\View\ViewInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
 /**
@@ -228,22 +224,13 @@ class TaskController extends ActionController
      * In case no batch is defined heap tasks will be gathered.
      * In case a task handle is provided the project, task group and batch are received by the task and possible
      * provided handles (for project, task group and batch) are ignored.
-     *
-     * @param string $projectHandle Optional project handle
-     * @param string $taskGroupHandle Optional task group handle
-     * @param string $batchHandle Optional batch handle
-     * @param string $taskHandle Optional task handle
-     * @return void
-     * @throws StopActionException
-     * @throws UnsupportedRequestTypeException
-     * @throws \Exception
      */
     public function listAction(
         string $projectHandle = '',
         string $taskGroupHandle = '',
         string $batchHandle = '',
         string $taskHandle = ''
-    ) {
+    ): void {
         $models = $this->getModelsForFilter($projectHandle, $taskGroupHandle, $batchHandle, $taskHandle);
         [
             'project' => $project,
@@ -324,9 +311,6 @@ class TaskController extends ActionController
 
     /**
      * Checks precondition.
-     *
-     * @throws StopActionException
-     * @throws UnsupportedRequestTypeException
      */
     protected function initializeAction(): void
     {
@@ -346,15 +330,7 @@ class TaskController extends ActionController
             // @extensionScannerIgnoreLine
             $this->redirect('error');
         }
-    }
 
-    /**
-     * Initializes the view before invoking an action method.
-     *
-     * @param ViewInterface $view The view to be initialized
-     */
-    protected function initializeView(ViewInterface $view): void
-    {
-        $view->assign('controller', 'Task');
+        parent::initializeAction();
     }
 }
