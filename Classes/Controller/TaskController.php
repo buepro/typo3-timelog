@@ -295,7 +295,7 @@ class TaskController extends ActionController
         $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
     }
 
-    public function errorAction(): string
+    public function errorAction()
     {
         if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
             // @extensionScannerIgnoreLine
