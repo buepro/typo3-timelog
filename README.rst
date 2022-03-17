@@ -6,6 +6,10 @@
    :alt: TYPO3 10
    :target: https://get.typo3.org/version/10
 
+.. image:: https://github.com/buepro/typo3-timelog/workflows/CI/badge.svg
+   :alt: Continuous Integration Status
+   :target: https://github.com/buepro/typo3-timelog/actions?query=workflow%3ACI
+
 ===========================
 TYPO3 extension ``timelog``
 ===========================
