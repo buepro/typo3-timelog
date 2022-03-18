@@ -13,7 +13,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project',
         'label' => 'handle',
-        'label_alt' => 'title,client',
+        'label_alt' => 'title,client,active_time,heap_time',
         'label_alt_force' => 1,
         'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getProjectLabel',
         'tstamp' => 'tstamp',

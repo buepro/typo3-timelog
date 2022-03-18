@@ -13,6 +13,7 @@ return [
     'ctrl' => [
         'title' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_taskgroup',
         'label' => 'title',
+        'label_alt' => 'active_time,time_deviation,project,handle',
         'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getTaskGroupLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',

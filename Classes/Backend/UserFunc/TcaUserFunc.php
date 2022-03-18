@@ -43,7 +43,9 @@ class TcaUserFunc
         $parts[] = sprintf('%.1f', $parameters['row']['active_time']);
         if (
             isset($parameters['row']['project']) &&
-            ($projectUid = (int)$parameters['row']['project']) > 0 &&
+            ($projectUid = is_array($parameters['row']['project']) ?
+                (int)$parameters['row']['project'][0] :
+                (int)$parameters['row']['project']) > 0 &&
             ($project = BackendUtility::getRecord('tx_timelog_domain_model_project', $projectUid)) !== null
         ) {
             if ($project['title']) {
