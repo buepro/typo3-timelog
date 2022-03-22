@@ -15,29 +15,29 @@ use Buepro\Timelog\Domain\Model\HandleInterface;
 use Buepro\Timelog\Service\DatabaseService;
 use Buepro\Timelog\Utility\GeneralUtility;
 use TYPO3\CMS\Core\SingletonInterface;
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent;
 
-/**
- * Class HandleMediator
- *
- * Sets the handle for tasks and projects.
- *
- */
-class HandleMediator implements SingletonInterface
+class ExtbaseMediator implements SingletonInterface
 {
     public function handlePersistEvent(EntityPersistedEvent $event): void
     {
-        $object = $event->getObject();
+        if (($object = $event->getObject()) instanceof HandleInterface) {
+            $this->checkHandle($object);
+        }
+    }
+
+    protected function checkHandle(HandleInterface $handleObject): void
+    {
         if (
-            $object instanceof HandleInterface &&
-            $object->getHandle() === '' &&
-            ($objectUid = (int)$object->getUid()) > 0
+            $handleObject instanceof AbstractEntity &&
+            ($objectUid = (int)$handleObject->getUid()) > 0 &&
+            ($handle = GeneralUtility::encodeHashid($objectUid, get_class($handleObject))) !== $handleObject->getHandle()
         ) {
-            $handle = GeneralUtility::encodeHashid($objectUid, get_class($object));
             // Sets the handle for the model in memory
-            $object->setHandle($handle);
+            $handleObject->setHandle($handle);
             // Sets the handle for the model in the db
-            $tableName = strtolower(str_replace('Buepro\\Timelog\\Domain\\Model\\', '', get_class($object)));
+            $tableName = strtolower(str_replace('Buepro\\Timelog\\Domain\\Model\\', '', get_class($handleObject)));
             $tableName = 'tx_timelog_domain_model_' . $tableName;
             (\TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(DatabaseService::class))->updateRecord(
                 $tableName,

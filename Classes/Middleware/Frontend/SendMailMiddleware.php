@@ -8,7 +8,7 @@ declare(strict_types=1);
  * LICENSE file that was distributed with this source code.
  */
 
-namespace Buepro\Timelog\Middleware;
+namespace Buepro\Timelog\Middleware\Frontend;
 
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;

@@ -286,7 +286,14 @@ class TaskController extends ActionController
             $task->setBatchDate($batchDate);
             $this->taskRepository->update($task);
         }
-//        $this->projectRepository->update($project);
+        if ($models['taskGroup'] instanceof TaskGroup) {
+            $models['taskGroup']->update();
+            $this->taskGroupRepository->update($models['taskGroup']);
+        }
+        if ($models['project'] instanceof Project) {
+            $models['project']->update();
+            $this->projectRepository->update($models['project']);
+        }
         $batchHandle = GeneralUtility::getBatchHandle(
             $batchDate->getTimestamp(),
             $tasks->getFirst() !== null ? $tasks->getFirst()->getUid() : 0

@@ -11,24 +11,26 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Backend\Mediator;
 
+use Buepro\Timelog\Domain\Model\Interval;
+use Buepro\Timelog\Domain\Model\Project;
+use Buepro\Timelog\Domain\Model\Task;
+use Buepro\Timelog\Domain\Model\TaskGroup;
 use Buepro\Timelog\Domain\Model\UpdateInterface;
-use TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent;
 use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\PersistenceManager;
 use TYPO3\CMS\Extbase\Persistence\Repository;
 
 /**
- * Class CoreMediator
+ * Maintain object state for changed records in the backend.
  *
- * Models might be changed in the backend without using setters. This can lead to an not consistent model state.
- * Such models can be registered and updated at this mediator.
+ * Within the DataHandler scope clients register changed object records. While saving and staying in the edit form
+ * the models get updated by handling the `AfterFormEnginePageInitializedEvent`. Upon saving and closing the form
+ * the object update is initiated by the Backend\MediatorMiddleware.
  *
- * Clients ask for an instance of it and register them self by calling `registerChangedObjectUid`.
- * Since clients are from the backend the scope is automatically backend.
- *
+ * Remark: In TYPO3 11 the event might not be needed any more.
  */
-class CoreMediator implements SingletonInterface
+class DataHandlerMediator implements SingletonInterface
 {
     /**
      * @var PersistenceManager
@@ -36,32 +38,41 @@ class CoreMediator implements SingletonInterface
     protected $persistenceManager;
 
     /**
-     * Array holding the uid from changed objects. The array has two dimension where the key from the first dimension
-     * represents the class name and the key from the second dimension the uid from the changed object.
+     * The array has two dimension where the key from the first dimension represents the class name and the key from
+     * the second dimension the uid from the changed object.
      *
      * @var array
      */
-    private $changedObjectUidList = [];
+    private $changedObjects = [];
+
+    /**
+     * Start processing with all intervals and end with all projects.
+     *
+     * @var string[]
+     */
+    private $processingSequence = [Interval::class, Task::class, TaskGroup::class, Project::class];
 
     public function __construct(PersistenceManager $persistenceManager)
     {
         $this->persistenceManager = $persistenceManager;
     }
 
-    public function registerChangedObjectUid(string $objectClassName, int $uid): void
+    public function registerChangedObject(string $objectClassName, int $uid): void
     {
-        $this->changedObjectUidList[$objectClassName][$uid] = 1;
+        $this->changedObjects[$objectClassName][$uid] = 1;
     }
 
     /**
-     * Updates the changed objects.
      * A changed object needs to implement the \Buepro\Timelog\Domain\Model\UpdateInterface and a repository
      * needs to be available for it.
      */
     private function updateChangedObjects(): void
     {
-        foreach ($this->changedObjectUidList as $className => $uidList) {
-            foreach ($uidList as $uid => $n) {
+        foreach ($this->processingSequence as $className) {
+            if (!isset($this->changedObjects[$className])) {
+                continue;
+            }
+            foreach ($this->changedObjects[$className] as $uid => $n) {
                 $repositoryClassName = str_replace('Model', 'Repository', $className) . 'Repository';
                 if (class_exists($repositoryClassName)) {
                     $repository = GeneralUtility::makeInstance($repositoryClassName);
@@ -76,22 +87,16 @@ class CoreMediator implements SingletonInterface
                     }
                 }
             }
+            $this->persistenceManager->persistAll();
         }
     }
 
-    /**
-     * This event is received after the view for the form has been initialized (data for form elements not fetched yet)
-     */
-    public function handleAfterFormEnginePageInitializedEvent(AfterFormEnginePageInitializedEvent $event): void
+    public function process(): void
     {
-        if ($this->changedObjectUidList === []) {
+        if ($this->changedObjects === []) {
             return;
         }
-        // Updates objects
         $this->updateChangedObjects();
-        // Persists objects
-        $this->persistenceManager->persistAll();
-        // Clears changed object lists
-        $this->changedObjectUidList = [];
+        $this->changedObjects = [];
     }
 }

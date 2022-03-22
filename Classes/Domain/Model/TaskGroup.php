@@ -11,7 +11,9 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Domain\Model;
 
+use Buepro\Timelog\Utility\TaskUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * TaskGroup
@@ -19,87 +21,42 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class TaskGroup extends AbstractEntity implements UpdateInterface, HandleInterface
 {
 
-    /**
-     * handle
-     *
-     * @var string
-     */
+    /** @var string */
     protected $handle = '';
 
-    /**
-     * title
-     *
-     * @var string
-     */
+    /** @var string */
     protected $title = '';
 
-    /**
-     * description
-     *
-     * @var string
-     */
+    /** @var string */
     protected $description = '';
 
-    /**
-     * internalNote
-     *
-     * @var string
-     */
+    /** @var string */
     protected $internalNote = '';
 
-    /**
-     * timeTarget in hours
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $timeTarget = 0.0;
 
-    /**
-     * timeDeviation in hours
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $timeDeviation = 0.0;
 
-    /**
-     * Sum from the tasks activeTime in hours
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $activeTime = 0.0;
 
-    /**
-     * Sum from active time from tasks that are not batched yet
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $heapTime = 0.0;
 
-    /**
-     * Sum from active time from tasks that are batched
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $batchTime = 0.0;
 
-    /**
-     * project
-     *
-     * @var Project
-     */
+    /** @var ?Project */
     protected $project = null;
 
     /**
-     * tasks
-     *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task>
+     * @var null|ObjectStorage<Task>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
      */
     protected $tasks = null;
 
-    /**
-     * __construct
-     */
     public function __construct()
     {
         //Do not remove the next line: It would break the functionality
@@ -117,7 +74,7 @@ class TaskGroup extends AbstractEntity implements UpdateInterface, HandleInterfa
     protected function initStorageObjects()
     {
         // @phpstan-ignore-next-line
-        $this->tasks = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->tasks = new ObjectStorage();
     }
 
     public function getHandle(): string
@@ -172,6 +129,7 @@ class TaskGroup extends AbstractEntity implements UpdateInterface, HandleInterfa
     public function setTimeTarget(float $timeTarget): self
     {
         $this->timeTarget = $timeTarget;
+        $this->updateTimeDeviation();
         return $this;
     }
 
@@ -180,22 +138,9 @@ class TaskGroup extends AbstractEntity implements UpdateInterface, HandleInterfa
         return $this->timeDeviation;
     }
 
-    public function setTimeDeviation(float $timeDeviation): self
-    {
-        $this->timeDeviation = $timeDeviation;
-        return $this;
-    }
-
     public function getActiveTime(): float
     {
         return $this->activeTime;
-    }
-
-    public function setActiveTime(float $activeTime): self
-    {
-        $this->activeTime = $activeTime;
-        $this->update();
-        return $this;
     }
 
     public function getHeapTime(): float
@@ -203,21 +148,9 @@ class TaskGroup extends AbstractEntity implements UpdateInterface, HandleInterfa
         return $this->heapTime;
     }
 
-    public function setHeapTime(float $heapTime): self
-    {
-        $this->heapTime = $heapTime;
-        return $this;
-    }
-
     public function getBatchTime(): float
     {
         return $this->batchTime;
-    }
-
-    public function setBatchTime(float $batchTime): self
-    {
-        $this->batchTime = $batchTime;
-        return $this;
     }
 
     public function getProject(): ?Project
@@ -231,43 +164,25 @@ class TaskGroup extends AbstractEntity implements UpdateInterface, HandleInterfa
         return $this;
     }
 
-    public function addTask(Task $task): self
-    {
-        $this->tasks->attach($task);
-        return $this;
-    }
-
-    public function removeTask(Task $taskToRemove): self
-    {
-        $this->tasks->detach($taskToRemove);
-        return $this;
-    }
-
-    /**
-     * Returns the tasks
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task> $tasks
-     */
+    /** @return ?ObjectStorage<Task> */
     public function getTasks()
     {
         return $this->tasks;
     }
 
-    /**
-     * Sets the tasks
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task> $tasks
-     */
-    public function setTasks(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $tasks): self
+    public function update(): void
     {
-        $this->tasks = $tasks;
-        return $this;
+        if (($tasks = $this->getTasks()) === null) {
+            return;
+        }
+        $tasks = $tasks->toArray();
+        $this->activeTime = TaskUtility::getActiveTimeForTasks($tasks);
+        $this->heapTime = TaskUtility::getHeapTimeForTasks($tasks);
+        $this->batchTime = TaskUtility::getBatchTimeForTasks($tasks);
+        $this->updateTimeDeviation();
     }
 
-    /**
-     * Updates the object state
-     */
-    public function update(): void
+    protected function updateTimeDeviation(): void
     {
         $this->timeDeviation = $this->getTimeTarget() - $this->getActiveTime();
     }

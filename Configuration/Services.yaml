@@ -1,41 +1,50 @@
 services:
-    _defaults:
-        autowire: true
-        autoconfigure: true
-        public: false
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
 
-    Buepro\Timelog\:
-        resource: '../Classes/*'
-        exclude: '../Classes/Domain/Model/*'
+  Buepro\Timelog\:
+    resource: '../Classes/*'
+    exclude: '../Classes/Domain/Model/*'
 
-    # Event listeners
-    Buepro\Timelog\Mediator\HandleMediator:
-        tags:
-            - name: event.listener
-              identifier: 'timelog-handle-mediator'
-              method: 'handlePersistEvent'
-              event: TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent
+  Buepro\Timelog\Mediator\ExtbaseMediator:
+    tags:
+      -
+        name: event.listener
+        identifier: 'timelog-extbase-mediator'
+        method: 'handlePersistEvent'
+        event: TYPO3\CMS\Extbase\Event\Persistence\EntityPersistedEvent
 
-    Buepro\Timelog\Mediator\TimeMediator:
-        tags:
-            - name: event.listener
-              identifier: 'timelog-task-time'
-              method: handleTaskActiveTimeChangedEvent
-              event: Buepro\Timelog\Event\TaskActiveTimeChangedEvent
-            - name: event.listener
-              identifier: 'timelog-task-batch'
-              method: handleTaskBatchDateChangedEvent
-              event: Buepro\Timelog\Event\TaskBatchDateChangedEvent
+  Buepro\Timelog\Mediator\TaskMediator:
+    tags:
+      -
+        name: event.listener
+        identifier: 'timelog-task-mediator-time'
+        method: handleTimeChangeEvent
+        event: Buepro\Timelog\Event\TaskTimeChangeEvent
+      -
+        name: event.listener
+        identifier: 'timelog-task-mediator-task-group'
+        method: handleTaskGroupChangeEvent
+        event: Buepro\Timelog\Event\TaskTaskGroupChangeEvent
+      -
+        name: event.listener
+        identifier: 'timelog-task-mediator-project'
+        method: handleProjectChangeEvent
+        event: Buepro\Timelog\Event\TaskProjectChangeEvent
 
-    Buepro\Timelog\Backend\Mediator\CoreMediator:
-        tags:
-            - name: event.listener
-              identifier: 'timelog-core-mediator'
-              method: handleAfterFormEnginePageInitializedEvent
-              event: TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent
+  Buepro\Timelog\Backend\Mediator\DataHandlerMediator:
+    tags:
+      -
+        name: event.listener
+        identifier: 'timelog-data-handler-mediator'
+        method: process
+        event: TYPO3\CMS\Backend\Controller\Event\AfterFormEnginePageInitializedEvent
 
-    Buepro\Timelog\Service\ExtensionInstallService:
-        tags:
-            - name: event.listener
-              identifier: 'buepro/timelog/finalize-extension-installation'
-              event: TYPO3\CMS\Core\Package\Event\AfterPackageActivationEvent
+  Buepro\Timelog\Service\ExtensionInstallService:
+    tags:
+      -
+        name: event.listener
+        identifier: 'buepro/timelog/finalize-extension-installation'
+        event: TYPO3\CMS\Core\Package\Event\AfterPackageActivationEvent

@@ -17,34 +17,22 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
 class FrontendUser extends AbstractEntity
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $name = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $firstName = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $middleName = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $lastName = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $email = '';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $company = '';
 
     public function setName(string $name): self
@@ -133,7 +121,7 @@ class FrontendUser extends AbstractEntity
     }
 
     /**
-     * @return array|null [$email] or [$email => $displayName]
+     * @return ?array [$email] or [$email => $displayName]
      * @see MailMessage::setTo()
      */
     public function getEmailAddress(): ?array

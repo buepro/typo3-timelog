@@ -13,9 +13,7 @@ namespace Buepro\Timelog\Domain\Model;
 
 class Client extends FrontendUser
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $ownerEmail = '';
 
     public function setOwnerEmail(string $ownerEmail): self

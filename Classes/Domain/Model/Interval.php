@@ -11,32 +11,36 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Domain\Model;
 
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
 /**
  * Interval
  */
-class Interval extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Interval extends AbstractEntity implements UpdateInterface
 {
+    /** @var Task */
+    protected $task;
 
-    /**
-     * startTime
-     *
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $startTime = null;
 
-    /**
-     * endTime
-     *
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $endTime = null;
 
-    /**
-     * The duration in houres
-     *
-     * @var float
-     */
-    protected $duration = 0;
+    /** @var float Unit is hours */
+    protected $duration = 0.0;
+
+    public function getTask(): Task
+    {
+        return $this->task;
+    }
+
+    public function setTask(Task $task): self
+    {
+        $this->task = $task;
+        $task->update();
+        return $this;
+    }
 
     public function getStartTime(): ?\DateTime
     {
@@ -45,7 +49,10 @@ class Interval extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     public function setStartTime(\DateTime $startTime): self
     {
-        $this->startTime = $startTime;
+        if ($this->startTime === null || ($this->startTime->getTimestamp() !== $startTime->getTimestamp())) {
+            $this->startTime = $startTime;
+            $this->update();
+        }
         return $this;
     }
 
@@ -56,7 +63,10 @@ class Interval extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
     public function setEndTime(\DateTime $endTime): self
     {
-        $this->endTime = $endTime;
+        if ($this->endTime === null || ($this->endTime->getTimestamp() !== $endTime->getTimestamp())) {
+            $this->endTime = $endTime;
+            $this->update();
+        }
         return $this;
     }
 
@@ -65,9 +75,17 @@ class Interval extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->duration;
     }
 
-    public function setDuration(float $duration): self
+    public function update(): void
     {
-        $this->duration = $duration;
-        return $this;
+        $previousDuration = $this->duration;
+        if ($this->startTime === null || $this->endTime === null) {
+            $this->duration = 0.0;
+        }
+        if ($this->startTime !== null && $this->endTime !== null) {
+            $this->duration = ($this->endTime->getTimestamp() - $this->startTime->getTimestamp()) / 3600;
+        }
+        if ($this->task !== null && (abs($previousDuration - $this->duration) > 0.0001)) {
+            $this->task->update();
+        }
     }
 }

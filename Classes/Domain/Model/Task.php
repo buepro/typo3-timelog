@@ -11,8 +11,9 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Domain\Model;
 
-use Buepro\Timelog\Event\TaskActiveTimeChangedEvent;
-use Buepro\Timelog\Event\TaskBatchDateChangedEvent;
+use Buepro\Timelog\Event\TaskProjectChangeEvent;
+use Buepro\Timelog\Event\TaskTaskGroupChangeEvent;
+use Buepro\Timelog\Event\TaskTimeChangeEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
@@ -23,78 +24,39 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 class Task extends AbstractEntity implements UpdateInterface, HandleInterface
 {
 
-    /**
-     * handle
-     *
-     * @var string
-     */
+    /** @var string */
     protected $handle = '';
 
-    /**
-     * title
-     *
-     * @var string
-     */
+    /** @var string */
     protected $title = '';
 
-    /**
-     * description
-     *
-     * @var string
-     */
+    /** @var string */
     protected $description = '';
 
-    /**
-     * The duration in houres
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $activeTime = 0;
 
-    /**
-     * batchDate
-     *
-     * @var \DateTime
-     */
+    /** @var \DateTime */
     protected $batchDate = null;
 
-    /**
-     * project
-     *
-     * @var \Buepro\Timelog\Domain\Model\Project
-     */
+    /** @var ?Project */
     protected $project = null;
 
-    /**
-     * taskGroup
-     *
-     * @var \Buepro\Timelog\Domain\Model\TaskGroup
-     */
+    /** @var ?TaskGroup */
     protected $taskGroup = null;
 
-    /**
-     * worker
-     *
-     * @var FrontendUser
-     */
+    /** @var ?FrontendUser */
     protected $worker = null;
 
     /**
-     * intervals
-     *
      * @var ObjectStorage<Interval>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
      */
     protected $intervals = null;
 
-    /**
-     * @var EventDispatcherInterface
-     */
+    /** @var EventDispatcherInterface */
     protected $eventDispatcher;
 
-    /**
-     * __construct
-     */
     public function __construct()
     {
 
@@ -102,9 +64,6 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
         $this->initStorageObjects();
     }
 
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
     {
         $this->eventDispatcher = $eventDispatcher;
@@ -120,16 +79,6 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
     {
         // @phpstan-ignore-next-line
         $this->intervals = new ObjectStorage();
-    }
-
-    private function triggerActiveTimeChangedEvent(float $previousActiveTime, float $newActiveTime): void
-    {
-        $this->eventDispatcher->dispatch(new TaskActiveTimeChangedEvent($this, $previousActiveTime, $newActiveTime));
-    }
-
-    private function triggerBatchDateChangedEvent(?\DateTime $previousDate, ?\DateTime $currentDate): void
-    {
-        $this->eventDispatcher->dispatch(new TaskBatchDateChangedEvent($this, $previousDate, $currentDate));
     }
 
     public function getTitle(): string
@@ -157,33 +106,30 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
     public function addInterval(Interval $interval): self
     {
         $this->intervals->attach($interval);
+        $this->update();
         return $this;
     }
 
     public function removeInterval(Interval $intervalToRemove): self
     {
         $this->intervals->detach($intervalToRemove);
+        $this->update();
         return $this;
     }
 
     /**
-     * Returns the intervals
-     *
-     * @return null|ObjectStorage<Interval> $intervals
+     * @return ?ObjectStorage<Interval>
      */
     public function getIntervals()
     {
         return $this->intervals;
     }
 
-    /**
-     * Sets the intervals
-     *
-     * @param ObjectStorage<Interval> $intervals
-     */
+    /** @param ObjectStorage<Interval> $intervals */
     public function setIntervals(ObjectStorage $intervals): self
     {
         $this->intervals = $intervals;
+        $this->update();
         return $this;
     }
 
@@ -194,10 +140,9 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
 
     public function setActiveTime(float $activeTime): self
     {
-        if ($this->activeTime !== $activeTime) {
-            $previousActiveTime = $this->activeTime;
+        if (abs($this->activeTime - $activeTime) > 0.0001) {
             $this->activeTime = $activeTime;
-            $this->triggerActiveTimeChangedEvent($previousActiveTime, $activeTime);
+            $this->eventDispatcher->dispatch(new TaskTimeChangeEvent($this));
         }
         return $this;
     }
@@ -220,17 +165,7 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
 
     public function setBatchDate(\DateTime $batchDate): self
     {
-        if (
-            ($this->getBatchDate() xor $batchDate) ||
-            (
-                $this->batchDate !== null &&
-                ($this->batchDate->getTimestamp() !== $batchDate->getTimestamp())
-            )
-        ) {
-            $previousBatchDate = $this->batchDate;
-            $this->batchDate = $batchDate;
-            $this->triggerBatchDateChangedEvent($previousBatchDate, $batchDate);
-        }
+        $this->batchDate = $batchDate;
         return $this;
     }
 
@@ -239,25 +174,40 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
         return $this->project;
     }
 
-    public function setProject(Project $project): self
+    public function setProject(?Project $project): self
     {
-        $this->project = $project;
+        if ($this->project === null && $project === null) {
+            return $this;
+        }
+        if (
+            ($this->project === null ||  $project === null) ||
+            ($this->project->getUid() !== $project->getUid())
+        ) {
+            $previousProject = $this->project;
+            $this->project = $project;
+            $this->eventDispatcher->dispatch(new TaskProjectChangeEvent($this, $previousProject, $project));
+        }
         return $this;
     }
 
-    /**
-     * Returns the taskGroup
-     *
-     * @return TaskGroup $taskGroup
-     */
     public function getTaskGroup(): ?TaskGroup
     {
         return $this->taskGroup;
     }
 
-    public function setTaskGroup(TaskGroup $taskGroup): self
+    public function setTaskGroup(?TaskGroup $taskGroup): self
     {
-        $this->taskGroup = $taskGroup;
+        if ($this->taskGroup === null && $taskGroup === null) {
+            return $this;
+        }
+        if (
+            ($this->taskGroup === null || $taskGroup === null) ||
+            ($this->taskGroup->getUid() !== $taskGroup->getUid())
+        ) {
+            $previousTaskGroup = $this->taskGroup;
+            $this->taskGroup = $taskGroup;
+            $this->eventDispatcher->dispatch(new TaskTaskGroupChangeEvent($this, $previousTaskGroup, $taskGroup));
+        }
         return $this;
     }
 
@@ -272,44 +222,17 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
         return $this;
     }
 
-    /**
-     * Updates a task by calculating the active time
-     */
     public function update(): void
     {
         if (($intervals = $this->getIntervals()) === null) {
             return;
         }
-        // Calculates the active time
         $activeTime = 0;
         foreach ($intervals as $interval) {
-
-            // Gets star and end timestamp for interval
-            $startTime = 0;
-            $endTime = 0;
-            if ($interval->getStartTime() !== null) {
-                $startTime = $interval->getStartTime()->getTimestamp();
-            }
-            if ($interval->getEndTime() !== null) {
-                $endTime = $interval->getEndTime()->getTimestamp();
-            }
-
-            // Sets the active time for the interval
-            if ($endTime > $startTime) {
-                $intervalDuration = $endTime - $startTime;
-                $interval->setDuration($intervalDuration / 3600);
-                $activeTime += $intervalDuration;
-            } else {
-                $interval->setDuration(0);
-            }
+            /** @var Interval $interval */
+            $activeTime += $interval->getDuration();
         }
-
-        // Updates the active time for the task
-        if ($activeTime > 0) {
-            $this->setActiveTime($activeTime / 3600);
-        } else {
-            $this->setActiveTime(0);
-        }
+        $this->setActiveTime($activeTime);
     }
 
     /**

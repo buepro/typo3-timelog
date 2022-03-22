@@ -11,7 +11,9 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Domain\Model;
 
+use Buepro\Timelog\Utility\TaskUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
 /**
  * Project
@@ -19,95 +21,48 @@ use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 class Project extends AbstractEntity implements UpdateInterface, HandleInterface
 {
 
-    /**
-     * handle
-     *
-     * @var string
-     */
+    /** @var string */
     protected $handle = '';
 
-    /**
-     * title
-     *
-     * @var string
-     */
+    /** @var string */
     protected $title = '';
 
-    /**
-     * description
-     *
-     * @var string
-     */
+    /** @var string */
     protected $description = '';
 
-    /**
-     * internalNote
-     *
-     * @var string
-     */
+    /** @var string */
     protected $internalNote = '';
 
-    /**
-     * Sum from the tasks activeTime in hours
-     *
-     * @var float
-     */
+    /**  @var float Unit is hours */
     protected $activeTime = 0.0;
 
-    /**
-     * Sum from active time from tasks that are not batched yet
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $heapTime = 0.0;
 
-    /**
-     * Sum from active time from tasks that are batched
-     *
-     * @var float
-     */
+    /** @var float Unit is hours */
     protected $batchTime = 0.0;
 
-    /**
-     * client
-     *
-     * @var Client
-     */
+    /** @var ?Client */
     protected $client = null;
 
-    /**
-     * owner
-     *
-     * @var FrontendUser
-     */
+    /** @var ?FrontendUser */
     protected $owner = null;
 
-    /**
-     * ccEmail
-     *
-     * @var string
-     */
+    /** @var string */
     protected $ccEmail = '';
 
     /**
-     * tasks
-     *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task>
+     * @var null|ObjectStorage<Task>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
      */
     protected $tasks = null;
 
     /**
-     * taskGroups
-     *
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<TaskGroup>
+     * @var null|ObjectStorage<TaskGroup>
      * @TYPO3\CMS\Extbase\Annotation\ORM\Cascade remove
      */
     protected $taskGroups = null;
 
-    /**
-     * __construct
-     */
     public function __construct()
     {
         //Do not remove the next line: It would break the functionality
@@ -123,9 +78,9 @@ class Project extends AbstractEntity implements UpdateInterface, HandleInterface
     protected function initStorageObjects(): void
     {
         // @phpstan-ignore-next-line
-        $this->tasks = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->tasks = new ObjectStorage();
         // @phpstan-ignore-next-line
-        $this->taskGroups = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->taskGroups = new ObjectStorage();
     }
 
     public function getHandle(): string
@@ -177,32 +132,14 @@ class Project extends AbstractEntity implements UpdateInterface, HandleInterface
         return $this->activeTime;
     }
 
-    public function setActiveTime(float $activeTime): self
-    {
-        $this->activeTime = $activeTime;
-        return $this;
-    }
-
     public function getHeapTime(): float
     {
         return $this->heapTime;
     }
 
-    public function setHeapTime(float $heapTime): self
-    {
-        $this->heapTime = $heapTime;
-        return $this;
-    }
-
     public function getBatchTime(): float
     {
         return $this->batchTime;
-    }
-
-    public function setBatchTime(float $batchTime): self
-    {
-        $this->batchTime = $batchTime;
-        return $this;
     }
 
     public function getClient(): ?Client
@@ -238,79 +175,26 @@ class Project extends AbstractEntity implements UpdateInterface, HandleInterface
         return $this;
     }
 
-    public function addTask(\Buepro\Timelog\Domain\Model\Task $task): self
-    {
-        $this->tasks->attach($task);
-        return $this;
-    }
-
-    public function removeTask(\Buepro\Timelog\Domain\Model\Task $taskToRemove): self
-    {
-        $this->tasks->detach($taskToRemove);
-        return $this;
-    }
-
-    /**
-     * Returns the tasks
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task> $tasks
-     */
+    /** @return ?ObjectStorage<Task> */
     public function getTasks()
     {
         return $this->tasks;
     }
 
-    /**
-     * Sets the tasks
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Buepro\Timelog\Domain\Model\Task> $tasks
-     */
-    public function setTasks(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $tasks): self
-    {
-        $this->tasks = $tasks;
-        return $this;
-    }
-
-    public function addTaskGroup(TaskGroup $taskGroup): self
-    {
-        $this->taskGroups->attach($taskGroup);
-        return $this;
-    }
-
-    public function removeTaskGroup(TaskGroup $taskGroupToRemove): self
-    {
-        $this->taskGroups->detach($taskGroupToRemove);
-        return $this;
-    }
-
-    /**
-     * Returns the taskGroups
-     *
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<TaskGroup> $taskGroups
-     */
+    /**  @return ?ObjectStorage<TaskGroup> */
     public function getTaskGroups()
     {
         return $this->taskGroups;
     }
 
-    /**
-     * Sets the taskGroups
-     *
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<TaskGroup> $taskGroups
-     */
-    public function setTaskGroups(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $taskGroups): self
-    {
-        $this->taskGroups = $taskGroups;
-        return $this;
-    }
-
-    /**
-     * Updates its state
-     *
-     * @return void
-     */
     public function update(): void
     {
-        // TODO: Implement Update() method.
+        if (($tasks = $this->getTasks()) === null) {
+            return;
+        }
+        $tasks = $tasks->toArray();
+        $this->activeTime = TaskUtility::getActiveTimeForTasks($tasks);
+        $this->heapTime = TaskUtility::getHeapTimeForTasks($tasks);
+        $this->batchTime = TaskUtility::getBatchTimeForTasks($tasks);
     }
 }

@@ -12,8 +12,8 @@ declare(strict_types=1);
 namespace Buepro\Timelog\Domain\Model;
 
 /**
- * A UpdateInterface. Models might present an inconsistent state coming from setting data without using the setters.
- * Models implementing this interface provide methods to update them self for that their state is consistent.
+ * Models implementing this interface update properties depending on child elements. Mainly it is used to calculate
+ * the heap and batch time.
  */
 interface UpdateInterface
 {

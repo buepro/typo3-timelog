@@ -50,7 +50,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'size' => 12,
+                'size' => 14,
                 'eval' => 'datetime',
                 'default' => time()
             ],
@@ -61,7 +61,7 @@ return [
             'config' => [
                 'type' => 'input',
                 'renderType' => 'inputDateTime',
-                'size' => 12,
+                'size' => 14,
                 'eval' => 'datetime',
                 'default' => 0
             ],
@@ -71,7 +71,7 @@ return [
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_interval.duration',
             'config' => [
                 'type' => 'input',
-                'size' => 12,
+                'size' => 10,
                 'eval' => 'double2',
                 'readOnly' => 1
             ]

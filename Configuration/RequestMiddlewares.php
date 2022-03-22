@@ -10,9 +10,20 @@ declare(strict_types=1);
  */
 
 return [
+    'backend' => [
+        'buepro/timelog/mediator' => [
+            'target' => \Buepro\Timelog\Middleware\Backend\MediatorMiddleware::class,
+            'after' => [
+                'typo3/cms-core/response-propagation',
+                'typo3/cms-backend/site-resolver',
+                'typo3/cms-backend/response-headers',
+                'typo3/cms-extbase/signal-slot-deprecator'
+            ],
+        ],
+    ],
     'frontend' => [
         'buepro/timelog/send-mail' => [
-            'target' => \Buepro\Timelog\Middleware\SendMailMiddleware::class,
+            'target' => \Buepro\Timelog\Middleware\Frontend\SendMailMiddleware::class,
             'after' => [
                 'typo3/cms-frontend/prepare-tsfe-rendering',
             ],
