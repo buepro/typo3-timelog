@@ -52,11 +52,9 @@ class TaskRepository extends Repository
      *
      * ATTENTION: The storage location isn't considered.
      *
-     * @param Project $project
-     * @param int $limit
      * @return array|QueryResultInterface
      */
-    public function findRecentForProject(Project $project, int $limit = 2)
+    public function findRecentForProject(Project $project, int $limit = 2, bool $excludeBatched = true)
     {
         /** @var \TYPO3\CMS\Core\Database\Query\QueryBuilder $queryBuilder */
         $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)
@@ -79,6 +77,13 @@ class TaskRepository extends Repository
             ->groupBy('task.uid')
             ->orderBy('max_start_time', 'DESC')
             ->setMaxResults($limit);
+
+        if ($excludeBatched) {
+            $queryBuilder->andWhere($queryBuilder->expr()->eq(
+                'batch_date',
+                $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)
+            ));
+        }
 
 //        $sql = $queryBuilder->getSQL();
 //        $params = $queryBuilder->getParameters();
