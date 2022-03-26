@@ -28,6 +28,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
+      - name: Delete composer.lock
+        run: rm composer.lock
       - name: Set up MySQL ${{ matrix.mysql }}
         uses: mirromutth/mysql-action@v1.1
         with:
