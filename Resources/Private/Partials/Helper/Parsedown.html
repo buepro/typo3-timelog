@@ -9,7 +9,8 @@
 <f:if condition="{settings.transform} == 1">
     <div class="tx-timelog-markdown">
         {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
-            -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)}
+            -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)
+            -> f:format.raw()}
     </div>
 </f:if>
 <f:if condition="{settings.transform} == 2">
@@ -19,7 +20,8 @@
         <f:then>
             <div class="tx-timelog-markdown">
                 {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
-                    -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)}
+                    -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)
+                    -> f:format.raw()}
             </div>
         </f:then>
         <f:else>
