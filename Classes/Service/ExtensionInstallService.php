@@ -11,12 +11,12 @@ declare(strict_types = 1);
 namespace Buepro\Timelog\Service;
 
 use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
-use TYPO3\CMS\Core\Package\Event\AfterPackageActivationEvent;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extensionmanager\Event\AfterExtensionFilesHaveBeenImportedEvent;
 
 class ExtensionInstallService
 {
-    public function __invoke(AfterPackageActivationEvent $event): void
+    public function __invoke(AfterExtensionFilesHaveBeenImportedEvent $event): void
     {
         if ($event->getPackageKey() !== 'timelog') {
             return;

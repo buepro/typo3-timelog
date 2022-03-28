@@ -1,0 +1,2 @@
+This file is just used to trigger the event AfterExtensionFilesHaveBeenImportedEvent.
+See as well Configuration/Services.yaml

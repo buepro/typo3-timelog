@@ -47,4 +47,4 @@ services:
       -
         name: event.listener
         identifier: 'buepro/timelog/finalize-extension-installation'
-        event: TYPO3\CMS\Core\Package\Event\AfterPackageActivationEvent
+        event: TYPO3\CMS\Extensionmanager\Event\AfterExtensionFilesHaveBeenImportedEvent
