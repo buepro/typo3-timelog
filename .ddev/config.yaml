@@ -20,7 +20,6 @@ web_environment:
   - typo3DatabaseName=t3func
   - typo3DatabasePassword=root
   - typo3DatabaseUsername=root
-  - PHP_IDE_CONFIG=serverName=timelog.ddev.site
 
 
 # This config.yaml was created with ddev version v1.17.7
