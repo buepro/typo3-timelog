@@ -25,7 +25,7 @@
 		"typo3/cms-core": "^10.4.11 || ^11.5"
 	},
 	"require-dev": {
-		"buepro/typo3-pizpalue": "~v12.4.1",
+		"buepro/typo3-pizpalue": "~v12.5.0",
 		"ergebnis/composer-normalize": "^2.15.0",
 		"friendsofphp/php-cs-fixer": "^3.0.0",
 		"friendsoftypo3/phpstan-typo3": "^0.8.1",
@@ -50,7 +50,12 @@
 		"bin-dir": ".build/bin",
 		"optimize-autoloader": true,
 		"sort-packages": true,
-		"vendor-dir": ".build/vendor"
+		"vendor-dir": ".build/vendor",
+		"allow-plugins": {
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true,
+			"ergebnis/composer-normalize": true
+		}
 	},
 	"extra": {
 		"branch-alias": {
@@ -113,11 +118,11 @@
 			"@typo3cms:database:import"
 		],
 		"typo3cms:database:export": [
-			".build/bin/typo3cms database:export -c Default -e 'cf_*' -e 'cache_*' -e '[bf]e_sessions' -e sys_log | gzip -c > Build/site/db10.sql.gz",
-			"ls -l Build/site/db10.sql.gz"
+			".build/bin/typo3cms database:export -c Default -e 'cf_*' -e 'cache_*' -e '[bf]e_sessions' -e sys_log | gzip -c > Build/site/db11.sql.gz",
+			"ls -l Build/site/db11.sql.gz"
 		],
 		"typo3cms:database:import": [
-			"gzip -cdk Build/site/db10.sql.gz | .build/bin/typo3cms database:import"
+			"gzip -cdk Build/site/db11.sql.gz | .build/bin/typo3cms database:import"
 		],
 		"typo3cms:install:setup": [
 			".build/bin/typo3cms install:setup --no-interaction --use-existing-database --database-host-name='db' --database-name='db' --database-user-name='db' --database-user-password='db' --admin-user-name='admin' --admin-password='admin123ADMIN:)' --site-name='timelog dev' --web-server-config='apache'"
