@@ -6,6 +6,14 @@
    :alt: TYPO3 10
    :target: https://get.typo3.org/version/10
 
+.. image:: https://poser.pugx.org/buepro/typo3-timelog/d/total.svg
+   :alt: Total Downloads
+   :target: https://packagist.org/packages/buepro/typo3-timelog
+
+.. image:: https://poser.pugx.org/buepro/typo3-timelog/d/monthly
+   :alt: Monthly Downloads
+   :target: https://packagist.org/packages/buepro/typo3-timelog
+
 .. image:: https://github.com/buepro/typo3-timelog/workflows/CI/badge.svg
    :alt: Continuous Integration Status
    :target: https://github.com/buepro/typo3-timelog/actions?query=workflow%3ACI
