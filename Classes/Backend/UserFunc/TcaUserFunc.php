@@ -23,8 +23,11 @@ class TcaUserFunc
             GeneralUtility::fixed_lgd_cs($parameters['row']['title'], $textLength),
             sprintf('%.1f, %.1f', $parameters['row']['active_time'], $parameters['row']['heap_time']),
         ];
-        if ($parameters['row']['client']) {
-            $client = BackendUtility::getRecord('fe_users', $parameters['row']['client']);
+        if (
+            isset($parameters['row']['client']) &&
+            ($clientUid = $this->getChildUid($parameters['row']['client'])) > 0 &&
+            ($client = BackendUtility::getRecord('fe_users', $clientUid)) !== null
+        ) {
             $parts[] = $client['company'] ?? $client['name'] ?? $client['last_name'] ?? '';
         }
         $parts[] = $parameters['row']['handle'];
@@ -43,9 +46,7 @@ class TcaUserFunc
         $parts[] = sprintf('%.1f', $parameters['row']['active_time']);
         if (
             isset($parameters['row']['project']) &&
-            ($projectUid = is_array($parameters['row']['project']) ?
-                (int)$parameters['row']['project'][0] :
-                (int)$parameters['row']['project']) > 0 &&
+            ($projectUid = $this->getChildUid($parameters['row']['project'])) > 0 &&
             ($project = BackendUtility::getRecord('tx_timelog_domain_model_project', $projectUid)) !== null
         ) {
             if ($project['title']) {
@@ -69,7 +70,7 @@ class TcaUserFunc
         ];
         if (
             isset($parameters['row']['project']) &&
-            ($projectUid = (int)$parameters['row']['project']) > 0 &&
+            ($projectUid = $this->getChildUid($parameters['row']['project'])) > 0 &&
             ($project = BackendUtility::getRecord('tx_timelog_domain_model_project', $projectUid)) !== null
         ) {
             $parts[] = GeneralUtility::fixed_lgd_cs($project['title'], $textLength);
@@ -86,8 +87,10 @@ class TcaUserFunc
         if ($interval === null || !isset($interval['task']) || !(bool)$interval['task']) {
             return;
         }
-        $task = BackendUtility::getRecord('tx_timelog_domain_model_task', $interval['task']);
-        if (isset($task['title'], $interval['start_time'], $interval['duration'])) {
+        if (
+            ($task = BackendUtility::getRecord('tx_timelog_domain_model_task', $interval['task'])) !== null &&
+            isset($task['title'], $interval['start_time'], $interval['duration'])
+        ) {
             $parameters['title'] = sprintf(
                 '%s (%s - %.2f)',
                 $task['title'],
@@ -111,14 +114,7 @@ class TcaUserFunc
         if ($parameters['row']['name']) {
             $items[] = $parameters['row']['name'];
         } elseif ($parameters['row']['first_name'] || $parameters['row']['last_name']) {
-            $name = [];
-            if ($parameters['row']['first_name']) {
-                $name[] = $parameters['row']['first_name'];
-            }
-            if ($parameters['row']['last_name']) {
-                $name[] = $parameters['row']['last_name'];
-            }
-            $items[] = implode(' ', $name);
+            $items[] = trim($parameters['row']['first_name'] . ' ' . $parameters['row']['last_name']);
         }
         // Adds company
         if ($parameters['row']['company']) {
@@ -127,5 +123,14 @@ class TcaUserFunc
 
         // Compiles text and adds path
         $parameters['entry']['text'] = implode(' | ', $items) . '<br />' . $text[1];
+    }
+
+    /**
+     * @param array|int $field
+     * @return int
+     */
+    protected function getChildUid($field): int
+    {
+        return (int)(is_array($field) ? $field[0] : $field);
     }
 }
