@@ -30,7 +30,9 @@ class TcaUserFunc
         ) {
             $parts[] = $client['company'] ?? $client['name'] ?? $client['last_name'] ?? '';
         }
-        $parts[] = $parameters['row']['handle'];
+        if (($parameters['row']['handle'] ?? '') !== '') {
+            $parts[] = $parameters['row']['handle'];
+        }
         $parameters['title'] = implode(' - ', array_filter($parts));
     }
 
@@ -38,26 +40,32 @@ class TcaUserFunc
     {
         $textLength = 20;
         $parts = [];
-        if (isset($parameters['row']['title']) && $parameters['row']['title'] !== '') {
+        if (($parameters['row']['title'] ?? '') !== '') {
             $parts[] = GeneralUtility::fixed_lgd_cs($parameters['row']['title'], $textLength * 2);
-        } elseif (isset($parameters['row']['description']) && $parameters['row']['description'] !== '') {
+        } elseif (($parameters['row']['description'] ?? '') !== '') {
             $parts[] = GeneralUtility::fixed_lgd_cs($parameters['row']['description'], $textLength * 2);
         }
-        $parts[] = sprintf('%.1f', $parameters['row']['active_time']);
+        if (($parameters['row']['active_time'] ?? '') !== '') {
+            $parts[] = sprintf('%.1f', $parameters['row']['active_time']);
+        }
         if (
             isset($parameters['row']['project']) &&
             ($projectUid = $this->getChildUid($parameters['row']['project'])) > 0 &&
             ($project = BackendUtility::getRecord('tx_timelog_domain_model_project', $projectUid)) !== null
         ) {
-            if ($project['title']) {
+            if (($project['title'] ?? '') !== '') {
                 $parts[] = GeneralUtility::fixed_lgd_cs($project['title'], $textLength);
             }
-            if ($project['client']) {
-                $client = BackendUtility::getRecord('fe_users', $project['client']);
+            if (
+                ($clientUid = (int)($project['client'] ?? 0)) !== 0 &&
+                ($client = BackendUtility::getRecord('fe_users', $clientUid)) !== null
+            ) {
                 $parts[] = $client['company'] ?? $client['name'] ?? $client['last_name'] ?? '';
             }
         }
-        $parts[] = $parameters['row']['handle'];
+        if (($parameters['row']['handle'] ?? '') !== '') {
+            $parts[] = $parameters['row']['handle'];
+        }
         $parameters['title'] = implode(' - ', array_filter($parts));
     }
 
@@ -75,7 +83,7 @@ class TcaUserFunc
         ) {
             $parts[] = GeneralUtility::fixed_lgd_cs($project['title'], $textLength);
         }
-        if (isset($parameters['row']['handle']) && $parameters['row']['handle'] !== '') {
+        if (($parameters['row']['handle'] ?? '') !== '') {
             $parts[] = $parameters['row']['handle'];
         }
         $parameters['title'] = implode(' - ', array_filter($parts));
@@ -111,13 +119,15 @@ class TcaUserFunc
         $items[] = $text[0];
 
         // Adds name
-        if ($parameters['row']['name']) {
-            $items[] = $parameters['row']['name'];
-        } elseif ($parameters['row']['first_name'] || $parameters['row']['last_name']) {
-            $items[] = trim($parameters['row']['first_name'] . ' ' . $parameters['row']['last_name']);
+        if (
+            isset($parameters['row']['name'], $parameters['row']['first_name'], $parameters['row']['last_name']) &&
+            ($name = trim($parameters['row']['name']) !== '' ? trim($parameters['row']['name']) :
+                trim($parameters['row']['first_name'] . ' ' . $parameters['row']['last_name'])) !== ''
+        ) {
+            $items[] = $name;
         }
         // Adds company
-        if ($parameters['row']['company']) {
+        if (($parameters['row']['company'] ?? '') !== '') {
             $items[] = $parameters['row']['company'];
         }
 
@@ -131,6 +141,6 @@ class TcaUserFunc
      */
     protected function getChildUid($field): int
     {
-        return (int)(is_array($field) ? $field[0] : $field);
+        return (int)(is_array($field) && isset($field[0]) ? $field[0] : $field);
     }
 }
