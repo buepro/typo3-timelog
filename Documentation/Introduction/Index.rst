@@ -24,14 +24,16 @@
 Introduction
 ============
 
-The aim from this extension is to increase the efficiency and transparency of work by continuously collecting work
-information and communicate it to customers.
+The aim from this extension is to increase the efficiency and transparency of
+work by continuously collecting work information and communicate it to customers.
 
-Work conducted for a project is split into tasks. Each task consists of intervals where an interval is a
-timespan work has been conducted to without interruption. Tasks can be assigned to task groups and further
-collected in batches to be used as references (e.g. in in invoices).
+Work conducted for a project is split into tasks. Each task consists of intervals
+where an interval is a timespan work has been conducted to without interruption.
+Tasks can be assigned to task groups and further collected in batches to be used
+as references (e.g. for bookkeeping purposes).
 
-With a click information regarding the latest tasks worked on might be communicated to the client.
+With a click information regarding the latest tasks worked on might be
+communicated to the customer.
 
 
 Screenshots

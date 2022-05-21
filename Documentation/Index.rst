@@ -9,6 +9,9 @@ Timelog
 :Extension key:
    timelog
 
+:Package name:
+   buepro/typo3-timelog
+
 :Version:
    |release|
 
@@ -18,16 +21,23 @@ Timelog
 :Author:
    Roman Büchler
 
-:Email:
-   rb@buechler.pro
-
 :License:
-   This document is published under the Open Content License
-   available from https://www.openhub.net/licenses/opl.
+   This document is published under the
+   `Creative Commons BY 4.0 <https://creativecommons.org/licenses/by/4.0/>`__
+   license.
 
 :Rendered:
    |today|
 
+----
+
+The extension provides the possibility to register working time in the backend,
+organizing it in groups and projects and communicate it to customers. Details
+regarding accumulated time can be looked up in the frontend by a token. For
+bookkeeping purposes working times can be bundled to batches where each batch
+can be referenced by a token too.
+
+----
 
 **Table of Contents**
 
