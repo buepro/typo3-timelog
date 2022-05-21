@@ -28,7 +28,7 @@
 				<source>Duration</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.client">
-				<source>Client</source>
+				<source>Customer</source>
 			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.owner">
 				<source>Owner</source>
@@ -90,7 +90,7 @@
 				<source>Project progress - %s</source>
 			</trans-unit>
 			<trans-unit id="salutationNeutral">
-				<source>Dear client</source>
+				<source>Dear customer</source>
 			</trans-unit>
 			<trans-unit id="salutationPersonal">
 				<source>Dear Miss/Mr. %s</source>
@@ -126,7 +126,7 @@
 				<source>Batched tasks (%s) from group %s</source>
 			</trans-unit>
 			<trans-unit id="sendEmailToClient">
-				<source>Send email to client</source>
+				<source>Send email to customer</source>
 			</trans-unit>
 			<trans-unit id="createBatch">
 				<source>Create batch</source>

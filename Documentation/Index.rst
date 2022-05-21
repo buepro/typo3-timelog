@@ -47,5 +47,12 @@ can be referenced by a token too.
    Introduction/Index
    Administration/Index
    Configuration/Index
+   User/Index
    Changelog/Index
 
+.. Meta Menu
+
+.. toctree::
+   :hidden:
+
+   Sitemap
