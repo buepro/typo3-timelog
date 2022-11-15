@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Strict comparison using \\!\\=\\= between Buepro\\\\Timelog\\\\Domain\\\\Model\\\\Interval and null will always evaluate to true\\.$#"
+			count: 2
+			path: ../Classes/Domain/Model/Task.php

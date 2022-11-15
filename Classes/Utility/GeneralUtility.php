@@ -17,7 +17,6 @@ use TYPO3\CMS\Core\Configuration\ExtensionConfiguration;
 
 class GeneralUtility
 {
-
     /**
      * Gets an instance from Hashids for a model.
      *
@@ -30,8 +29,11 @@ class GeneralUtility
             ExtensionConfiguration::class
         );
         $timelogConfiguration = $extensionConfiguration->get('timelog');
+        if (!is_array($timelogConfiguration) || !isset($timelogConfiguration['hashidSalt'], $timelogConfiguration['hashidLength'])) {
+            throw new \LogicException('The timelog configuration is not available.', 1668537875);
+        }
         $salt = sprintf('%s%s%s', $model, $timelogConfiguration['hashidSalt'], 'Lihdfg!');
-        return new Hashids($salt, $timelogConfiguration['hashidLength']);
+        return new Hashids($salt, (int)$timelogConfiguration['hashidLength']);
     }
 
     /**

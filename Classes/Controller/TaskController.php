@@ -30,7 +30,6 @@ use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
  */
 class TaskController extends ActionController
 {
-
     /**
      * projectRepository
      *
@@ -246,7 +245,8 @@ class TaskController extends ActionController
         if ($tasks instanceof QueryResultInterface && (bool)$tasks->count()) {
             $tasksCount = $tasks->count();
             foreach ($tasks as $aTask) {
-                if (!$aTask->getBatchDate()) {
+                /** @var Task $aTask */
+                if (!(bool)$aTask->getBatchDate()) {
                     $hasTasksOnHeap = true;
                     break;
                 }

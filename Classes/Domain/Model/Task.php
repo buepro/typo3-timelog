@@ -23,7 +23,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Task extends AbstractEntity implements UpdateInterface, HandleInterface
 {
-
     /** @var string */
     protected $handle = '';
 
@@ -59,7 +58,6 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
 
     public function __construct()
     {
-
         //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
     }
@@ -248,6 +246,7 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
         $result = (new \DateTime())->setTimestamp($now);
         foreach ($intervals as $interval) {
             if (
+                $interval !== null &&
                 ($startTime = $interval->getStartTime()) !== null &&
                 $startTime->getTimestamp() < $result->getTimestamp()
             ) {
@@ -269,6 +268,7 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
         $result = (new \DateTime())->setTimestamp(0);
         foreach ($intervals as $interval) {
             if (
+                $interval !== null &&
                 ($endTime = $interval->getEndTime()) !== null &&
                 $endTime->getTimestamp() > $result->getTimestamp()
             ) {

@@ -23,7 +23,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class DatabaseService
 {
-
     /**
      * Sets a field from a table
      *

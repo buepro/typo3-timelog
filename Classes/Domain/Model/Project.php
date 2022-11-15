@@ -20,7 +20,6 @@ use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
  */
 class Project extends AbstractEntity implements UpdateInterface, HandleInterface
 {
-
     /** @var string */
     protected $handle = '';
 

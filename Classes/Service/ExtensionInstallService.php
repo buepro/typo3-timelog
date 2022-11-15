@@ -24,7 +24,11 @@ class ExtensionInstallService
         // Ensure hashid salt is set
         $extensionConfiguration = GeneralUtility::makeInstance(ExtensionConfiguration::class);
         $timelogConfiguration = $extensionConfiguration->get('timelog');
-        if (isset($timelogConfiguration['hashidSalt']) && $timelogConfiguration['hashidSalt'] === '') {
+        if (
+            is_array($timelogConfiguration) &&
+            isset($timelogConfiguration['hashidSalt']) &&
+            $timelogConfiguration['hashidSalt'] === ''
+        ) {
             $timelogConfiguration['hashidSalt'] = md5(sprintf('%d Lihdfg!', time()));
 
             // Workaround for
