@@ -22,7 +22,7 @@
 		"php": ">=7.3.0",
 		"buepro/typo3-auxlibs": "^1.4",
 		"buepro/typo3-pvh": "^1.1.0",
-		"typo3/cms-core": "^10.4.11 || ^11.5"
+		"typo3/cms-core": "^11.5"
 	},
 	"require-dev": {
 		"buepro/typo3-pizpalue": "~14.1.0",
