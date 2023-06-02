@@ -9,6 +9,7 @@
 
 namespace Buepro\Timelog\ViewHelpers;
 
+use League\CommonMark\GithubFlavoredMarkdownConverter;
 use TYPO3Fluid\Fluid\Core\Rendering\RenderingContextInterface;
 use TYPO3Fluid\Fluid\Core\ViewHelper\AbstractViewHelper;
 use TYPO3Fluid\Fluid\Core\ViewHelper\Traits\CompileWithContentArgumentAndRenderStatic;
@@ -22,7 +23,6 @@ class ParsedownViewHelper extends AbstractViewHelper
     public function initializeArguments(): void
     {
         $this->registerArgument('text', 'string', 'The text with markdown syntax to be parsed.', false);
-        $this->registerArgument('nl2br', 'bool', 'If true converts line feeds to line breaks', false, false);
     }
 
     public static function renderStatic(
@@ -31,8 +31,13 @@ class ParsedownViewHelper extends AbstractViewHelper
         RenderingContextInterface $renderingContext
     ): string {
         $text = $arguments['text'] ?? $renderChildrenClosure();
-        $parsedown = new \Parsedown;
-        $parsedown->setBreaksEnabled($arguments['nl2br']);
-        return $parsedown->text($text);
+        $converter = new GithubFlavoredMarkdownConverter([
+            'renderer' => [
+                'block_separator' => "\n",
+            ],
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
+        return $converter->convert($text);
     }
 }

@@ -9,7 +9,7 @@
 <f:if condition="{settings.transform} == 1">
     <div class="tx-timelog-markdown">
         {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
-            -> tl:parsedown(nl2br: settings.maintainLineBreaks)
+            -> tl:parsedown()
             -> f:format.raw()}
     </div>
 </f:if>
@@ -20,7 +20,7 @@
         <f:then>
             <div class="tx-timelog-markdown">
                 {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
-                    -> tl:parsedown(nl2br: settings.maintainLineBreaks)
+                    -> tl:parsedown()
                     -> f:format.raw()}
             </div>
         </f:then>

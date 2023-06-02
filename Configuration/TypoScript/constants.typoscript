@@ -49,7 +49,5 @@ plugin.tx_timelog_taskpanel {
         token = !md
         # cat=plugin.tx_timelog_taskpanel/markdown/030; type=string; label= Markdown regular expression
         regexp = /^!md(?:\r|\n|\r\n)/
-        # cat=plugin.tx_timelog_taskpanel/markdown/030; type=bool; label= Maintain line breaks. If set line breaks will result in a br-tag
-        maintainLineBreaks = 1
     }
 }

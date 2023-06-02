@@ -47,7 +47,6 @@ plugin.tx_timelog_taskpanel {
             transform = {$plugin.tx_timelog_taskpanel.markdown.transform}
             token = {$plugin.tx_timelog_taskpanel.markdown.token}
             regexp = {$plugin.tx_timelog_taskpanel.markdown.regexp}
-            maintainLineBreaks = {$plugin.tx_timelog_taskpanel.markdown.maintainLineBreaks}
         }
     }
 }

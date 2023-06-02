@@ -20,7 +20,7 @@
 	"homepage": "https://github.com/buepro/typo3-timelog/",
 	"require": {
 		"buepro/typo3-pvh": "^2.0",
-		"erusev/parsedown": "^1.7.4",
+		"league/commonmark": "^2.4.0",
 		"hashids/hashids": "~5.0.2",
 		"typo3/cms-core": "^12.4"
 	},
