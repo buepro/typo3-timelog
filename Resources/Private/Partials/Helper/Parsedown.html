@@ -1,6 +1,6 @@
 <html xmlns:f="http://typo3.org/ns/TYPO3/CMS/Fluid/ViewHelpers"
       xmlns:pvh="http://typo3.org/ns/Buepro/Pvh/ViewHelpers"
-      xmlns:auxlibs="http://typo3.org/ns/Buepro/Auxlibs/ViewHelpers"
+      xmlns:tl="http://typo3.org/ns/Buepro/Timelog/ViewHelpers"
       data-namespace-typo3-fluid="true">
 
 <f:if condition="{settings.transform} == 0">
@@ -9,7 +9,7 @@
 <f:if condition="{settings.transform} == 1">
     <div class="tx-timelog-markdown">
         {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
-            -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)
+            -> tl:parsedown(nl2br: settings.maintainLineBreaks)
             -> f:format.raw()}
     </div>
 </f:if>
@@ -20,7 +20,7 @@
         <f:then>
             <div class="tx-timelog-markdown">
                 {pvh:format.pregReplace(subject: text, pattern: settings.regexp, replacement: '')
-                    -> auxlibs:parsedown(nl2br: settings.maintainLineBreaks)
+                    -> tl:parsedown(nl2br: settings.maintainLineBreaks)
                     -> f:format.raw()}
             </div>
         </f:then>

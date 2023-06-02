@@ -16,6 +16,7 @@ use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
 use Buepro\Timelog\Service\DatabaseService;
+use Buepro\Timelog\Service\RegistryService;
 use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
@@ -73,6 +74,12 @@ class DataHandlerHook implements \TYPO3\CMS\Core\SingletonInterface
         array $fieldArray,
         DataHandler $dataHandler
     ): void {
+        if (
+            $table === 'tx_timelog_domain_model_task' &&
+            ($workerUid = (int) ($fieldArray['worker'] ?? 0)) !== 0
+        ) {
+            (new RegistryService())->setWorkerUidForBeUser($workerUid);
+        }
         if (in_array($table, [
             'tx_timelog_domain_model_task',
             'tx_timelog_domain_model_interval',

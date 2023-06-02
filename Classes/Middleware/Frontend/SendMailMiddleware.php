@@ -21,6 +21,8 @@ use TYPO3\CMS\Core\Http\NullResponse;
 use TYPO3\CMS\Core\Http\Response;
 use TYPO3\CMS\Core\Mail\MailMessage;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Extbase\Mvc\ExtbaseRequestParameters;
+use TYPO3\CMS\Extbase\Mvc\Request;
 use TYPO3\CMS\Fluid\View\StandaloneView;
 
 /**
@@ -29,34 +31,16 @@ use TYPO3\CMS\Fluid\View\StandaloneView;
  */
 class SendMailMiddleware implements MiddlewareInterface
 {
-    /**
-     * StandaloneSubjectView
-     * @var StandaloneView
-     */
-    protected $standaloneSubjectView;
+    protected StandaloneView $standaloneSubjectView;
+    protected StandaloneView $standaloneBodyPlainView;
+    protected StandaloneView $standaloneBodyHtmlView;
 
-    /**
-     * StandaloneBodyPlainView
-     * @var StandaloneView
-     */
-    protected $standaloneBodyPlainView;
-
-    /**
-     * StandaloneBodyHtmlView
-     * @var StandaloneView
-     */
-    protected $standaloneBodyHtmlView;
-
-    public function __construct()
+    private function initializeStandaloneViews(ServerRequestInterface $request): void
     {
         $this->standaloneSubjectView = GeneralUtility::makeInstance(StandaloneView::class);
         $this->standaloneBodyPlainView = GeneralUtility::makeInstance(StandaloneView::class);
         $this->standaloneBodyHtmlView = GeneralUtility::makeInstance(StandaloneView::class);
-        $this->initializeStandaloneView();
-    }
 
-    private function initializeStandaloneView(): void
-    {
         $this->standaloneSubjectView->setTemplatePathAndFilename(
             'EXT:timelog/Resources/Private/Templates/Mail/Subject.html'
         );
@@ -66,6 +50,11 @@ class SendMailMiddleware implements MiddlewareInterface
         $this->standaloneBodyHtmlView->setTemplatePathAndFilename(
             'EXT:timelog/Resources/Private/Templates/Mail/BodyHtml.html'
         );
+
+        $extbaseRequest = new Request($request->withAttribute('extbase', new ExtbaseRequestParameters()));
+        $this->standaloneSubjectView->setRequest($extbaseRequest);
+        $this->standaloneBodyHtmlView->setRequest($extbaseRequest);
+        $this->standaloneBodyPlainView->setRequest($extbaseRequest);
     }
 
     private function getErrorResponse(string $reasonPhrase): Response
@@ -75,6 +64,8 @@ class SendMailMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
+        $this->initializeStandaloneViews($request);
+
         // Get url parameters
         $parsedBody = $request->getParsedBody();
         $parsedBody = is_array($parsedBody) ? $parsedBody : [];

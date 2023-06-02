@@ -1,9 +1,13 @@
 # Folders
-.build/
-.idea/
-Documentation-GENERATED-temp/
+/.build/
+/.idea/
+/Build/node_modules/
+/Documentation-GENERATED-temp/
+/config/
+/system/
+/var/
 
 # Files
 *.cache
 *.zip
-Build/node_modules
+composer.lock

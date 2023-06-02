@@ -17,14 +17,16 @@ return [
         'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getTaskGroupLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
         'enablecolumns' => [
         ],
         'searchFields' => 'handle,title,description',
         'default_sortby' => 'tstamp DESC',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-taskgroup.svg'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-taskgroup.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => 1,
+        ],
     ],
     'palettes' => [
         'texts' => [
@@ -98,18 +100,18 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_taskgroup.time_target',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2'
             ]
         ],
         'time_deviation' => [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_taskgroup.time_deviation',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],
@@ -117,9 +119,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:active_time',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],
@@ -127,9 +129,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:heap_time',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],
@@ -137,9 +139,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:batch_time',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],

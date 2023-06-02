@@ -14,6 +14,7 @@ namespace Buepro\Timelog\Domain\Repository;
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
+use Doctrine\DBAL\Exception;
 use Doctrine\DBAL\ForwardCompatibility\Result;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
@@ -53,6 +54,7 @@ class TaskRepository extends Repository
      * ATTENTION: The storage location isn't considered.
      *
      * @return array|QueryResultInterface
+     * @throws Exception
      */
     public function findRecentForProject(Project $project, int $limit = 2, bool $excludeBatched = true)
     {
@@ -85,19 +87,13 @@ class TaskRepository extends Repository
             ));
         }
 
-//        $sql = $queryBuilder->getSQL();
-//        $params = $queryBuilder->getParameters();
-
-        $tasks = $queryBuilder->execute();
+        //        $sql = $queryBuilder->getSQL();
+        //        $params = $queryBuilder->getParameters();
 
         $result = [];
-        if ($tasks instanceof Result) {
-            $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
-            foreach ($tasks as $task) {
-                $result[] = $propertyMapper->convert((string) $task['uid'], Task::class);
-            }
+        foreach($queryBuilder->executeQuery()->fetchAllAssociative() as $record) {
+            $result[] = $this->findByUid($record['uid']);
         }
-
         return $result;
     }
 
@@ -149,8 +145,8 @@ class TaskRepository extends Repository
             );
         }
 
-//        $sql = $queryBuilder->getSQL();
-//        $params = $queryBuilder->getParameters();
+        //        $sql = $queryBuilder->getSQL();
+        //        $params = $queryBuilder->getParameters();
 
         if (
             ($queryResult = $queryBuilder->execute()) instanceof Result &&
@@ -206,7 +202,7 @@ class TaskRepository extends Repository
         // Batch constraint
         $constraints['batchDate'] = $query->equals('batchDate', $batchTime);
 
-        $query->matching($query->logicalAnd($constraints));
+        $query->matching($query->logicalAnd(...$constraints));
         $query->setOrderings(['intervals.startTime' => \TYPO3\CMS\Extbase\Persistence\QueryInterface::ORDER_DESCENDING]);
         return $query->execute();
     }

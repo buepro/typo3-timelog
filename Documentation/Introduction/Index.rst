@@ -1,12 +1,8 @@
 .. include:: /Includes.rst.txt
 
-.. image:: https://img.shields.io/badge/TYPO3-11-orange.svg
-   :alt: TYPO3 11
-   :target: https://get.typo3.org/version/11
-
-.. image:: https://img.shields.io/badge/TYPO3-10-orange.svg
-   :alt: TYPO3 10
-   :target: https://get.typo3.org/version/10
+.. image:: https://img.shields.io/badge/TYPO3-12-orange.svg
+   :alt: TYPO3 12
+   :target: https://get.typo3.org/version/12
 
 .. image:: https://poser.pugx.org/buepro/typo3-timelog/d/total.svg
    :alt: Total Downloads

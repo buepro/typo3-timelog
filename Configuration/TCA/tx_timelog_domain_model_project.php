@@ -18,14 +18,16 @@ return [
         'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getProjectLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
         'enablecolumns' => [
         ],
         'searchFields' => 'handle,title,description',
         'default_sortby' => 'tstamp DESC',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-project.svg'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-project.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => 1,
+        ],
     ],
     'palettes' => [
         'references' => [
@@ -103,9 +105,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.active_time',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],
@@ -113,9 +115,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.heap_time',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],
@@ -123,9 +125,9 @@ return [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.batch_time',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],
@@ -135,7 +137,6 @@ return [
             'config' => [
                 'type' => 'group',
                 'renderType' => '',
-                'internal_type' => 'db',
                 'allowed' => 'fe_users',
                 'foreign_table' => 'fe_users',
                 'size' => 1,
@@ -172,7 +173,6 @@ return [
             'config' => [
                 'type' => 'group',
                 'renderType' => '',
-                'internal_type' => 'db',
                 'allowed' => 'fe_users',
                 'foreign_table' => 'fe_users',
                 'size' => 1,
@@ -206,6 +206,7 @@ return [
         'cc_email' => [
             'exclude' => true,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.cc_email',
+            'description' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_project.cc_email.description',
             'config' => [
                 'type' => 'input',
                 'size' => 30,

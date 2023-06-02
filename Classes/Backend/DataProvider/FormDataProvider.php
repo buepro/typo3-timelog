@@ -11,7 +11,7 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Backend\DataProvider;
 
-use Buepro\Timelog\Service\DatabaseService;
+use Buepro\Timelog\Service\RegistryService;
 use TYPO3\CMS\Backend\Form\FormDataProviderInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -32,7 +32,7 @@ class FormDataProvider implements FormDataProviderInterface
         $pageRenderer = GeneralUtility::makeInstance(
             \TYPO3\CMS\Core\Page\PageRenderer::class
         );
-        $pageRenderer->loadRequireJsModule('TYPO3/CMS/Timelog/Backend/Task');
+        $pageRenderer->loadJavaScriptModule('@buepro/timelog/Task.js');
     }
 
     /**
@@ -70,14 +70,8 @@ class FormDataProvider implements FormDataProviderInterface
 
         // Add data to task
         if ($result['tableName'] === 'tx_timelog_domain_model_task' && $result['command'] === 'new') {
-            // Sets last used worker by be-user to task
-            $latest = (GeneralUtility::makeInstance(DatabaseService::class))->getLatestRecord(
-                'tx_timelog_domain_model_task',
-                '*',
-                sprintf('cruser_id = %d', $GLOBALS['BE_USER']->user['uid'])
-            );
-            if (isset($latest['worker']) && (int)$latest['worker'] > 0) {
-                $result['databaseRow']['worker'] = $latest['worker'];
+            if (($workerUid = (new RegistryService())->getWorkerUidForBeUser()) > 0) {
+                $result['databaseRow']['worker'] = $workerUid;
             }
             $this->addInterval();
         }

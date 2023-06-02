@@ -13,6 +13,7 @@ namespace Buepro\Timelog\Controller;
 
 use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Repository\ProjectRepository;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Context\Context;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -34,7 +35,7 @@ class ProjectController extends ActionController
      * Shows projects with hashed tasks from a client defined by a project handle.
      * In case no project handle is supplied and a be-user is logged in all hashed projects are shown.
      */
-    public function listAction(string $projectHandle = ''): void
+    public function listAction(string $projectHandle = ''): ResponseInterface
     {
         $projects = null;
         if ($projectHandle === '') {
@@ -52,5 +53,6 @@ class ProjectController extends ActionController
             'projectHandle' => $projectHandle,
             'projects' => $projects
         ]);
+        return $this->htmlResponse();
     }
 }

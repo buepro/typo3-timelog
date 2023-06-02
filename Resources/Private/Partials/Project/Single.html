@@ -113,7 +113,8 @@
                     <div class="tx-timelog-taskgroupfilter mt-3">
                         <h5>{f:translate(key: 'taskGroup')}</h5>
                         <div class="form-group">
-                            <f:form.select name="taskGroupHandle" class="form-control" additionalAttributes="{onchange: '$(\'#tx-timelog-formfield-batchhandle\').val (\'\'); this.form.submit()'}">
+                            <script>function timelogSubmitForm (field) { const batchSelector = document.getElementById("tx-timelog-formfield-batchhandle"); if (batchSelector) { batchSelector.value = ""; } field.form.submit(); }</script>
+                            <f:form.select name="taskGroupHandle" class="form-control" additionalAttributes="{onchange: 'timelogSubmitForm(this)'}">
                                 <f:form.select.option value="" selected="{pvh:condition.variable.isNull(value: taskGroup, then: 1, else: 0)}">
                                     {f:translate(key: 'includeAll')}
                                 </f:form.select.option>

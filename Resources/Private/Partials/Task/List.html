@@ -51,9 +51,11 @@
                                 </f:format.printf>
                             </f:then>
                             <f:else>
-                                <f:format.printf arguments="{0: projectLink}">
-                                    {f:translate(key: 'heapProjectListTitle')}
-                                </f:format.printf>
+                                <f:if condition="{project}">
+                                    <f:format.printf arguments="{0: projectLink}">
+                                        {f:translate(key: 'heapProjectListTitle')}
+                                    </f:format.printf>
+                                </f:if>
                             </f:else>
                         </f:if>
                     </f:format.htmlentitiesDecode>

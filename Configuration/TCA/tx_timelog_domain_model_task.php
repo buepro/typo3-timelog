@@ -17,14 +17,16 @@ return [
         'label_userFunc' => 'Buepro\\Timelog\\Backend\\UserFunc\\TcaUserFunc->getTaskLabel',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
         'enablecolumns' => [
         ],
         'searchFields' => 'handle,title,description',
         'default_sortby' => 'crdate DESC',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-task.svg'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-task.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => 1,
+        ],
     ],
     'palettes' => [
         'batch' => [
@@ -82,9 +84,9 @@ return [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.active_time',
             'config' => [
-                'type' => 'input',
+                'type' => 'number',
+                'format' => 'decimal',
                 'size' => 12,
-                'eval' => 'double2',
                 'readOnly' => 1
             ]
         ],
@@ -92,10 +94,8 @@ return [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_task.batch_date',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 14,
-                'eval' => 'datetime',
                 'default' => 0
             ],
         ],
@@ -136,7 +136,6 @@ return [
                 'type' => 'group',
                 'renderType' => '',
                 'foreign_table' => 'fe_users',
-                'internal_type' => 'db',
                 'allowed' => 'fe_users',
                 'default' => 0,
                 'size' => 1,

@@ -35,14 +35,20 @@
 </div>
 
 <f:asset.script identifier="timelog-task-find">
-;+function ( $ ) {
-    $(function () {
-        $('.tx-timelog-projectsearch input').on('click',function () {
-            var $parent = $(this).closest('.tx-timelog-projectsearch')
-            $('.tlc-findfield',$parent).attr('value','');
-        })
-    });
-}(jQuery);
+;+function () {
+    const ready = (callback) => {
+        if (document.readyState != 'loading') callback();
+        else document.addEventListener('DOMContentLoaded', callback);
+    }
+    ready(() => {
+        const inputs = document.querySelectorAll('.tx-timelog-projectsearch .tlc-findfield');
+        inputs.forEach((input) => input.addEventListener('click', () => {
+            inputs.forEach((input) => {
+                input.value = '';
+            })
+        }))
+    })
+}();
 </f:asset.script>
 
 </html>

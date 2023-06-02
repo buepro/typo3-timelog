@@ -19,6 +19,7 @@ use Buepro\Timelog\Domain\Repository\TaskGroupRepository;
 use Buepro\Timelog\Domain\Repository\TaskRepository;
 use Buepro\Timelog\Utility\GeneralUtility;
 use DateTime;
+use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
 use TYPO3\CMS\Core\Messaging\AbstractMessage;
@@ -229,7 +230,7 @@ class TaskController extends ActionController
         string $taskGroupHandle = '',
         string $batchHandle = '',
         string $taskHandle = ''
-    ): void {
+    ): ResponseInterface {
         $models = $this->getModelsForFilter($projectHandle, $taskGroupHandle, $batchHandle, $taskHandle);
         [
             'project' => $project,
@@ -268,12 +269,14 @@ class TaskController extends ActionController
             'hasTasksOnHeap' => $hasTasksOnHeap,
             'settings' => $this->settings,
         ]);
+
+        return $this->htmlResponse();
     }
 
     /**
      * Creates a task batch from the task heap
      */
-    public function createBatchAction(string $projectHandle = '', string $taskGroupHandle = ''): void
+    public function createBatchAction(string $projectHandle = '', string $taskGroupHandle = ''): ResponseInterface
     {
         $models = $this->getModelsForFilter($projectHandle, $taskGroupHandle);
         if (!$models['tasks'] instanceof QueryResultInterface || $models['tasks']->count() < 1) {
@@ -300,9 +303,11 @@ class TaskController extends ActionController
         );
         // @extensionScannerIgnoreLine
         $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
+
+        return $this->htmlResponse();
     }
 
-    public function errorAction()
+    public function errorAction(): ResponseInterface
     {
         if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
             // @extensionScannerIgnoreLine

@@ -100,6 +100,9 @@
 			<trans-unit id="tx_timelog_domain_model_project.cc_email">
 				<source>CC Email</source>
 			</trans-unit>
+			<trans-unit id="tx_timelog_domain_model_project.cc_email.description">
+				<source>Single email address or coma separated list from email addresses receiving the email as CC.</source>
+			</trans-unit>
 			<trans-unit id="tx_timelog_domain_model_project.task_groups">
 				<source>Task groups</source>
 			</trans-unit>

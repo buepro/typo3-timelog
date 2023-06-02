@@ -17,13 +17,15 @@ return [
         'default_sortby' => 'tstamp DESC',
         'tstamp' => 'tstamp',
         'crdate' => 'crdate',
-        'cruser_id' => 'cruser_id',
         'versioningWS' => true,
         'delete' => 'deleted',
         'enablecolumns' => [
         ],
         'searchFields' => '',
-        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-interval.svg'
+        'iconfile' => 'EXT:timelog/Resources/Public/Icons/domain-model-interval.svg',
+        'security' => [
+            'ignorePageTypeRestriction' => 1,
+        ],
     ],
     'palettes' => [
         'time' => [
@@ -48,10 +50,8 @@ return [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_interval.start_time',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 14,
-                'eval' => 'datetime',
                 'default' => time()
             ],
         ],
@@ -59,10 +59,8 @@ return [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_interval.end_time',
             'config' => [
-                'type' => 'input',
-                'renderType' => 'inputDateTime',
+                'type' => 'datetime',
                 'size' => 14,
-                'eval' => 'datetime',
                 'default' => 0
             ],
         ],
@@ -70,9 +68,9 @@ return [
             'exclude' => false,
             'label' => 'LLL:EXT:timelog/Resources/Private/Language/locallang_db.xlf:tx_timelog_domain_model_interval.duration',
             'config' => [
-                'type' => 'input',
-                'size' => 10,
-                'eval' => 'double2',
+                'type' => 'number',
+                'format' => 'decimal',
+                'size' => 12,
                 'readOnly' => 1
             ]
         ],

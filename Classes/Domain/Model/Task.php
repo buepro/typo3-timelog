@@ -15,6 +15,7 @@ use Buepro\Timelog\Event\TaskProjectChangeEvent;
 use Buepro\Timelog\Event\TaskTaskGroupChangeEvent;
 use Buepro\Timelog\Event\TaskTimeChangeEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
@@ -53,18 +54,10 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
      */
     protected $intervals = null;
 
-    /** @var EventDispatcherInterface */
-    protected $eventDispatcher;
-
     public function __construct()
     {
         //Do not remove the next line: It would break the functionality
         $this->initStorageObjects();
-    }
-
-    public function injectEventDispatcher(EventDispatcherInterface $eventDispatcher): void
-    {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
@@ -140,7 +133,8 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
     {
         if (abs($this->activeTime - $activeTime) > 0.0001) {
             $this->activeTime = $activeTime;
-            $this->eventDispatcher->dispatch(new TaskTimeChangeEvent($this));
+            GeneralUtility::makeInstance(EventDispatcherInterface::class)
+                ->dispatch(new TaskTimeChangeEvent($this));
         }
         return $this;
     }
@@ -183,7 +177,8 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
         ) {
             $previousProject = $this->project;
             $this->project = $project;
-            $this->eventDispatcher->dispatch(new TaskProjectChangeEvent($this, $previousProject, $project));
+            GeneralUtility::makeInstance(EventDispatcherInterface::class)
+                ->dispatch(new TaskProjectChangeEvent($this, $previousProject, $project));
         }
         return $this;
     }
@@ -204,7 +199,8 @@ class Task extends AbstractEntity implements UpdateInterface, HandleInterface
         ) {
             $previousTaskGroup = $this->taskGroup;
             $this->taskGroup = $taskGroup;
-            $this->eventDispatcher->dispatch(new TaskTaskGroupChangeEvent($this, $previousTaskGroup, $taskGroup));
+            GeneralUtility::makeInstance(EventDispatcherInterface::class)
+                ->dispatch(new TaskTaskGroupChangeEvent($this, $previousTaskGroup, $taskGroup));
         }
         return $this;
     }

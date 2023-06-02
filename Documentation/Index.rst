@@ -37,6 +37,8 @@ regarding accumulated time can be looked up in the frontend by a token. For
 bookkeeping purposes working times can be bundled to batches where each batch
 can be referenced by a token too.
 
+ATTENTION: This extension requires composer installation.
+
 ----
 
 **Table of Contents**

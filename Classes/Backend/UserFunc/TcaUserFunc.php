@@ -21,7 +21,7 @@ class TcaUserFunc
         $textLength = 30;
         $parts = [
             GeneralUtility::fixed_lgd_cs($parameters['row']['title'], $textLength),
-            sprintf('%.1f, %.1f', $parameters['row']['active_time'], $parameters['row']['heap_time']),
+            sprintf('%.1f, %.1f', ($parameters['row']['active_time'] ?? 0.0), ($parameters['row']['heap_time'] ?? 0.0)),
         ];
         if (
             isset($parameters['row']['client']) &&
@@ -74,7 +74,7 @@ class TcaUserFunc
         $textLength = 30;
         $parts = [
             GeneralUtility::fixed_lgd_cs($parameters['row']['title'], $textLength),
-            sprintf('%.1f, %.1f', $parameters['row']['active_time'], $parameters['row']['time_deviation']),
+            sprintf('%.1f, %.1f', ($parameters['row']['active_time'] ?? 0.0), ($parameters['row']['time_deviation'] ?? 0.0)),
         ];
         if (
             isset($parameters['row']['project']) &&
@@ -112,27 +112,29 @@ class TcaUserFunc
     {
         $items = [];
 
-        // Default text (contains username and path)
-        $text = explode('<br />', $parameters['entry']['text']);
+        // Add username
+        $items[] = $parameters['row']['username'];
 
-        // Adds username
-        $items[] = $text[0];
-
-        // Adds name
+        // Add name
         if (
-            isset($parameters['row']['name'], $parameters['row']['first_name'], $parameters['row']['last_name']) &&
-            ($name = trim($parameters['row']['name']) !== '' ? trim($parameters['row']['name']) :
-                trim($parameters['row']['first_name'] . ' ' . $parameters['row']['last_name'])) !== ''
+            ($name = trim($parameters['row']['name'] ?? '')) !== '' ||
+            ($name = trim(($parameters['row']['first_name'] ?? '') . ' ' . ($parameters['row']['last_name'] ?? ''))) !== ''
         ) {
             $items[] = $name;
         }
-        // Adds company
+
+        // Add company
         if (($parameters['row']['company'] ?? '') !== '') {
             $items[] = $parameters['row']['company'];
         }
 
-        // Compiles text and adds path
-        $parameters['entry']['text'] = implode(' | ', $items) . '<br />' . $text[1];
+        // Add path
+        if (($parameters['entry']['path'] ?? '') !== '') {
+            $items[] =  $parameters['entry']['path'];
+        }
+
+        // Compile text
+        $parameters['entry']['label'] = implode(' | ', $items);
     }
 
     /**

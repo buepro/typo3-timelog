@@ -19,25 +19,24 @@
 	],
 	"homepage": "https://github.com/buepro/typo3-timelog/",
 	"require": {
-		"php": ">=7.3.0",
-		"buepro/typo3-auxlibs": "^1.4",
-		"buepro/typo3-pvh": "^1.1.0",
-		"typo3/cms-core": "^11.5"
+		"buepro/typo3-pvh": "^2.0",
+		"erusev/parsedown": "^1.7.4",
+		"hashids/hashids": "~5.0.2",
+		"typo3/cms-core": "^12.4"
 	},
 	"require-dev": {
-		"buepro/typo3-pizpalue": "~14.1.0",
-		"ergebnis/composer-normalize": "^2.15.0",
+		"buepro/typo3-pizpalue": "~15.1.0",
+		"ergebnis/composer-normalize": "^2.31.0",
 		"friendsofphp/php-cs-fixer": "^3.0.0",
 		"friendsoftypo3/phpstan-typo3": "^0.9.0",
-		"overtrue/phplint": "^3.2.0 || ^4.3.0 || ^5.3.0",
+		"overtrue/phplint": "^9.0.4",
 		"phpstan/phpstan-deprecation-rules": "^1.0.0",
 		"phpstan/phpstan-phpunit": "^1.1.1",
 		"phpstan/phpstan-strict-rules": "^1.4.3",
-		"typo3/cms-base-distribution": "^10.4 || ^11.5",
-		"typo3/cms-impexp": "^10.4 || ^11.5",
-		"typo3/cms-lowlevel": "^10.4 || ^11.5",
-		"typo3/cms-recycler": "^10.4 || ^11.5",
-		"typo3/testing-framework": "^5.0 || ^6.4"
+		"typo3/cms-base-distribution": "^12.4",
+		"typo3/cms-impexp": "^12.4",
+		"typo3/cms-lowlevel": "^12.4",
+		"typo3/cms-recycler": "^12.4"
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
@@ -59,20 +58,21 @@
 	},
 	"extra": {
 		"branch-alias": {
-			"dev-main": "1.8.x-dev"
+			"dev-main": "2.0.x-dev"
 		},
 		"typo3/cms": {
-			"app-dir": ".build",
 			"extension-key": "timelog",
 			"web-dir": ".build/public"
 		}
 	},
 	"scripts": {
 		"post-autoload-dump": [
-			"mkdir -p .build/public/typo3conf/ext/",
-			"[ -L .build/public/typo3conf/ext/timelog ] || ln -snvf ../../../../. .build/public/typo3conf/ext/timelog",
-			"mkdir -p .build/config/sites/default",
-			"[ -L .build/config/sites/default/config.yaml ] || ln -svf ../../../../Build/site/config.yaml .build/config/sites/default/config.yaml"
+			"[ -d .build/public/_assets ] || mkdir -p .build/public/typo3conf/ext/",
+			"[ -d .build/public/_assets ] || [ -L .build/public/typo3conf/ext/timelog ] || ln -snvf ../../../../. .build/public/typo3conf/ext/timelog",
+			"[ -d .build/public/_assets ] || mkdir -p .build/config/sites/default",
+			"[ -d .build/public/_assets ] || [ -L .build/config/sites/default/config.yaml ] || ln -svf ../../../../Build/site/config.yaml .build/config/sites/default/config.yaml",
+			"[ ! -d .build/public/_assets ] || mkdir -p config/sites/default",
+			"[ ! -d .build/public/_assets ] || [ -L config/sites/default/config.yaml ] || ln -svf ../../../Build/site/config.yaml config/sites/default/config.yaml"
 		],
 		"ci": [
 			"@ci:static"
