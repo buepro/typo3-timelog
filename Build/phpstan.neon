@@ -9,6 +9,7 @@ parameters:
 	level: max
 	checkMissingIterableValueType: false
 	reportUnmatchedIgnoredErrors: false
+	checkGenericClassInNonGenericObjectType: false
 
 	paths:
 	- %currentWorkingDirectory%/Classes

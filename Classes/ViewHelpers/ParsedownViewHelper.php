@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the package buepro/timelog.
+ * This file is part of the composer package buepro/typo3-timelog.
  *
  * For the full copyright and license information, please read the
  * LICENSE file that was distributed with this source code.
@@ -19,7 +19,7 @@ class ParsedownViewHelper extends AbstractViewHelper
 
     protected $escapeOutput = false;
 
-    public function initializeArguments()
+    public function initializeArguments(): void
     {
         $this->registerArgument('text', 'string', 'The text with markdown syntax to be parsed.', false);
         $this->registerArgument('nl2br', 'bool', 'If true converts line feeds to line breaks', false, false);

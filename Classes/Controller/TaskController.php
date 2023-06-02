@@ -22,7 +22,7 @@ use DateTime;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
-use TYPO3\CMS\Core\Messaging\AbstractMessage;
+use TYPO3\CMS\Core\Type\ContextualFeedbackSeverity;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 
@@ -314,7 +314,7 @@ class TaskController extends ActionController
             $this->addFlashMessage(
                 'The storagePid isn\'t defined. Please review the "Record Storage Page" field and the TS constants.',
                 'Configuration missing',
-                AbstractMessage::ERROR,
+                ContextualFeedbackSeverity::ERROR,
                 true
             );
         }
