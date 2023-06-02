@@ -13,7 +13,6 @@ namespace Buepro\Timelog\Domain\Repository;
 
 use Buepro\Timelog\Domain\Model\FrontendUser;
 use Buepro\Timelog\Domain\Model\Project;
-use Doctrine\DBAL\ForwardCompatibility\Result;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Property\PropertyMapper;
@@ -53,18 +52,16 @@ class ProjectRepository extends \TYPO3\CMS\Extbase\Persistence\Repository
             $queryBuilder->where($queryBuilder->expr()->eq('task.batch_date', '""'));
         }
 
-//        $sql = $queryBuilder->getSQL();
-//        $params = $queryBuilder->getParameters();
+        //        $sql = $queryBuilder->getSQL();
+        //        $params = $queryBuilder->getParameters();
 
-        $projects = $queryBuilder->execute();
-        $result = [];
-
-        if ($projects instanceof Result) {
-            $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
-            foreach ($projects as $project) {
-                $result[] = $propertyMapper->convert((string) $project['uid'], Project::class);
-            }
+        $result = $queryBuilder->executeQuery();
+        $propertyMapper = GeneralUtility::makeInstance(PropertyMapper::class);
+        $projects = [];
+        while ($projectRecord = $result->fetchAssociative()) {
+            /** @var array{uid: int} $projectRecord */
+            $projects[] = $propertyMapper->convert((string) $projectRecord['uid'], Project::class);
         }
-        return $result;
+        return $projects;
     }
 }

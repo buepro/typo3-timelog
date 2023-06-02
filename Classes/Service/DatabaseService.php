@@ -11,9 +11,6 @@ declare(strict_types=1);
 
 namespace Buepro\Timelog\Service;
 
-use Doctrine\DBAL\Driver\Statement;
-use Doctrine\DBAL\ForwardCompatibility\DriverResultStatement;
-use Doctrine\DBAL\ForwardCompatibility\Result;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\Query\Restriction\DeletedRestriction;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -48,15 +45,17 @@ class DatabaseService
      */
     public function getRecordByUid(string $tableName, int $uid, array $fields): ?array
     {
-        $statement = GeneralUtility::makeInstance(ConnectionPool::class)
+        $result = GeneralUtility::makeInstance(ConnectionPool::class)
             ->getConnectionForTable($tableName)
             ->select($fields, $tableName, ['uid' => $uid]);
-        if (
-            $statement instanceof DriverResultStatement &&
-            ($row = $statement->fetchAssociative()) !== false &&
-            $row !== []
-        ) {
-            return $row;
+        try {
+            if (
+                ($row = $result->fetchAssociative()) !== false &&
+                $row !== []
+            ) {
+                return $row;
+            }
+        } catch (\Exception $e) {
         }
         return null;
     }
@@ -91,12 +90,15 @@ class DatabaseService
             $queryBuilder->andWhere($where);
         }
 
-        if (
-            ($statement = $queryBuilder->execute()) instanceof Result &&
-            ($row = $statement->fetchAssociative()) !== false &&
-            $row !== []
-        ) {
-            return $row;
+        $result = $queryBuilder->executeQuery();
+        try {
+            if (
+                ($row = $result->fetchAssociative()) !== false &&
+                $row !== []
+            ) {
+                return $row;
+            }
+        } catch (\Exception $e) {
         }
         return null;
     }
@@ -120,10 +122,7 @@ class DatabaseService
                 $queryBuilder->expr()->gt('start_time', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT)),
                 $queryBuilder->expr()->eq('end_time', $queryBuilder->createNamedParameter(0, \PDO::PARAM_INT))
             )
-            ->execute();
-        if ($result instanceof Statement) {
-            return $result->rowCount() > 0;
-        }
-        return false;
+            ->executeQuery();
+        return $result->rowCount() > 0;
     }
 }

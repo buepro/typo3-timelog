@@ -15,7 +15,6 @@ use Buepro\Timelog\Domain\Model\Project;
 use Buepro\Timelog\Domain\Model\Task;
 use Buepro\Timelog\Domain\Model\TaskGroup;
 use Doctrine\DBAL\Exception;
-use Doctrine\DBAL\ForwardCompatibility\Result;
 use Psr\Http\Message\ServerRequestInterface;
 use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Http\ApplicationType;
@@ -23,7 +22,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Persistence\Generic\Typo3QuerySettings;
 use TYPO3\CMS\Extbase\Persistence\QueryResultInterface;
 use TYPO3\CMS\Extbase\Persistence\Repository;
-use TYPO3\CMS\Extbase\Property\PropertyMapper;
 
 /**
  * The repository for Tasks
@@ -92,6 +90,7 @@ class TaskRepository extends Repository
 
         $result = [];
         foreach($queryBuilder->executeQuery()->fetchAllAssociative() as $record) {
+            /** @var array{uid: int} $record */
             $result[] = $this->findByUid($record['uid']);
         }
         return $result;
@@ -148,25 +147,21 @@ class TaskRepository extends Repository
         //        $sql = $queryBuilder->getSQL();
         //        $params = $queryBuilder->getParameters();
 
-        if (
-            ($queryResult = $queryBuilder->execute()) instanceof Result &&
-            (int)$queryResult->rowCount() > 0
-        ) {
-            $batches = [];
-            foreach ($queryResult as $batch) {
-                $date = new \DateTime();
-                $date->setTimestamp($batch['timestamp']);
-                $batches[] = array_merge($batch, [
-                    'handle' => \Buepro\Timelog\Utility\GeneralUtility::getBatchHandle(
-                        $batch['timestamp'],
-                        $batch['aTaskUid']
-                    ),
-                    'date' => $date
-                ]);
-            }
-            return $batches;
+        $result = $queryBuilder->executeQuery();
+        $batches = [];
+        while ($batch = $result->fetchAssociative()) {
+            /** @var array{timestamp: int, aTaskUid: int} $batch */
+            $date = new \DateTime();
+            $date->setTimestamp($batch['timestamp']);
+            $batches[] = array_merge($batch, [
+                'handle' => \Buepro\Timelog\Utility\GeneralUtility::getBatchHandle(
+                    $batch['timestamp'],
+                    $batch['aTaskUid']
+                ),
+                'date' => $date
+            ]);
         }
-        return [];
+        return $batches;
     }
 
     /**
