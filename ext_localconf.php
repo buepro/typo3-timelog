@@ -13,40 +13,19 @@ defined('TYPO3') || die('Access denied.');
     /**
      * Configure plugin
      */
-    $version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::getCurrentTypo3Version();
-    $version = \TYPO3\CMS\Core\Utility\VersionNumberUtility::convertVersionNumberToInteger($version);
-    if ($version < 10000000) {
-        // For TYPO3 < V10
-        // @extensionScannerIgnoreLine
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Buepro.Timelog',
-            'Taskpanel',
-            [
-                'Task' => 'list,createBatch,error',
-                'Project' => 'list'
-            ],
-            // non-cacheable actions
-            [
-                'Task' => 'list,createBatch,error',
-                'Project' => 'list'
-            ]
-        );
-    } else {
-        // For TYPO3 V10
-        \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-            'Timelog',
-            'Taskpanel',
-            [
-                \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,error',
-                \Buepro\Timelog\Controller\ProjectController::class => 'list'
-            ],
-            // non-cacheable actions
-            [
-                \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,error',
-                \Buepro\Timelog\Controller\ProjectController::class => 'list'
-            ]
-        );
-    }
+    \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+        'Timelog',
+        'Taskpanel',
+        [
+            \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,error',
+            \Buepro\Timelog\Controller\ProjectController::class => 'list'
+        ],
+        // non-cacheable actions
+        [
+            \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,error',
+            \Buepro\Timelog\Controller\ProjectController::class => 'list'
+        ]
+    );
 
     /**
      * New content element wizard
