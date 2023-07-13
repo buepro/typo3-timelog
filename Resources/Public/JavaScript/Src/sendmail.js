@@ -3,42 +3,27 @@
         if (document.readyState != "loading") callback();
         else document.addEventListener("DOMContentLoaded", callback);
     }
+    function showResult(container, resultClass) {
+        container.classList.remove('tlc-progress');
+        container.classList.add(resultClass);
+        setTimeout(() => {
+            container.classList.remove(resultClass);
+            container.classList.remove('tlc-progress');
+        }, 1000);
+
+    }
     ready(() => {
         document.querySelector('.tx-timelog .tlc-sendmail').addEventListener('click', function (event) {
             event.stopPropagation();
-            console.log(this);
             const button = this;
+            const iconContainer = button.parentElement;
+            iconContainer.classList.add('tlc-progress')
             fetch(button.dataset.uri)
                 .then(data => {
-                    console.log('result: ', data);
+                    showResult(iconContainer, 'tlc-success');
                 }).catch(error => {
-                    console.log('error: ', error);
+                    showResult(iconContainer, 'tlc-error');
                 });
         })
     });
 })();
-
-
-// ;+function ( $ ) {
-//   $(function () {
-//     $('.tx-timelog .tlc-sendmail').click(function (event) {
-//       event.stopPropagation();
-//       console.log('click');
-//       var $this = $(this);
-//       var $panel = $this.parent();
-//       var uri = $this.attr('data-uri');
-//       $panel.addClass('tlc-progress')
-//       $.ajax( uri )
-//         .done(function() {
-//           $panel.removeClass('tlc-progress').addClass('tlc-success');
-//           setTimeout(function () {
-//             $panel.removeClass('tlc-success');
-//           }, 3000);
-//         })
-//         .fail(function() {
-//           $panel.removeClass('tlc-progress').addClass('tlc-error');
-//           $panel.parent().append('<p class="alert alert-danger my-2">' + arguments[2] +'</p>');
-//         })
-//     })
-//   })
-// }(jQuery);
