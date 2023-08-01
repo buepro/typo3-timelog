@@ -17,12 +17,12 @@ defined('TYPO3') || die('Access denied.');
         'Timelog',
         'Taskpanel',
         [
-            \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,error',
+            \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,configurationError',
             \Buepro\Timelog\Controller\ProjectController::class => 'list'
         ],
         // non-cacheable actions
         [
-            \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,error',
+            \Buepro\Timelog\Controller\TaskController::class => 'list,createBatch,configurationError',
             \Buepro\Timelog\Controller\ProjectController::class => 'list'
         ]
     );

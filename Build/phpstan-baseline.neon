@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Call to an undefined method object\\:\\:getUid\\(\\)\\.$#"
+			count: 1
+			path: ../Classes/Controller/TaskController.php
+
+		-
 			message: "#^Strict comparison using \\!\\=\\= between Buepro\\\\Timelog\\\\Domain\\\\Model\\\\Interval and null will always evaluate to true\\.$#"
 			count: 2
 			path: ../Classes/Domain/Model/Task.php

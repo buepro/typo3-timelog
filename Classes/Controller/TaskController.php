@@ -53,12 +53,6 @@ class TaskController extends ActionController
     protected $taskRepository = null;
 
     /**
-     * Plugin ts setup
-     * @var array
-     */
-    private $tsSetup = [];
-
-    /**
      * TaskController constructor.
      *
      * @param ProjectRepository $projectRepository
@@ -231,6 +225,23 @@ class TaskController extends ActionController
         string $batchHandle = '',
         string $taskHandle = ''
     ): ResponseInterface {
+        $configuration = $this->configurationManager->getConfiguration(
+            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
+        );
+        if (
+            !isset($configuration['persistence']['storagePid']) ||
+            (int)$configuration['persistence']['storagePid'] < 1
+        ) {
+            $this->addFlashMessage(
+                'The storagePid isn\'t defined. Please review the "Record Storage Page" field and the TS constants.',
+                'Configuration missing',
+                ContextualFeedbackSeverity::ERROR,
+                true
+            );
+            // @extensionScannerIgnoreLine
+            return $this->redirect('configurationError');
+        }
+
         $models = $this->getModelsForFilter($projectHandle, $taskGroupHandle, $batchHandle, $taskHandle);
         [
             'project' => $project,
@@ -281,11 +292,12 @@ class TaskController extends ActionController
         $models = $this->getModelsForFilter($projectHandle, $taskGroupHandle);
         if (!$models['tasks'] instanceof QueryResultInterface || $models['tasks']->count() < 1) {
             // @extensionScannerIgnoreLine
-            $this->redirect('list', null, null, ['projectHandle' => $projectHandle]);
+            return $this->redirect('list', null, null, ['projectHandle' => $projectHandle]);
         }
         $tasks = $models['tasks'];
         $batchDate = new DateTime('now');
         foreach ($tasks as $task) {
+            /** @var Task $task */
             $task->setBatchDate($batchDate);
             $this->taskRepository->update($task);
         }
@@ -302,47 +314,12 @@ class TaskController extends ActionController
             $tasks->getFirst() !== null ? $tasks->getFirst()->getUid() : 0
         );
         // @extensionScannerIgnoreLine
-        $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
+        return $this->redirect('list', null, null, ['batchHandle' => $batchHandle]);
+    }
 
+    public function configurationErrorAction(): ResponseInterface
+    {
         return $this->htmlResponse();
     }
 
-    public function errorAction(): ResponseInterface
-    {
-        if (!isset($this->tsSetup['persistence.']['storagePid']) || !$this->tsSetup['persistence.']['storagePid']) {
-            // @extensionScannerIgnoreLine
-            $this->addFlashMessage(
-                'The storagePid isn\'t defined. Please review the "Record Storage Page" field and the TS constants.',
-                'Configuration missing',
-                ContextualFeedbackSeverity::ERROR,
-                true
-            );
-        }
-        return parent::errorAction();
-    }
-
-    /**
-     * Checks precondition.
-     */
-    protected function initializeAction(): void
-    {
-        // Forwards to errorAction
-        if ($this->actionMethodName === 'errorAction') {
-            return;
-        }
-
-        // Checks configuration
-        $configuration = $this->configurationManager->getConfiguration(
-            ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK
-        );
-        if (
-            !isset($configuration['persistence']['storagePid']) ||
-            (int)$configuration['persistence']['storagePid'] < 1
-        ) {
-            // @extensionScannerIgnoreLine
-            $this->redirect('error');
-        }
-
-        parent::initializeAction();
-    }
 }
