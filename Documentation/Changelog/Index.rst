@@ -12,6 +12,7 @@ Releases
 .. toctree::
    :maxdepth: 1
 
+   Release: 2.0.0 <2.0.0>
    Release: 1.7.0 <1.7.0>
    Release: 1.6.0 <1.6.0>
    Release: 1.5.3 <1.5.3>
