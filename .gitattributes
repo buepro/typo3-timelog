@@ -5,7 +5,7 @@
 # Files
 /.* export-ignore
 /composer.lock export-ignore
-/ExtensionBuilder.json
+/ExtensionBuilder.json export-ignore
 
 # Enforce checkout with linux lf consistent over all plattforms
 *.xml text eol=lf
